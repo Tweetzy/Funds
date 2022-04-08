@@ -1,0 +1,5 @@
+name: ${project.name}
+version: ${project.version}
+main: ${main.class}
+author: ${author}
+api-version: 1.16
