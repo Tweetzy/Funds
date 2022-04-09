@@ -47,6 +47,11 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>${jarName}</finalName>
@@ -117,7 +122,7 @@
                             <outputDirectory>C:\Dev\Minecraft\latest\plugins</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>C:\Users\Kiran\Documents\Development\Minecraft\Active\Auction House\target</directory>
+                                    <directory>C:\Users\Kiran\Documents\Development\Minecraft\Active\${project.name}\target</directory>
                                     <include>${project.name}.jar</include>
                                     <filtering>false</filtering>
                                 </resource>
