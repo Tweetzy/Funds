@@ -1,8 +1,11 @@
 package ca.tweetzy.funds.hooks;
 
+import ca.tweetzy.funds.Funds;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.ServicePriority;
 
 import java.util.List;
 
@@ -13,14 +16,19 @@ import java.util.List;
  * @author Kiran Hart
  */
 public final class VaultHook implements Economy {
+
+	public VaultHook() {
+		Bukkit.getServer().getServicesManager().register(Economy.class, this, Funds.getInstance(), ServicePriority.Highest);
+	}
+
 	@Override
 	public boolean isEnabled() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public String getName() {
-		return null;
+		return "Funds";
 	}
 
 	@Override
@@ -30,7 +38,7 @@ public final class VaultHook implements Economy {
 
 	@Override
 	public int fractionalDigits() {
-		return 0;
+		return -1;
 	}
 
 	@Override

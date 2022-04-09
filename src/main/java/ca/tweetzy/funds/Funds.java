@@ -2,6 +2,7 @@ package ca.tweetzy.funds;
 
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
+import ca.tweetzy.funds.hooks.VaultHook;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.rose.RosePlugin;
 import ca.tweetzy.rose.database.DataMigrationManager;
@@ -37,6 +38,8 @@ public final class Funds extends RosePlugin {
 		final DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager,
 				new _1_CurrencyTableMigration()
 		);
+
+		new VaultHook();
 
 		// run migrations for tables
 		dataMigrationManager.runMigrations();

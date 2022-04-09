@@ -3,3 +3,6 @@ version: ${project.version}
 main: ${main.class}
 author: ${author}
 api-version: 1.16
+load: STARTUP
+loadbefore:
+  - Vault
