@@ -6,5 +6,5 @@ package ca.tweetzy.funds.guis;
  *
  * @author Kiran Hart
  */
-public final class PGUI {
+public final class SettingsGUI {
 }
