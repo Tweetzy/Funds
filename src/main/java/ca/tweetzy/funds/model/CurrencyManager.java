@@ -1,6 +1,8 @@
 package ca.tweetzy.funds.model;
 
+import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
 
 import java.util.HashMap;
@@ -33,7 +35,16 @@ public final class CurrencyManager {
 
 	public void loadCurrencies() {
 		this.currencies.clear();
+		Funds.getDataManager().getCurrencies((error, found) -> {
+			if (error != null) {
 
-		// todo data manager load
+				return;
+			}
+
+			found.forEach(currency -> {
+				addCurrency(currency);
+				Common.log("&aLoaded currency&F: &e" + currency.getId());
+			});
+		});
 	}
 }

@@ -11,6 +11,7 @@ import ca.tweetzy.rose.utils.QuickItem;
 import ca.tweetzy.rose.utils.input.TitleInput;
 import lombok.NonNull;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -68,6 +69,11 @@ public final class MaterialPicker extends BaseGUI {
 					if (string.isEmpty()) return false;
 					click.manager.showGUI(click.player, new MaterialPicker(null, string, MaterialPicker.this.selected));
 					return true;
+				}
+
+				@Override
+				public void onExit(Player player) {
+					click.manager.showGUI(click.player, MaterialPicker.this);
 				}
 			};
 		});

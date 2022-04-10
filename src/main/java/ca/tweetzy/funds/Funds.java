@@ -4,15 +4,21 @@ import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
 import ca.tweetzy.funds.guis.template.MaterialPicker;
 import ca.tweetzy.funds.hooks.VaultHook;
+import ca.tweetzy.funds.model.CurrencyManager;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.rose.RosePlugin;
 import ca.tweetzy.rose.database.DataMigrationManager;
 import ca.tweetzy.rose.database.DatabaseConnector;
 import ca.tweetzy.rose.database.SQLiteConnector;
 import ca.tweetzy.rose.gui.GuiManager;
+import ca.tweetzy.rose.utils.Common;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.logging.Logger;
 
 /**
  * Date Created: April 08 2022
@@ -22,10 +28,10 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  */
 public final class Funds extends RosePlugin {
 
+	private final CurrencyManager currencyManager = new CurrencyManager();
 	private final GuiManager guiManager = new GuiManager(this);
 
 	private DatabaseConnector databaseConnector;
-
 	private DataManager dataManager;
 
 	@SneakyThrows
@@ -33,6 +39,7 @@ public final class Funds extends RosePlugin {
 	protected void onWake() {
 		// settings & locale setup
 		Settings.setup();
+		Common.setPrefix(Settings.PREFIX.getString());
 
 		// Set up the database if enabled
 		this.databaseConnector = new SQLiteConnector(this);
@@ -50,6 +57,10 @@ public final class Funds extends RosePlugin {
 
 	@Override
 	protected void onFlight() {
+
+		// load currencies
+		this.currencyManager.loadCurrencies();
+
 		guiManager.init();
 		getServer().getPluginManager().registerEvents(this, this);
 	}
