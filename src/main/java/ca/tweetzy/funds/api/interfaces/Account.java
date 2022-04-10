@@ -13,7 +13,7 @@ public interface Account {
 
 	UUID getOwner();
 
-	Map<Currency, Double>  getCurrencies();
+	Map<Currency, Double> getCurrencies();
 
 	long getCreatedAt();
 }

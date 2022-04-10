@@ -2,6 +2,7 @@ package ca.tweetzy.funds;
 
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
+import ca.tweetzy.funds.guis.template.MaterialPicker;
 import ca.tweetzy.funds.hooks.VaultHook;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.rose.RosePlugin;
@@ -10,6 +11,8 @@ import ca.tweetzy.rose.database.DatabaseConnector;
 import ca.tweetzy.rose.database.SQLiteConnector;
 import ca.tweetzy.rose.gui.GuiManager;
 import lombok.SneakyThrows;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
  * Date Created: April 08 2022
@@ -48,6 +51,16 @@ public final class Funds extends RosePlugin {
 	@Override
 	protected void onFlight() {
 		guiManager.init();
+		getServer().getPluginManager().registerEvents(this, this);
+	}
+
+	@EventHandler
+	public void onChat(AsyncPlayerChatEvent chatEvent) {
+		if (chatEvent.getMessage().equalsIgnoreCase("materialpicker")) {
+			this.guiManager.showGUI(chatEvent.getPlayer(), new MaterialPicker(null, null, (event, selected) -> {
+				event.player.closeInventory();
+			}));
+		}
 	}
 
 	@Override

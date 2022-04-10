@@ -14,8 +14,8 @@ public final class Settings {
 
 	private static final Config config = Funds.getInstance().getCoreConfig();
 
-	public static final ConfigSetting LANG = new ConfigSetting(config, "language", "en_US", "The default language for the plugin");
-	public static final ConfigSetting PREFIX = new ConfigSetting(config, "prefix", "&8(&eFunds&8)", "The plugin's prefix");
+	public static final ConfigSetting LANG = new ConfigSetting(config, "Language", "en_US", "The default language for the plugin");
+	public static final ConfigSetting PREFIX = new ConfigSetting(config, "Prefix", "&8(&eFunds&8)", "The plugin's prefix");
 
 	public static void setup() {
 		config.load();

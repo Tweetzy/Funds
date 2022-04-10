@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 public final class MaterialPicker extends BaseGUI {
 
-	private String searchQuery;
+	private final String searchQuery;
 	private final BiConsumer<GuiClickEvent, CompMaterial> selected;
 
 	public MaterialPicker(final String titleOverride, final String searchQuery, @NonNull final BiConsumer<GuiClickEvent, CompMaterial> selected) {
