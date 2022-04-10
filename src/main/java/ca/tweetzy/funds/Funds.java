@@ -1,5 +1,6 @@
 package ca.tweetzy.funds;
 
+import ca.tweetzy.funds.commands.FundsCommand;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
 import ca.tweetzy.funds.guis.template.MaterialPicker;
@@ -7,6 +8,7 @@ import ca.tweetzy.funds.hooks.VaultHook;
 import ca.tweetzy.funds.model.CurrencyManager;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.rose.RosePlugin;
+import ca.tweetzy.rose.command.CommandManager;
 import ca.tweetzy.rose.database.DataMigrationManager;
 import ca.tweetzy.rose.database.DatabaseConnector;
 import ca.tweetzy.rose.database.SQLiteConnector;
@@ -30,6 +32,7 @@ public final class Funds extends RosePlugin {
 
 	private final CurrencyManager currencyManager = new CurrencyManager();
 	private final GuiManager guiManager = new GuiManager(this);
+	private final CommandManager commandManager = new CommandManager(this);
 
 	private DatabaseConnector databaseConnector;
 	private DataManager dataManager;
@@ -60,17 +63,24 @@ public final class Funds extends RosePlugin {
 
 		// load currencies
 		this.currencyManager.loadCurrencies();
+		this.guiManager.init();
 
-		guiManager.init();
+		// register main command
+		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand());
+
 		getServer().getPluginManager().registerEvents(this, this);
 	}
 
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent chatEvent) {
+
+
 		if (chatEvent.getMessage().equalsIgnoreCase("materialpicker")) {
 			this.guiManager.showGUI(chatEvent.getPlayer(), new MaterialPicker(null, null, (event, selected) -> {
 				event.player.closeInventory();
 			}));
+		} else {
+			chatEvent.setMessage(Common.colorize(chatEvent.getMessage()));
 		}
 	}
 
