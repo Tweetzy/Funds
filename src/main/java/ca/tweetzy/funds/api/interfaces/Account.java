@@ -1,5 +1,6 @@
 package ca.tweetzy.funds.api.interfaces;
 
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -8,8 +9,11 @@ import java.util.UUID;
  *
  * @author Kiran Hart
  */
-public interface FundUser {
+public interface Account {
 
-	UUID getUUID();
+	UUID getOwner();
 
+	Map<Currency, Double>  getCurrencies();
+
+	long getCreatedAt();
 }
