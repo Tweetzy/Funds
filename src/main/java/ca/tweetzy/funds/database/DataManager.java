@@ -107,7 +107,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void updateCurrency(@NonNull final Currency currency, Callback<Boolean> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			long begin = System.currentTimeMillis();
+			long begin = System.nanoTime();
 			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "currency SET name = ?, description = ?, icon = ?, singular_format = ?, plural_format = ?, starting_balance = ?, withdraw_allowed = ?, pay_allowed = ? WHERE id = ?")) {
 
 				statement.setString(1, currency.getName());
@@ -118,10 +118,10 @@ public final class DataManager extends DataManagerAbstract {
 				statement.setDouble(6, currency.getStartingBalance());
 				statement.setBoolean(7, currency.isWithdrawAllowed());
 				statement.setBoolean(8, currency.isPayingAllowed());
-				statement.setString(8, currency.getId());
+				statement.setString(9, currency.getId());
 
 				int result = statement.executeUpdate();
-				Common.log(String.format("&fSynced &b%s &fcurrency to data file in &a%d&fms", currency.getId(), System.currentTimeMillis() - begin));
+				Common.log(String.format("&fSynced &b%s &fcurrency to data file in &a%s&f ms", currency.getId(), String.format("%,.3f", (System.nanoTime() - begin) / 1e+6)));
 
 				if (callback != null)
 					callback.accept(null, result > 0);
