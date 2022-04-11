@@ -49,7 +49,7 @@ public final class DataManager extends DataManagerAbstract {
 				preparedStatement.setString(2, currency.getName());
 				preparedStatement.setString(3, currency.getDescription());
 				preparedStatement.setString(4, currency.getIcon().name());
-				preparedStatement.setDouble(4, currency.getStartingBalance());
+				preparedStatement.setDouble(5, currency.getStartingBalance());
 
 				preparedStatement.executeUpdate();
 
