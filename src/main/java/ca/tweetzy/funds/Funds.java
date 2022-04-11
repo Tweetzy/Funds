@@ -4,23 +4,19 @@ import ca.tweetzy.funds.commands.FundsCommand;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
 import ca.tweetzy.funds.guis.template.MaterialPicker;
-import ca.tweetzy.funds.hooks.VaultHook;
 import ca.tweetzy.funds.model.CurrencyManager;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.rose.RosePlugin;
 import ca.tweetzy.rose.command.CommandManager;
+import ca.tweetzy.rose.configuration.Config;
 import ca.tweetzy.rose.database.DataMigrationManager;
 import ca.tweetzy.rose.database.DatabaseConnector;
 import ca.tweetzy.rose.database.SQLiteConnector;
 import ca.tweetzy.rose.gui.GuiManager;
 import ca.tweetzy.rose.utils.Common;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.logging.Logger;
 
 /**
  * Date Created: April 08 2022
@@ -37,12 +33,17 @@ public final class Funds extends RosePlugin {
 	private DatabaseConnector databaseConnector;
 	private DataManager dataManager;
 
+	private Config langConfig;
+
 	@SneakyThrows
 	@Override
 	protected void onWake() {
 		// settings & locale setup
 		Settings.setup();
 		Common.setPrefix(Settings.PREFIX.getString());
+
+		// lang setup
+		this.langConfig = new Config(this, "/locale/", Settings.LANG.getString() + ".yml");
 
 		// Set up the database if enabled
 		this.databaseConnector = new SQLiteConnector(this);
@@ -51,8 +52,6 @@ public final class Funds extends RosePlugin {
 		final DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager,
 				new _1_CurrencyTableMigration()
 		);
-
-		new VaultHook();
 
 		// run migrations for tables
 		dataMigrationManager.runMigrations();
@@ -97,6 +96,15 @@ public final class Funds extends RosePlugin {
 	// gui manager
 	public static GuiManager getGuiManager() {
 		return getInstance().guiManager;
+	}
+
+	// currency manager
+	public static CurrencyManager getCurrencyManager() {
+		return getInstance().currencyManager;
+	}
+
+	public static Config getLangConfig() {
+		return getInstance().langConfig;
 	}
 
 	// data manager
