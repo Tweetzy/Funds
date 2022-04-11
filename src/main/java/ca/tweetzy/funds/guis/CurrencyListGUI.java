@@ -25,15 +25,18 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 	}
 
 	@Override
-	protected ItemStack makeDisplayItem(Currency object) {
+	protected ItemStack makeDisplayItem(Currency currency) {
 		return QuickItem
-				.of(object.getIcon())
-				.name(object.getName())
+				.of(currency.getIcon())
+				.name(currency.getName())
 				.lore(
 						"&8Basic currency information",
-						"&7Identifier&F: &e" + object.getId(),
+						"&7Identifier&F: &e" + currency.getId(),
 						"&7Description&F:",
-						"&f- " + object.getDescription(),
+						"&f- " + currency.getDescription(),
+						"",
+						"&7Singular Format&f: &e" + currency.getSingularFormat(),
+						"&7Plural Format&f: &e" + currency.getPluralFormat(),
 						"",
 						"&e&lLeft Click &8» &7To Edit Currency",
 						"&c&lPress 1 &8» &7To Delete Currency"
