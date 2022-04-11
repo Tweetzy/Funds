@@ -44,7 +44,7 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 	@Override
 	protected void onClick(Currency currency, GuiClickEvent click) {
 		if (click.clickType == ClickType.LEFT)
-			click.manager.showGUI(click.player, new CurrencyEditGUI(this, currency));
+			click.manager.showGUI(click.player, new CurrencyEditGUI(new CurrencyListGUI(new AdminMainGUI()), currency));
 
 		if (click.clickType == ClickType.NUMBER_KEY)
 			Funds.getCurrencyManager().deleteCurrency(currency.getId(), deleted -> {

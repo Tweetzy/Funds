@@ -26,7 +26,6 @@ public abstract class BaseGUI extends Gui {
 		setRows(rows);
 		setDefaultSound(null);
 		setDefaultItem(QuickItem.of(CompMaterial.BLACK_STAINED_GLASS_PANE).name(" ").make());
-		draw();
 	}
 
 	public BaseGUI(final Gui parent, @NonNull final String title) {
@@ -38,6 +37,11 @@ public abstract class BaseGUI extends Gui {
 	}
 
 	protected abstract void draw();
+
+
+	protected void applyBackExit(Gui override) {
+		setButton(this.rows - 1, 0, QuickItem.of(CompMaterial.DARK_OAK_DOOR).name("&aBack").lore("&7Click to go back").make(), click -> click.manager.showGUI(click.player, override));
+	}
 
 	protected void applyBackExit() {
 		if (this.parent == null)

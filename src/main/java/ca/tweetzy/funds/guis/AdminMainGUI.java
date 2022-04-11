@@ -24,6 +24,7 @@ public final class AdminMainGUI extends BaseGUI {
 
 	public AdminMainGUI() {
 		super("&eFunds &fv&7" + Funds.getInstance().getVersion());
+		draw();
 	}
 
 	@Override

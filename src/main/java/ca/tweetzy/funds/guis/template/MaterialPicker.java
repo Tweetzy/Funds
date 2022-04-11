@@ -3,6 +3,7 @@ package ca.tweetzy.funds.guis.template;
 import ca.tweetzy.funds.api.Inflector;
 import ca.tweetzy.funds.model.Matcher;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
+import ca.tweetzy.rose.gui.Gui;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
 import ca.tweetzy.rose.gui.helper.InventoryBorder;
 import ca.tweetzy.rose.gui.helper.InventorySafeMaterials;
@@ -25,13 +26,20 @@ import java.util.stream.Collectors;
  */
 public final class MaterialPicker extends BaseGUI {
 
+	private final Gui parent;
 	private final String searchQuery;
 	private final BiConsumer<GuiClickEvent, CompMaterial> selected;
 
-	public MaterialPicker(final String titleOverride, final String searchQuery, @NonNull final BiConsumer<GuiClickEvent, CompMaterial> selected) {
-		super(titleOverride == null ? "&eMaterial Selector" : titleOverride);
+	public MaterialPicker(final Gui parent, final String titleOverride, final String searchQuery, @NonNull final BiConsumer<GuiClickEvent, CompMaterial> selected) {
+		super(parent, titleOverride == null ? "&eMaterial Selector" : titleOverride);
 		this.searchQuery = searchQuery;
 		this.selected = selected;
+		this.parent = parent;
+		draw();
+	}
+
+	public MaterialPicker(final String titleOverride, final String searchQuery, @NonNull final BiConsumer<GuiClickEvent, CompMaterial> selected) {
+		this(null, titleOverride, searchQuery, selected);
 	}
 
 	@Override
@@ -67,7 +75,7 @@ public final class MaterialPicker extends BaseGUI {
 				@Override
 				public boolean onResult(String string) {
 					if (string.isEmpty()) return false;
-					click.manager.showGUI(click.player, new MaterialPicker(null, string, MaterialPicker.this.selected));
+					click.manager.showGUI(click.player, new MaterialPicker(MaterialPicker.this.parent, MaterialPicker.this.title, string, MaterialPicker.this.selected));
 					return true;
 				}
 
@@ -83,7 +91,9 @@ public final class MaterialPicker extends BaseGUI {
 					.of(CompMaterial.LAVA_BUCKET)
 					.name("&c&lClear Search")
 					.lore("&7Click to clear your search")
-					.make(), click -> click.manager.showGUI(click.player, new MaterialPicker(null, null, this.selected)));
+					.make(), click -> click.manager.showGUI(click.player, new MaterialPicker(MaterialPicker.this.parent, MaterialPicker.this.title, null, this.selected)));
+
+		applyBackExit(this.parent);
 	}
 
 	@Override
