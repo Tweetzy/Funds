@@ -18,6 +18,14 @@ public interface Currency extends DatabaseSynchronize {
 
 	CompMaterial getIcon();
 
+	String getSingularFormat();
+
+	String getPluralFormat();
+
+	boolean isWithdrawAllowed();
+
+	boolean isPayingAllowed();
+
 	double getStartingBalance();
 
 	void setName(String name);
@@ -25,6 +33,14 @@ public interface Currency extends DatabaseSynchronize {
 	void setDescription(String description);
 
 	void setIcon(CompMaterial icon);
+
+	void setSingularFormat(String format);
+
+	void setPluralFormat(String format);
+
+	void setWithdrawalAllowed(boolean allowed);
+
+	void setPayingAllowed(boolean allowed);
 
 	void setStartingBalance(double startingBalance);
 }

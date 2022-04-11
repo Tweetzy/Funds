@@ -26,6 +26,10 @@ public final class _1_CurrencyTableMigration extends DataMigration {
 					"name VARCHAR(100) NOT NULL, " +
 					"description VARCHAR(160) NULL, " +
 					"icon VARCHAR(48) NOT NULL, " +
+					"singular_format VARCHAR(48) NOT NULL, " +
+					"plural_format VARCHAR(48) NOT NULL, " +
+					"withdraw_allowed BOOLEAN NOT NULL, " +
+					"pay_allowed BOOLEAN NOT NULL, " +
 					"starting_balance DOUBLE NOT NULL" +
 					")");
 		}
