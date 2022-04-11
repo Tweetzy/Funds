@@ -2,6 +2,7 @@ package ca.tweetzy.funds.model;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.rose.database.Callback;
 import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Date Created: April 08 2022
@@ -35,6 +38,34 @@ public final class CurrencyManager {
 	public Currency getCurrency(@NonNull final String id) {
 		return this.currencies.getOrDefault(id.toLowerCase(), null);
 	}
+
+	/*
+	======================== DATA MODIFICATION ========================
+	 */
+
+	public void createCurrency(@NonNull final Currency currency, final BiConsumer<Boolean, Currency> consumer) {
+		Funds.getDataManager().createCurrency(currency, (error, created) -> {
+			if (error == null)
+				this.addCurrency(created);
+
+			if (consumer != null)
+				consumer.accept(error != null, created);
+		});
+	}
+
+	public void deleteCurrency(@NonNull final String id, final Consumer<Boolean> wasDeleted) {
+		Funds.getDataManager().deleteCurrency(id, (error, deleted) -> {
+			if (error == null && deleted)
+				this.removeCurrency(id);
+
+			if (wasDeleted != null)
+				wasDeleted.accept(error == null && deleted);
+		});
+	}
+
+	/*
+	======================== END ========================
+	 */
 
 	public List<Currency> getCurrencies() {
 		return List.copyOf(this.currencies.values());

@@ -6,6 +6,7 @@ import ca.tweetzy.rose.gui.events.GuiClickEvent;
 import ca.tweetzy.rose.utils.QuickItem;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public abstract class PagedGUI<T> extends BaseGUI {
 
-	private final Gui parent;
+	protected final Gui parent;
 	private final List<T> items;
 
 	public PagedGUI(final Gui parent, @NonNull final String title, final int rows, @NonNull final List<T> items) {
@@ -57,6 +58,10 @@ public abstract class PagedGUI<T> extends BaseGUI {
 	}
 
 	protected void drawAdditional() {
+	}
+
+	public Gui getGuiParent() {
+		return this.parent;
 	}
 
 	protected abstract ItemStack makeDisplayItem(final T object);

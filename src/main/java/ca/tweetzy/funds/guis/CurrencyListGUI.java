@@ -7,6 +7,7 @@ import ca.tweetzy.rose.gui.Gui;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
 import ca.tweetzy.rose.gui.helper.InventoryBorder;
 import ca.tweetzy.rose.utils.QuickItem;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -41,8 +42,15 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 	}
 
 	@Override
-	protected void onClick(Currency object, GuiClickEvent clickEvent) {
+	protected void onClick(Currency currency, GuiClickEvent click) {
+		if (click.clickType == ClickType.LEFT)
+			click.manager.showGUI(click.player, new CurrencyEditGUI(this, currency));
 
+		if (click.clickType == ClickType.NUMBER_KEY)
+			Funds.getCurrencyManager().deleteCurrency(currency.getId(), deleted -> {
+				if (deleted)
+					click.manager.showGUI(click.player, Funds.getCurrencyManager().getCurrencies().isEmpty() ? new AdminMainGUI() : new CurrencyListGUI(new AdminMainGUI()));
+			});
 	}
 
 	@Override
