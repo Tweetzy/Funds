@@ -10,6 +10,7 @@ import ca.tweetzy.rose.utils.QuickItem;
 import ca.tweetzy.rose.utils.input.TitleInput;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 /**
  * Date Created: April 10 2022
@@ -46,6 +47,40 @@ public final class CurrencyEditGUI extends BaseGUI {
 			this.currency.sync();
 			e.manager.showGUI(e.player, new CurrencyEditGUI(this.parent, this.currency));
 		})));
+
+		// formatting
+		setButton(2, 1, QuickItem.of(CompMaterial.PAPER)
+				.name("&b&lFormatting")
+				.lore(
+						"&8Change currency's singular/plural format",
+						"&7These will be used depending on currency amount",
+						"",
+						"&7Singular&f: &e" + this.currency.getSingularFormat(),
+						"&7Plural&f: &e" + this.currency.getPluralFormat(),
+						"",
+						"&e&lLeft Click &8» &7To change singular format",
+						"&e&lRight Click &8» &7To change plural format"
+				).make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter " + (click.clickType == ClickType.LEFT ? "singular" : "plural") + " format for currency")) {
+
+			@Override
+			public boolean onResult(String string) {
+				if (string.length() < 3) return false;
+
+				if (click.clickType == ClickType.LEFT)
+					CurrencyEditGUI.this.currency.setSingularFormat(string);
+				if (click.clickType == ClickType.RIGHT)
+					CurrencyEditGUI.this.currency.setPluralFormat(string);
+
+				CurrencyEditGUI.this.currency.sync();
+				click.manager.showGUI(click.player, new CurrencyEditGUI(CurrencyEditGUI.this.parent, CurrencyEditGUI.this.currency));
+				return true;
+			}
+
+			@Override
+			public void onExit(Player player) {
+				click.manager.showGUI(player, CurrencyEditGUI.this);
+			}
+		});
 
 		// name
 		setButton(2, 4, QuickItem.of(CompMaterial.DARK_OAK_SIGN)
