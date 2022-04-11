@@ -32,10 +32,10 @@ public final class MaterialPicker extends BaseGUI {
 		super(titleOverride == null ? "&eMaterial Selector" : titleOverride);
 		this.searchQuery = searchQuery;
 		this.selected = selected;
-		draw();
 	}
 
-	private void draw() {
+	@Override
+	protected void draw() {
 		reset();
 
 		List<CompMaterial> validMaterials = InventorySafeMaterials.get();
