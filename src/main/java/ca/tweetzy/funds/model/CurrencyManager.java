@@ -5,7 +5,10 @@ import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Date Created: April 08 2022
@@ -31,6 +34,10 @@ public final class CurrencyManager {
 
 	public Currency getCurrency(@NonNull final String id) {
 		return this.currencies.getOrDefault(id.toLowerCase(), null);
+	}
+
+	public List<Currency> getCurrencies() {
+		return List.copyOf(this.currencies.values());
 	}
 
 	public void loadCurrencies() {
