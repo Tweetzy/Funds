@@ -1,5 +1,6 @@
 package ca.tweetzy.funds.impl;
 
+import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import lombok.AllArgsConstructor;
@@ -67,5 +68,10 @@ public final class FundCurrency implements Currency {
 	@Override
 	public void setStartingBalance(double startingBalance) {
 		this.startingBalance = startingBalance;
+	}
+
+	@Override
+	public void sync() {
+		Funds.getDataManager().updateCurrency(this, null);
 	}
 }

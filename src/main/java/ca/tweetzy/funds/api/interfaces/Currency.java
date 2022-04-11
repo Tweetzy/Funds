@@ -8,7 +8,7 @@ import ca.tweetzy.rose.comp.enums.CompMaterial;
  *
  * @author Kiran Hart
  */
-public interface Currency {
+public interface Currency extends DatabaseSynchronize {
 
 	String getId();
 
