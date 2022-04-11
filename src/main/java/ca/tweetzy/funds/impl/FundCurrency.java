@@ -3,6 +3,7 @@ package ca.tweetzy.funds.impl;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import lombok.AllArgsConstructor;
+import org.bukkit.ChatColor;
 
 /**
  * Date Created: April 08 2022
@@ -18,6 +19,10 @@ public final class FundCurrency implements Currency {
 	private String description;
 	private CompMaterial icon;
 	private double startingBalance;
+
+	public FundCurrency(final String id) {
+		this(ChatColor.stripColor(id.toLowerCase()), "&b&l" + id, id + " currency", CompMaterial.EMERALD, 0D);
+	}
 
 	@Override
 	public String getId() {
