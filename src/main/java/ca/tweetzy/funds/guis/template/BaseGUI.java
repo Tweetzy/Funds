@@ -18,18 +18,35 @@ import java.util.stream.IntStream;
  */
 public abstract class BaseGUI extends Gui {
 
-	public BaseGUI(@NonNull final String title, final int rows) {
+	private final Gui parent;
+
+	public BaseGUI(final Gui parent, @NonNull final String title, final int rows) {
+		this.parent = parent;
 		setTitle(Common.colorize(title));
 		setRows(rows);
 		setDefaultSound(null);
 		setDefaultItem(QuickItem.of(CompMaterial.BLACK_STAINED_GLASS_PANE).name(" ").make());
+		draw();
+	}
+
+	public BaseGUI(final Gui parent, @NonNull final String title) {
+		this(parent, title, 6);
 	}
 
 	public BaseGUI(@NonNull final String title) {
-		this(title, 6);
+		this(null, title, 6);
+	}
+
+	protected abstract void draw();
+
+	protected void applyBackExit() {
+		if (this.parent == null)
+			setButton(this.rows - 1, 0, QuickItem.of(CompMaterial.BARRIER).name("&cExit").lore("&7Click to close menu").make(), click -> click.gui.exit());
+		else
+			setButton(this.rows - 1, 0, QuickItem.of(CompMaterial.DARK_OAK_DOOR).name("&aBack").lore("&7Click to go back").make(), click -> click.manager.showGUI(click.player, this.parent));
 	}
 
 	protected List<Integer> fillSlots() {
-		return IntStream.rangeClosed(0, 53).boxed().collect(Collectors.toList());
+		return IntStream.rangeClosed(0, 44).boxed().collect(Collectors.toList());
 	}
 }
