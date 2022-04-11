@@ -7,6 +7,7 @@ import ca.tweetzy.rose.database.Callback;
 import ca.tweetzy.rose.database.DataManagerAbstract;
 import ca.tweetzy.rose.database.DatabaseConnector;
 import ca.tweetzy.rose.database.UpdateCallback;
+import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -90,7 +91,30 @@ public final class DataManager extends DataManagerAbstract {
 				int result = statement.executeUpdate();
 				callback.accept(null, result > 0);
 
-			} catch(Exception e) {
+			} catch (Exception e) {
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
+	public void updateCurrency(@NonNull final Currency currency, Callback<Boolean> callback) {
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			long begin = System.currentTimeMillis();
+			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "currency SET name = ?, description = ?, icon = ?, starting_balance = ? WHERE id = ?")) {
+
+				statement.setString(1, currency.getName());
+				statement.setString(2, currency.getDescription());
+				statement.setString(3, currency.getIcon().name());
+				statement.setDouble(4, currency.getStartingBalance());
+				statement.setString(5, currency.getId());
+
+				int result = statement.executeUpdate();
+				Common.log(String.format("&fSynced &b%s &fcurrency to data file in &a%d&fms", currency.getId(), System.currentTimeMillis() - begin));
+
+				if (callback != null)
+					callback.accept(null, result > 0);
+
+			} catch (Exception e) {
 				resolveCallback(callback, e);
 			}
 		}));
