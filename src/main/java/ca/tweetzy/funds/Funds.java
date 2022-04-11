@@ -3,7 +3,6 @@ package ca.tweetzy.funds;
 import ca.tweetzy.funds.commands.FundsCommand;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
-import ca.tweetzy.funds.guis.template.MaterialPicker;
 import ca.tweetzy.funds.model.CurrencyManager;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.rose.RosePlugin;
@@ -72,15 +71,7 @@ public final class Funds extends RosePlugin {
 
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent chatEvent) {
-
-
-		if (chatEvent.getMessage().equalsIgnoreCase("materialpicker")) {
-			this.guiManager.showGUI(chatEvent.getPlayer(), new MaterialPicker(null, null, (event, selected) -> {
-				event.player.closeInventory();
-			}));
-		} else {
-			chatEvent.setMessage(Common.colorize(chatEvent.getMessage()));
-		}
+		chatEvent.setMessage(Common.colorize(chatEvent.getMessage()));
 	}
 
 	@Override
