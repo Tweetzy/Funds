@@ -10,6 +10,7 @@ import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;
 import ca.tweetzy.rose.utils.input.TitleInput;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -52,6 +53,8 @@ public final class AdminMainGUI extends BaseGUI {
 
 					@Override
 					public boolean onResult(String string) {
+						string = ChatColor.stripColor(string);
+
 						if (string.isEmpty())
 							return false;
 

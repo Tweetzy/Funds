@@ -3,12 +3,15 @@ package ca.tweetzy.funds.guis;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.guis.template.MaterialPicker;
+import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;
 import ca.tweetzy.rose.utils.input.TitleInput;
 import lombok.NonNull;
+import org.apache.commons.lang.math.NumberUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -82,6 +85,39 @@ public final class CurrencyEditGUI extends BaseGUI {
 			}
 		});
 
+		// starting balance
+		setButton(2, 2, QuickItem.of(CompMaterial.SUNFLOWER)
+				.name("&b&lStarting Balance")
+				.lore(
+						"&8Change currency's starting balance",
+						"&7Reset/New accounts will start with this",
+						"",
+						"&7Current&f: &e" + this.currency.getStartingBalance() + " " + (this.currency.getStartingBalance() > 1 ? this.currency.getPluralFormat() : this.currency.getSingularFormat()),
+						"",
+						"&e&lClick &8» &7To change starting balance"
+				).make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter starting balance for currency")) {
+
+			@Override
+			public boolean onResult(String string) {
+				if (!NumberUtils.isNumber(string)) {
+					Common.tell(click.player, Locale.NOT_A_NUMBER.getString().replace("%value%", string));
+					return false;
+				}
+
+				final double starting = Double.parseDouble(ChatColor.stripColor(string));
+
+				CurrencyEditGUI.this.currency.setStartingBalance(starting < 0 ? 0 : starting);
+				CurrencyEditGUI.this.currency.sync();
+				click.manager.showGUI(click.player, new CurrencyEditGUI(CurrencyEditGUI.this.parent, CurrencyEditGUI.this.currency));
+				return true;
+			}
+
+			@Override
+			public void onExit(Player player) {
+				click.manager.showGUI(player, CurrencyEditGUI.this);
+			}
+		});
+
 		// name
 		setButton(2, 4, QuickItem.of(CompMaterial.DARK_OAK_SIGN)
 				.name("&b&lName")
@@ -137,6 +173,44 @@ public final class CurrencyEditGUI extends BaseGUI {
 			public void onExit(Player player) {
 				click.manager.showGUI(player, CurrencyEditGUI.this);
 			}
+		});
+
+		setButton(2, 6, QuickItem.of(CompMaterial.GOLD_NUGGET)
+				.name("&E&lWithdrawal")
+				.lore(
+						"&8Currency Withdrawal",
+						"&7Enabling this will allow users to withdraw ",
+						"&7the currency into a physical item",
+						"",
+						"&7Current&f: " + (this.currency.isWithdrawAllowed() ? "&aAllowed" : "&cDisallowed"),
+						"",
+						"&e&lClick &8» &7To toggle state"
+				)
+				.glow(this.currency.isWithdrawAllowed())
+				.make(), click -> {
+
+			CurrencyEditGUI.this.currency.setWithdrawalAllowed(!CurrencyEditGUI.this.currency.isWithdrawAllowed());
+			CurrencyEditGUI.this.currency.sync();
+			draw();
+		});
+
+		setButton(2, 7, QuickItem.of(CompMaterial.PRISMARINE_SHARD)
+				.name("&E&lPaying")
+				.lore(
+						"&8Currency Paying",
+						"&7Enabling this will allow users to pay ",
+						"&7other users with this currency",
+						"",
+						"&7Current&f: " + (this.currency.isPayingAllowed() ? "&aAllowed" : "&cDisallowed"),
+						"",
+						"&e&lClick &8» &7To toggle state"
+				)
+				.glow(this.currency.isPayingAllowed())
+				.make(), click -> {
+
+			CurrencyEditGUI.this.currency.setPayingAllowed(!CurrencyEditGUI.this.currency.isPayingAllowed());
+			CurrencyEditGUI.this.currency.sync();
+			draw();
 		});
 
 		applyBackExit();
