@@ -61,7 +61,7 @@ public final class AccountManager {
 				this.addAccount(created);
 
 			if (consumer != null)
-				consumer.accept(error != null, created);
+				consumer.accept(error == null, created);
 		});
 	}
 
