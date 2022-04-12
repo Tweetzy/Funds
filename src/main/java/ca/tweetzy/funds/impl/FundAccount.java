@@ -9,6 +9,7 @@ import com.google.gson.JsonParser;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -26,6 +27,10 @@ public final class FundAccount implements Account {
 	private final Map<Currency, Double> currencies;
 	private boolean balTopBlocked;
 	private final long createdAt;
+
+	public FundAccount(@NonNull final UUID owner) {
+		this(owner, Collections.emptyMap(), false, System.currentTimeMillis());
+	}
 
 	@Override
 	public UUID getOwner() {
@@ -85,6 +90,6 @@ public final class FundAccount implements Account {
 
 	@Override
 	public void sync() {
-
+		Funds.getDataManager().updateAccount(this, null);
 	}
 }
