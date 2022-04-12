@@ -68,6 +68,12 @@ public final class CurrencyManager {
 		return List.copyOf(this.currencies.values());
 	}
 
+	public HashMap<Currency, Double> getDefaultValueMap() {
+		final HashMap<Currency, Double> values = new HashMap<>();
+		this.currencies.values().forEach(currency -> values.put(currency, currency.getStartingBalance()));
+		return values;
+	}
+
 	public void loadCurrencies(Consumer<Integer> finished) {
 		this.currencies.clear();
 		Funds.getDataManager().getCurrencies((error, found) -> {
