@@ -2,12 +2,9 @@ package ca.tweetzy.funds.model;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.rose.database.Callback;
 import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -71,7 +68,7 @@ public final class CurrencyManager {
 		return List.copyOf(this.currencies.values());
 	}
 
-	public void loadCurrencies() {
+	public void loadCurrencies(Consumer<Integer> finished) {
 		this.currencies.clear();
 		Funds.getDataManager().getCurrencies((error, found) -> {
 			if (error != null) {
@@ -83,6 +80,8 @@ public final class CurrencyManager {
 				addCurrency(currency);
 				Common.log("&aLoaded currency&F: &e" + currency.getId());
 			});
+
+			finished.accept(currencies.size());
 		});
 	}
 }
