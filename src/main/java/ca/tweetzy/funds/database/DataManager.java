@@ -1,6 +1,8 @@
 package ca.tweetzy.funds.database;
 
+import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.impl.FundAccount;
 import ca.tweetzy.funds.impl.FundCurrency;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.database.Callback;
@@ -19,6 +21,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Date Created: April 08 2022
@@ -35,6 +38,73 @@ public final class DataManager extends DataManagerAbstract {
 	// =================================================== //
 	//					  ACCOUNT STUFF 				   //
 	// =================================================== //
+
+	public void createAccount(@NotNull final Account account, Callback<Account> callback) {
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			final String query = "INSERT INTO " + this.getTablePrefix() + "account (id, bal_top_blocked, currencies, created_at) VALUES (?, ?, ?, ?)";
+			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "account WHERE id = ?";
+
+			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+				final PreparedStatement fetch = connection.prepareStatement(fetchQuery);
+
+				fetch.setString(1, account.getOwner().toString());
+
+				preparedStatement.setString(1,  account.getOwner().toString());
+				preparedStatement.setBoolean(2,  account.isBalTopBlocked());
+				preparedStatement.setString(3,  account.getCurrencyJson());
+				preparedStatement.setLong(4,  account.getCreatedAt());
+
+				preparedStatement.executeUpdate();
+
+				if (callback != null) {
+					final ResultSet res = fetch.executeQuery();
+					res.next();
+					callback.accept(null, extractAccount(res));
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
+	public void getAccounts(@NonNull final Callback<List<Account>> callback) {
+		final List<Account> accounts = new ArrayList<>();
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + this.getTablePrefix() + "account")) {
+				final ResultSet resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					accounts.add(extractAccount(resultSet));
+				}
+
+				callback.accept(null, accounts);
+			} catch (Exception e) {
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
+	public void updateAccount(@NonNull final Account currency, Callback<Boolean> callback) {
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			long begin = System.nanoTime();
+			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "account SET bal_top_blocked = ?, currencies = ? WHERE id = ?")) {
+
+				statement.setBoolean(1, currency.isBalTopBlocked());
+				statement.setString(2, currency.getCurrencyJson());
+				statement.setString(3, currency.getOwner().toString());
+
+				int result = statement.executeUpdate();
+				Common.log(String.format("&fSynced user account to data file in &a%s&f ms", String.format("%,.3f", (System.nanoTime() - begin) / 1e+6)));
+
+				if (callback != null)
+					callback.accept(null, result > 0);
+
+			} catch (Exception e) {
+				resolveCallback(callback, e);
+			}
+		}));
+	}
 
 	// =================================================== //
 	//					  CURRENCY STUFF 				   //
@@ -135,6 +205,16 @@ public final class DataManager extends DataManagerAbstract {
 	// =================================================== //
 	//					   EXTRACTIONS
 	// =================================================== //
+
+	private Account extractAccount(@NotNull final ResultSet resultSet) throws SQLException {
+		return new FundAccount(
+				UUID.fromString(resultSet.getString("id")),
+				FundAccount.getCurrencyMapFromJson(resultSet.getString("currencies")),
+				resultSet.getBoolean("bal_top_blocked"),
+				resultSet.getLong("created_at")
+
+		);
+	}
 
 	private Currency extractCurrency(@NotNull final ResultSet resultSet) throws SQLException {
 		return new FundCurrency(

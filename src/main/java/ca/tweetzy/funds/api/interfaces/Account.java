@@ -9,11 +9,17 @@ import java.util.UUID;
  *
  * @author Kiran Hart
  */
-public interface Account {
+public interface Account extends DatabaseSynchronize {
 
 	UUID getOwner();
 
 	Map<Currency, Double> getCurrencies();
 
+	boolean isBalTopBlocked();
+
 	long getCreatedAt();
+
+	void setBalTopBlocked(boolean blocked);
+
+	String getCurrencyJson();
 }
