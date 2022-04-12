@@ -40,7 +40,7 @@ public final class AdminMainGUI extends BaseGUI {
 				.lore("&8All the currencies you've made")
 				.lore(OrList.get(Funds.getCurrencyManager().getCurrencies().isEmpty(),
 						Arrays.asList("&cNo currencies found", "", "&e&lClick &8» &7To create your first currency"),
-						Arrays.asList("&a" + Funds.getCurrencyManager().getCurrencies().size() + " currencies found", "", "&e&lClick &8» &7To view currencies")
+						Arrays.asList("&a" + Funds.getCurrencyManager().getCurrencies().size() + " &7currencies found", "", "&e&lClick &8» &7To view currencies")
 				)).make(), click -> {
 
 			if (Funds.getCurrencyManager().getCurrencies().isEmpty()) {
@@ -83,10 +83,12 @@ public final class AdminMainGUI extends BaseGUI {
 						"&8View all known player accounts",
 						"&7An account is used to store each",
 						"&7player's different currency count",
-						"",
-						"&e&lClick &8» &7To view accounts"
-				)
-				.make(), null);
+						"")
+				.lore(OrList.get(Funds.getAccountManager().getAccounts().isEmpty(),
+						Arrays.asList("&cNo accounts found", "", "&e&lClick &8» &7To create your first currency"),
+						Arrays.asList("&a" + Funds.getAccountManager().getAccounts().size() + " &7accounts found", "", "&e&lClick &8» &7To view accounts")
+				))
+				.make(), click -> click.manager.showGUI(click.player, new AccountListGUI(this)));
 
 		// Discord Button
 		setItem(4, 1, QuickItem.of(NBTEditor.getHead("http://textures.minecraft.net/texture/4d42337be0bdca2128097f1c5bb1109e5c633c17926af5fb6fc20000011aeb53"))
