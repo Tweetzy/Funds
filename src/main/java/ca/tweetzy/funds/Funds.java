@@ -3,6 +3,9 @@ package ca.tweetzy.funds;
 import ca.tweetzy.funds.commands.FundsCommand;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
+import ca.tweetzy.funds.database.migrations._2_AccountTableMigration;
+import ca.tweetzy.funds.listeners.AccessListeners;
+import ca.tweetzy.funds.model.AccountManager;
 import ca.tweetzy.funds.model.CurrencyManager;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.rose.RosePlugin;
@@ -25,6 +28,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  */
 public final class Funds extends RosePlugin {
 
+	private final AccountManager accountManager = new AccountManager();
 	private final CurrencyManager currencyManager = new CurrencyManager();
 	private final GuiManager guiManager = new GuiManager(this);
 	private final CommandManager commandManager = new CommandManager(this);
@@ -49,7 +53,8 @@ public final class Funds extends RosePlugin {
 		this.dataManager = new DataManager(this.databaseConnector, this);
 
 		final DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager,
-				new _1_CurrencyTableMigration()
+				new _1_CurrencyTableMigration(),
+				new _2_AccountTableMigration()
 		);
 
 		// run migrations for tables
@@ -59,14 +64,17 @@ public final class Funds extends RosePlugin {
 	@Override
 	protected void onFlight() {
 
-		// load currencies
-		this.currencyManager.loadCurrencies();
+		// load currencies -> then accounts
+		this.currencyManager.loadCurrencies((loaded) -> this.accountManager.loadAccounts());
+
+		// initialize gui manager
 		this.guiManager.init();
 
 		// register main command
 		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand());
 
 		getServer().getPluginManager().registerEvents(this, this);
+		getServer().getPluginManager().registerEvents(new AccessListeners(), this);
 	}
 
 	@EventHandler
@@ -87,6 +95,11 @@ public final class Funds extends RosePlugin {
 	// gui manager
 	public static GuiManager getGuiManager() {
 		return getInstance().guiManager;
+	}
+
+	// account manager
+	public static AccountManager getAccountManager() {
+		return getInstance().accountManager;
 	}
 
 	// currency manager
