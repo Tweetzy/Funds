@@ -49,10 +49,10 @@ public final class DataManager extends DataManagerAbstract {
 
 				fetch.setString(1, account.getOwner().toString());
 
-				preparedStatement.setString(1,  account.getOwner().toString());
-				preparedStatement.setBoolean(2,  account.isBalTopBlocked());
-				preparedStatement.setString(3,  account.getCurrencyJson());
-				preparedStatement.setLong(4,  account.getCreatedAt());
+				preparedStatement.setString(1, account.getOwner().toString());
+				preparedStatement.setBoolean(2, account.isBalTopBlocked());
+				preparedStatement.setString(3, account.getCurrencyJson());
+				preparedStatement.setLong(4, account.getCreatedAt());
 
 				preparedStatement.executeUpdate();
 

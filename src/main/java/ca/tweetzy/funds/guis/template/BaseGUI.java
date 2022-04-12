@@ -1,7 +1,6 @@
 package ca.tweetzy.funds.guis.template;
 
 import ca.tweetzy.rose.comp.enums.CompMaterial;
-import ca.tweetzy.rose.comp.enums.CompSound;
 import ca.tweetzy.rose.gui.Gui;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;

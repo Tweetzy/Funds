@@ -2,11 +2,9 @@ package ca.tweetzy.funds.model;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
