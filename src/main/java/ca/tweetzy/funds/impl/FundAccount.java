@@ -29,7 +29,7 @@ public final class FundAccount implements Account {
 	private final long createdAt;
 
 	public FundAccount(@NonNull final UUID owner) {
-		this(owner, Collections.emptyMap(), false, System.currentTimeMillis());
+		this(owner, Funds.getCurrencyManager().getDefaultValueMap(), false, System.currentTimeMillis());
 	}
 
 	@Override
