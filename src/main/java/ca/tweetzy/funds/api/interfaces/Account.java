@@ -13,7 +13,6 @@ public interface Account extends DatabaseSynchronize {
 
 	UUID getOwner();
 
-	// for fucking vault
 	String getName();
 
 	Map<Currency, Double> getCurrencies();
