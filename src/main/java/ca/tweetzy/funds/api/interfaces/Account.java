@@ -13,13 +13,18 @@ public interface Account extends DatabaseSynchronize {
 
 	UUID getOwner();
 
+	// for fucking vault
+	String getName();
+
 	Map<Currency, Double> getCurrencies();
 
 	boolean isBalTopBlocked();
 
 	long getCreatedAt();
 
+	String getCurrencyJson();
+
 	void setBalTopBlocked(boolean blocked);
 
-	String getCurrencyJson();
+	void setName(String name);
 }
