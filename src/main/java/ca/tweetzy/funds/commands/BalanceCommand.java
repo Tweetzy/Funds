@@ -1,12 +1,8 @@
 package ca.tweetzy.funds.commands;
 
-import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.rose.command.AllowedExecutor;
 import ca.tweetzy.rose.command.Command;
 import ca.tweetzy.rose.command.ReturnType;
-import ca.tweetzy.rose.utils.Common;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -21,14 +17,13 @@ import java.util.List;
 public final class BalanceCommand extends Command {
 
 	public BalanceCommand() {
-		super(AllowedExecutor.PLAYER, "balance", "bal");
+		super(AllowedExecutor.PLAYER, "balance");
 
 	}
 
 	@Override
 	protected ReturnType execute(CommandSender sender, String... args) {
 		final Player player = (Player) sender;
-
 
 		return ReturnType.SUCCESS;
 	}
@@ -40,7 +35,7 @@ public final class BalanceCommand extends Command {
 
 	@Override
 	public String getPermissionNode() {
-		return null;
+		return "funds.cmd.balance";
 	}
 
 	@Override
