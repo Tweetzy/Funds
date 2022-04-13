@@ -8,8 +8,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -24,17 +26,27 @@ import java.util.UUID;
 public final class FundAccount implements Account {
 
 	private final UUID owner;
+	private String name;
 	private final Map<Currency, Double> currencies;
 	private boolean balTopBlocked;
 	private final long createdAt;
 
+	public FundAccount(@NonNull final OfflinePlayer owner) {
+		this(owner.getUniqueId(), owner.getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, System.currentTimeMillis());
+	}
+
 	public FundAccount(@NonNull final UUID owner) {
-		this(owner, Funds.getCurrencyManager().getDefaultValueMap(), false, System.currentTimeMillis());
+		this(owner, Bukkit.getOfflinePlayer(owner).getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, System.currentTimeMillis());
 	}
 
 	@Override
 	public UUID getOwner() {
 		return this.owner;
+	}
+
+	@Override
+	public String getName() {
+		return this.name;
 	}
 
 	@Override
@@ -55,6 +67,11 @@ public final class FundAccount implements Account {
 	@Override
 	public void setBalTopBlocked(boolean balTopBlocked) {
 		this.balTopBlocked = balTopBlocked;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
