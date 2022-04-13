@@ -5,6 +5,7 @@ import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
 import ca.tweetzy.funds.database.migrations._2_AccountTableMigration;
 import ca.tweetzy.funds.listeners.AccessListeners;
+import ca.tweetzy.funds.listeners.HookListeners;
 import ca.tweetzy.funds.model.AccountManager;
 import ca.tweetzy.funds.model.CurrencyManager;
 import ca.tweetzy.funds.settings.Settings;
@@ -75,6 +76,7 @@ public final class Funds extends RosePlugin {
 
 		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new AccessListeners(), this);
+		getServer().getPluginManager().registerEvents(new HookListeners(), this);
 	}
 
 	@EventHandler
