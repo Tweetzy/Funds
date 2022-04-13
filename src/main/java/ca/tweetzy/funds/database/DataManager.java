@@ -41,7 +41,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void createAccount(@NotNull final Account account, Callback<Account> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "INSERT INTO " + this.getTablePrefix() + "account (id, bal_top_blocked, currencies, created_at) VALUES (?, ?, ?, ?)";
+			final String query = "INSERT INTO " + this.getTablePrefix() + "account (id, name, bal_top_blocked, currencies, created_at) VALUES (?, ?, ?, ?, ?)";
 			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "account WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -50,9 +50,10 @@ public final class DataManager extends DataManagerAbstract {
 				fetch.setString(1, account.getOwner().toString());
 
 				preparedStatement.setString(1, account.getOwner().toString());
-				preparedStatement.setBoolean(2, account.isBalTopBlocked());
-				preparedStatement.setString(3, account.getCurrencyJson());
-				preparedStatement.setLong(4, account.getCreatedAt());
+				preparedStatement.setString(2, account.getName());
+				preparedStatement.setBoolean(3, account.isBalTopBlocked());
+				preparedStatement.setString(4, account.getCurrencyJson());
+				preparedStatement.setLong(5, account.getCreatedAt());
 
 				preparedStatement.executeUpdate();
 
@@ -88,11 +89,12 @@ public final class DataManager extends DataManagerAbstract {
 	public void updateAccount(@NonNull final Account currency, Callback<Boolean> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
 			long begin = System.nanoTime();
-			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "account SET bal_top_blocked = ?, currencies = ? WHERE id = ?")) {
+			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "account SET name = ?, bal_top_blocked = ?, currencies = ? WHERE id = ?")) {
 
-				statement.setBoolean(1, currency.isBalTopBlocked());
-				statement.setString(2, currency.getCurrencyJson());
-				statement.setString(3, currency.getOwner().toString());
+				statement.setString(1, currency.getName());
+				statement.setBoolean(2, currency.isBalTopBlocked());
+				statement.setString(3, currency.getCurrencyJson());
+				statement.setString(4, currency.getOwner().toString());
 
 				int result = statement.executeUpdate();
 				Common.log(String.format("&fSynced user account to data file in &a%s&f ms", String.format("%,.3f", (System.nanoTime() - begin) / 1e+6)));
@@ -209,6 +211,7 @@ public final class DataManager extends DataManagerAbstract {
 	private Account extractAccount(@NotNull final ResultSet resultSet) throws SQLException {
 		return new FundAccount(
 				UUID.fromString(resultSet.getString("id")),
+				resultSet.getString("name"),
 				FundAccount.getCurrencyMapFromJson(resultSet.getString("currencies")),
 				resultSet.getBoolean("bal_top_blocked"),
 				resultSet.getLong("created_at")

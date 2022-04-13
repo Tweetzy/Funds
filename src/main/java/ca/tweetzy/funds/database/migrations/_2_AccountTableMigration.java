@@ -23,6 +23,7 @@ public final class _2_AccountTableMigration extends DataMigration {
 		try (Statement statement = connection.createStatement()) {
 			statement.execute("CREATE TABLE " + tablePrefix + "account (" +
 					"id VARCHAR(36) PRIMARY KEY, " +
+					"name VARCHAR(16) NOT NULL, " +
 					"bal_top_blocked BOOLEAN NOT NULL, " +
 					"currencies TEXT NOT NULL, " +
 					"created_at LONG NOT NULL" +
