@@ -9,5 +9,4 @@ package ca.tweetzy.funds.hooks;
 public final class HookManager {
 
 
-
 }
