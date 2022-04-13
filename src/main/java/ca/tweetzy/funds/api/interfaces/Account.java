@@ -1,7 +1,5 @@
 package ca.tweetzy.funds.api.interfaces;
 
-import net.milkbowl.vault.economy.EconomyResponse;
-
 import java.util.Map;
 import java.util.UUID;
 
