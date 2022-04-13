@@ -46,6 +46,6 @@ public final class FundsCommand extends Command {
 
 	@Override
 	public String getDescription() {
-		return null;
+		return "Brings up the admin menu";
 	}
 }
