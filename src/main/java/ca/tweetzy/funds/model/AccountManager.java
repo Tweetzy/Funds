@@ -4,12 +4,11 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 
 /**
@@ -32,6 +31,21 @@ public final class AccountManager {
 	public void removeAccount(@NonNull final UUID id) {
 		synchronized (this.accounts) {
 			this.accounts.removeIf(account -> account.getOwner().equals(id));
+		}
+	}
+
+	public Account getAccount(@NonNull final String name) {
+		synchronized (this.accounts) {
+			final AtomicReference<Account> accountReference = new AtomicReference<>(null);
+
+			Common.runAsync(() -> {
+				final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+				final Account account = getAccount(offlinePlayer);
+
+				accountReference.set(account);
+			});
+
+			return accountReference.get();
 		}
 	}
 
