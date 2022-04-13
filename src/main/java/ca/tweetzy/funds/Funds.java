@@ -1,5 +1,6 @@
 package ca.tweetzy.funds;
 
+import ca.tweetzy.funds.commands.BalanceCommand;
 import ca.tweetzy.funds.commands.FundsCommand;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
@@ -73,6 +74,7 @@ public final class Funds extends RosePlugin {
 
 		// register main command
 		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand());
+		this.commandManager.registerCommandDynamically("balance").addCommand(new BalanceCommand());
 
 		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new AccessListeners(), this);
