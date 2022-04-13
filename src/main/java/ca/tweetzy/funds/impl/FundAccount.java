@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
@@ -71,6 +72,65 @@ public final class FundAccount implements Account {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public boolean transferCurrency(Account account, Currency currency, double amount) {
+		if (account == null) return false;
+		if (currency == null) return false;
+		if (!this.currencies.containsKey(currency)) return false;
+
+		final double payeeBalance = this.currencies.get(currency);
+		if (payeeBalance < amount) return false;
+
+		this.currencies.put(currency, payeeBalance - amount);
+		account.depositCurrency(currency, amount);
+		return true;
+	}
+
+	@Override
+	public boolean withdrawCurrency(Currency currency, double amount) {
+		if (currency == null) return false;
+		if (!this.currencies.containsKey(currency)) return false;
+
+		final double payeeBalance = this.currencies.get(currency);
+		if (payeeBalance < amount) return false;
+
+		this.currencies.put(currency, payeeBalance - amount);
+		return true;
+	}
+
+	@Override
+	public boolean depositCurrency(Currency currency, double amount) {
+		if (currency == null) return false;
+
+		if (!this.currencies.containsKey(currency)) {
+			this.currencies.put(currency, amount);
+		} else {
+			final double existingBalance = this.currencies.get(currency);
+			this.currencies.put(currency, existingBalance + amount);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean setCurrency(Currency currency, double amount) {
+		if (currency == null) return false;
+		this.currencies.put(currency, amount);
+		return true;
+	}
+
+	@Override
+	public boolean resetCurrencies(Currency... currencies) {
+		if (currencies.length == 0) {
+			this.currencies.clear();
+			this.currencies.putAll(Funds.getCurrencyManager().getDefaultValueMap());
+		} else {
+			for (Currency currency : currencies)
+				this.currencies.put(currency, currency.getStartingBalance());
+		}
+		return true;
 	}
 
 	@Override
