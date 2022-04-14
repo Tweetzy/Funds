@@ -43,7 +43,10 @@ public final class CurrencyManager {
 	public void setVaultCurrency(@NonNull final Currency currency) {
 		this.vaultCurrency = currency;
 		// run the update here just coz
-
+		Funds.getDataManager().updateVaultCurrency(currency, (error, success) -> {
+			if (error == null && success)
+				currency.sync(false);
+		});
 	}
 
 	/*
