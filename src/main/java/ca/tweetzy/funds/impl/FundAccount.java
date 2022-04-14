@@ -165,7 +165,7 @@ public final class FundAccount implements Account {
 	}
 
 	@Override
-	public void sync() {
-		Funds.getDataManager().updateAccount(this, null);
+	public void sync(boolean silent) {
+		Funds.getDataManager().updateAccount(silent, this, null);
 	}
 }
