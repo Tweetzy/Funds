@@ -123,4 +123,5 @@ public final class Funds extends RosePlugin {
 	public static DataManager getDataManager() {
 		return getInstance().dataManager;
 	}
+
 }
