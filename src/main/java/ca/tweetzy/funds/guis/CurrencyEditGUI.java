@@ -1,5 +1,6 @@
 package ca.tweetzy.funds.guis;
 
+import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.guis.template.MaterialPicker;
@@ -14,6 +15,9 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Date Created: April 10 2022
@@ -47,7 +51,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				).make(), click -> click.manager.showGUI(click.player, new MaterialPicker(this, "&eFunds &8> &7" + this.currency.getId() + " &8> &7Select Icon", null, (e, selected) -> {
 
 			this.currency.setIcon(selected);
-			this.currency.sync();
+			this.currency.sync(false);
 			e.manager.showGUI(e.player, new CurrencyEditGUI(this.parent, this.currency));
 		})));
 
@@ -74,7 +78,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				if (click.clickType == ClickType.RIGHT)
 					CurrencyEditGUI.this.currency.setPluralFormat(string);
 
-				CurrencyEditGUI.this.currency.sync();
+				CurrencyEditGUI.this.currency.sync(false);
 				click.manager.showGUI(click.player, new CurrencyEditGUI(CurrencyEditGUI.this.parent, CurrencyEditGUI.this.currency));
 				return true;
 			}
@@ -107,7 +111,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				final double starting = Double.parseDouble(ChatColor.stripColor(string));
 
 				CurrencyEditGUI.this.currency.setStartingBalance(starting < 0 ? 0 : starting);
-				CurrencyEditGUI.this.currency.sync();
+				CurrencyEditGUI.this.currency.sync(false);
 				click.manager.showGUI(click.player, new CurrencyEditGUI(CurrencyEditGUI.this.parent, CurrencyEditGUI.this.currency));
 				return true;
 			}
@@ -135,7 +139,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				if (string.length() < 3) return false;
 
 				CurrencyEditGUI.this.currency.setName(string);
-				CurrencyEditGUI.this.currency.sync();
+				CurrencyEditGUI.this.currency.sync(false);
 				click.manager.showGUI(click.player, new CurrencyEditGUI(CurrencyEditGUI.this.parent, CurrencyEditGUI.this.currency));
 				return true;
 			}
@@ -164,7 +168,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				if (string.length() < 3) return false;
 
 				CurrencyEditGUI.this.currency.setDescription(string);
-				CurrencyEditGUI.this.currency.sync();
+				CurrencyEditGUI.this.currency.sync(false);
 				click.manager.showGUI(click.player, new CurrencyEditGUI(CurrencyEditGUI.this.parent, CurrencyEditGUI.this.currency));
 				return true;
 			}
@@ -191,7 +195,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				.make(), click -> {
 
 			CurrencyEditGUI.this.currency.setWithdrawalAllowed(!CurrencyEditGUI.this.currency.isWithdrawAllowed());
-			CurrencyEditGUI.this.currency.sync();
+			CurrencyEditGUI.this.currency.sync(false);
 			draw();
 		});
 
@@ -211,23 +215,32 @@ public final class CurrencyEditGUI extends BaseGUI {
 				.make(), click -> {
 
 			CurrencyEditGUI.this.currency.setPayingAllowed(!CurrencyEditGUI.this.currency.isPayingAllowed());
-			CurrencyEditGUI.this.currency.sync();
+			CurrencyEditGUI.this.currency.sync(false);
 			draw();
 		});
 
 		// vault currency
-		setButton(4,6, QuickItem.of(CompMaterial.FLINT)
-				.name("&b&lMake V")
+		setButton(4, 6, QuickItem.of(CompMaterial.FLINT)
+				.name("&b&lMake Vault Currency")
 				.lore(
-						"&8Change currency's description",
-						"&7This will be shown within guis.",
+						"&8Currency Paying",
+						"&7Making a currency the vault currency is the best",
+						"&7way to allow other plugins that use Vault to handle",
+						"&7player balances, it's also funds' default go to.",
 						"",
-						"&7Description&f:",
-						"&e" + this.currency.getDescription(),
-						"",
-						"&e&lClick &8» &7To change description"
-				).make(), click -> {
+						"&7Current&f: " + (this.currency.isVaultCurrency() ? "&aTrue" : "&cFalse"))
+				.lore(this.currency.isVaultCurrency() ?
+						Arrays.asList("&b&oSelecting another currency will automatically",
+								"&b&odisable this one in favour of the other.") : Collections.emptyList()
+				)
+				.lore("", "&e&lClick &8» &7To make vault currency")
+				.make(), click -> {
 
+			if (!CurrencyEditGUI.this.currency.isVaultCurrency()) {
+				CurrencyEditGUI.this.currency.setIsVaultCurrency(true);
+				Funds.getCurrencyManager().setVaultCurrency(this.currency);
+				draw();
+			}
 		});
 
 		applyBackExit();
