@@ -3,6 +3,7 @@ package ca.tweetzy.funds.model;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.rose.utils.Common;
+import lombok.Getter;
 import lombok.NonNull;
 
 import java.util.HashMap;
@@ -20,6 +21,9 @@ public final class CurrencyManager {
 
 	private final HashMap<String, Currency> currencies = new HashMap<>();
 
+	@Getter
+	private Currency vaultCurrency;
+
 	public void addCurrency(@NonNull final Currency currency) {
 		this.currencies.put(currency.getId().toLowerCase(), currency);
 	}
@@ -34,6 +38,12 @@ public final class CurrencyManager {
 
 	public Currency getCurrency(@NonNull final String id) {
 		return this.currencies.getOrDefault(id.toLowerCase(), null);
+	}
+
+	public void setVaultCurrency(@NonNull final Currency currency) {
+		this.vaultCurrency = currency;
+		// run the update here just coz
+
 	}
 
 	/*
@@ -78,12 +88,15 @@ public final class CurrencyManager {
 		this.currencies.clear();
 		Funds.getDataManager().getCurrencies((error, found) -> {
 			if (error != null) {
-
 				return;
 			}
 
 			found.forEach(currency -> {
 				addCurrency(currency);
+
+				if (currency.isVaultCurrency())
+					this.vaultCurrency = currency;
+
 				Common.log("&aLoaded currency&F: &e" + currency.getId());
 			});
 

@@ -28,6 +28,8 @@ public interface Currency extends DatabaseSynchronize {
 
 	double getStartingBalance();
 
+	boolean isVaultCurrency();
+
 	void setName(String name);
 
 	void setDescription(String description);
@@ -43,4 +45,6 @@ public interface Currency extends DatabaseSynchronize {
 	void setPayingAllowed(boolean allowed);
 
 	void setStartingBalance(double startingBalance);
+
+	void setIsVaultCurrency(boolean isVaultCurrency);
 }

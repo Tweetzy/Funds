@@ -2,9 +2,11 @@ package ca.tweetzy.funds;
 
 import ca.tweetzy.funds.commands.BalanceCommand;
 import ca.tweetzy.funds.commands.FundsCommand;
+import ca.tweetzy.funds.commands.PayCommand;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
 import ca.tweetzy.funds.database.migrations._2_AccountTableMigration;
+import ca.tweetzy.funds.database.migrations._3_VaultCurrencyMigration;
 import ca.tweetzy.funds.listeners.AccessListeners;
 import ca.tweetzy.funds.listeners.HookListeners;
 import ca.tweetzy.funds.model.AccountManager;
@@ -56,7 +58,8 @@ public final class Funds extends RosePlugin {
 
 		final DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager,
 				new _1_CurrencyTableMigration(),
-				new _2_AccountTableMigration()
+				new _2_AccountTableMigration(),
+				new _3_VaultCurrencyMigration()
 		);
 
 		// run migrations for tables
@@ -75,6 +78,7 @@ public final class Funds extends RosePlugin {
 		// register main command
 		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand());
 		this.commandManager.registerCommandDynamically("balance").addCommand(new BalanceCommand());
+		this.commandManager.registerCommandDynamically("pay").addCommand(new PayCommand());
 
 		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new AccessListeners(), this);

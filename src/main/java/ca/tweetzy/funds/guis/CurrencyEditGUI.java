@@ -175,6 +175,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 			}
 		});
 
+		// withdrawal
 		setButton(2, 6, QuickItem.of(CompMaterial.GOLD_NUGGET)
 				.name("&E&lWithdrawal")
 				.lore(
@@ -194,6 +195,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 			draw();
 		});
 
+		// paying
 		setButton(2, 7, QuickItem.of(CompMaterial.PRISMARINE_SHARD)
 				.name("&E&lPaying")
 				.lore(
@@ -211,6 +213,21 @@ public final class CurrencyEditGUI extends BaseGUI {
 			CurrencyEditGUI.this.currency.setPayingAllowed(!CurrencyEditGUI.this.currency.isPayingAllowed());
 			CurrencyEditGUI.this.currency.sync();
 			draw();
+		});
+
+		// vault currency
+		setButton(4,6, QuickItem.of(CompMaterial.FLINT)
+				.name("&b&lMake V")
+				.lore(
+						"&8Change currency's description",
+						"&7This will be shown within guis.",
+						"",
+						"&7Description&f:",
+						"&e" + this.currency.getDescription(),
+						"",
+						"&e&lClick &8» &7To change description"
+				).make(), click -> {
+
 		});
 
 		applyBackExit();

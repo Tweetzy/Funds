@@ -49,17 +49,17 @@ public final class VaultHook implements Economy {
 
 	@Override
 	public String format(double amount) {
-		return String.format("%s %s", String.format("%,.2f", amount), amount == 1D ? Funds.getCurrencyManager().getCurrency("coins").getSingularFormat() : Funds.getCurrencyManager().getCurrency("coins").getPluralFormat());
+		return String.format("%s %s", String.format("%,.2f", amount), amount == 1D ? Funds.getCurrencyManager().getVaultCurrency().getSingularFormat() : Funds.getCurrencyManager().getVaultCurrency().getPluralFormat());
 	}
 
 	@Override
 	public String currencyNamePlural() {
-		return Funds.getCurrencyManager().getCurrency("coins").getPluralFormat();
+		return Funds.getCurrencyManager().getVaultCurrency().getPluralFormat();
 	}
 
 	@Override
 	public String currencyNameSingular() {
-		return Funds.getCurrencyManager().getCurrency("coins").getSingularFormat();
+		return Funds.getCurrencyManager().getVaultCurrency().getSingularFormat();
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public final class VaultHook implements Economy {
 	@Override
 	public double getBalance(OfflinePlayer player) {
 		final Account account = Funds.getAccountManager().getAccount(player);
-		final Currency currency = Funds.getCurrencyManager().getCurrency("coins");
+		final Currency currency = Funds.getCurrencyManager().getVaultCurrency();
 		return account != null && currency != null ? account.getCurrencies().get(currency) : 0D;
 	}
 
@@ -97,7 +97,7 @@ public final class VaultHook implements Economy {
 	@Override
 	public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
 		final Account account = Funds.getAccountManager().getAccount(player);
-		final Currency currency = Funds.getCurrencyManager().getCurrency("coins");
+		final Currency currency = Funds.getCurrencyManager().getVaultCurrency();
 
 		if (account == null || currency == null)
 			return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Funds vault currency not set or user account not found!");
@@ -121,7 +121,7 @@ public final class VaultHook implements Economy {
 	@Override
 	public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
 		final Account account = Funds.getAccountManager().getAccount(player);
-		final Currency currency = Funds.getCurrencyManager().getCurrency("coins");
+		final Currency currency = Funds.getCurrencyManager().getVaultCurrency();
 
 		if (account == null || currency == null)
 			return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Funds vault currency not set or user account not found!");
@@ -178,7 +178,7 @@ public final class VaultHook implements Economy {
 	@Override
 	public double getBalance(String playerName) {
 		final Account account = Funds.getAccountManager().getAccount(playerName);
-		final Currency currency = Funds.getCurrencyManager().getCurrency("coins");
+		final Currency currency = Funds.getCurrencyManager().getVaultCurrency();
 		return account != null && currency != null ? account.getCurrencies().get(currency) : 0D;
 	}
 

@@ -25,6 +25,7 @@ public final class FundCurrency implements Currency {
 	private boolean withdrawAllowed;
 	private boolean payingAllowed;
 	private double startingBalance;
+	private boolean isVaultCurrency;
 
 	public FundCurrency(final String id) {
 		this(
@@ -36,7 +37,8 @@ public final class FundCurrency implements Currency {
 				Inflector.getInstance().pluralize(id),
 				true,
 				true,
-				0D
+				0D,
+				false
 		);
 	}
 
@@ -86,6 +88,11 @@ public final class FundCurrency implements Currency {
 	}
 
 	@Override
+	public boolean isVaultCurrency() {
+		return this.isVaultCurrency;
+	}
+
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -123,6 +130,11 @@ public final class FundCurrency implements Currency {
 	@Override
 	public void setStartingBalance(double startingBalance) {
 		this.startingBalance = startingBalance;
+	}
+
+	@Override
+	public void setIsVaultCurrency(boolean isVaultCurrency) {
+		this.isVaultCurrency = isVaultCurrency;
 	}
 
 	@Override
