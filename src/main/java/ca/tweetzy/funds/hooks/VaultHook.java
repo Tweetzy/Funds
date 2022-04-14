@@ -108,7 +108,7 @@ public final class VaultHook implements Economy {
 
 		final double currentBalance = account.getCurrencies().get(currency);
 		account.getCurrencies().put(currency, currentBalance - amount);
-		account.sync();
+		account.sync(true);
 
 		return new EconomyResponse(amount, account.getCurrencies().get(currency), EconomyResponse.ResponseType.SUCCESS, null);
 	}
@@ -129,7 +129,7 @@ public final class VaultHook implements Economy {
 
 		final double currentBalance = account.getCurrencies().get(currency);
 		account.getCurrencies().put(currency, currentBalance + amount);
-		account.sync();
+		account.sync(true);
 
 		return new EconomyResponse(amount, account.getCurrencies().get(currency), EconomyResponse.ResponseType.SUCCESS, null);
 	}
