@@ -1,5 +1,7 @@
-package ca.tweetzy.funds.api.interfaces;
+package ca.tweetzy.funds.api.interfaces.api;
 
+import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.api.interfaces.Currency;
 import lombok.NonNull;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -20,7 +22,7 @@ public interface AccountAPI {
 	/**
 	 * Used to create a new {@link Account}
 	 *
-	 * @param account is the {@link Account} to be created
+	 * @param account  is the {@link Account} to be created
 	 * @param consumer returns true if the account was created, along with the created account
 	 */
 	void createAccount(@NonNull final Account account, final BiConsumer<Boolean, Account> consumer);
@@ -53,7 +55,7 @@ public interface AccountAPI {
 	 * <b>
 	 * Please don't use this, use {@link #getAccount(OfflinePlayer)} or {@link #getAccount(UUID)}
 	 * </b>
-	 *
+	 * <p>
 	 * It's already ran async if you need to use it for whatever reason.
 	 *
 	 * @param name is the name of the player
@@ -88,7 +90,7 @@ public interface AccountAPI {
 	/**
 	 * Used to reset all the known player {@link Account}s
 	 * back to the starting {@link Currency} balances
-	 *
+	 * <p>
 	 * This is run asynchronously
 	 */
 	void resetPlayerAccountsBalances();
