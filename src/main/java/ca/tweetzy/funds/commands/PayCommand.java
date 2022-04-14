@@ -101,7 +101,7 @@ public final class PayCommand extends Command {
 			}
 
 			account.depositCurrency(currency, amount);
-			account.sync();
+			account.sync(true);
 		});
 
 		return ReturnType.SUCCESS;
