@@ -26,3 +26,5 @@ Funds is an upcoming multi-currently plugin with ChestGUIs, Vault integration an
 ## Developers
 
 As funds is work in progress, the API is not complete yet. Check back later for finalised instructions
+
+See [Funds API](/wiki/API.md)
