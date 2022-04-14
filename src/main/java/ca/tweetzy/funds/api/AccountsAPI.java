@@ -2,7 +2,7 @@ package ca.tweetzy.funds.api;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.api.interfaces.AccountAPI;
+import ca.tweetzy.funds.api.interfaces.api.AccountAPI;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -18,10 +18,10 @@ Funds is an upcoming multi-currently plugin with ChestGUIs, Vault integration an
 
 ## Downloads
 
- * [Spigot](https://twetzy.ca)
- * [Polymart](https://twetzy.ca)
- * [Github (release)](https://twetzy.ca)
- * [Github (CI)](https://twetzy.ca)
+* [Spigot](https://twetzy.ca)
+* [Polymart](https://twetzy.ca)
+* [Github (release)](https://twetzy.ca)
+* [Github (CI)](https://twetzy.ca)
 
 ## Developers
 

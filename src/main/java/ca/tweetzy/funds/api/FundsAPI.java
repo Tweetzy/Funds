@@ -1,9 +1,9 @@
 package ca.tweetzy.funds.api;
 
-import ca.tweetzy.funds.api.interfaces.AccountAPI;
-import ca.tweetzy.funds.api.interfaces.CurrencyAPI;
-import ca.tweetzy.funds.api.interfaces.FundAPI;
-import ca.tweetzy.funds.api.interfaces.TransactionAPI;
+import ca.tweetzy.funds.api.interfaces.api.AccountAPI;
+import ca.tweetzy.funds.api.interfaces.api.CurrencyAPI;
+import ca.tweetzy.funds.api.interfaces.api.FundAPI;
+import ca.tweetzy.funds.api.interfaces.api.TransactionAPI;
 
 /**
  * Date Created: April 13 2022
