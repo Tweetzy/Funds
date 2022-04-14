@@ -38,7 +38,7 @@ public final class AccessListeners implements Listener {
 		if (!playerAccount.getName().equalsIgnoreCase(player.getName())) {
 			Common.log(String.format("&fUser &e%s &fhas changed their name to &e%s&f, updating account info.", playerAccount.getName(), player.getName()));
 			playerAccount.setName(player.getName());
-			playerAccount.sync();
+			playerAccount.sync(false);
 		}
 	}
 }
