@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Date Created: April 11 2022
@@ -68,17 +69,33 @@ public final class AccountManager {
 		}
 	}
 
+	public void resetPlayerAccountsBalances() {
+		Common.runAsync(() -> {
+			synchronized (this.accounts) {
+				this.accounts.forEach(Account::resetCurrencies);
+				updateAccounts(this.accounts, null);
+			}
+		});
+	}
+
 	/*
 	======================== DATA MODIFICATION ========================
 	 */
 
-	public void createAccount(@NonNull final Account currency, final BiConsumer<Boolean, Account> consumer) {
-		Funds.getDataManager().createAccount(currency, (error, created) -> {
+	public void createAccount(@NonNull final Account account, final BiConsumer<Boolean, Account> consumer) {
+		Funds.getDataManager().createAccount(account, (error, created) -> {
 			if (error == null)
 				this.addAccount(created);
 
 			if (consumer != null)
 				consumer.accept(error == null, created);
+		});
+	}
+
+	public void updateAccounts(@NonNull final List<Account> accounts, final Consumer<Boolean> consumer) {
+		Funds.getDataManager().updateAccounts(accounts, (error, success) -> {
+			if (consumer != null)
+				consumer.accept(success);
 		});
 	}
 
