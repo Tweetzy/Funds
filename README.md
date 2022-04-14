@@ -13,3 +13,16 @@
 <br>
 [![bStats Servers](https://img.shields.io/bstats/servers/14883?label=Servers)](https://bstats.org/plugin/bukkit/Funds/14883)
 </div>
+
+Funds is an upcoming multi-currently plugin with ChestGUIs, Vault integration and a developer API.
+
+## Downloads
+
+ * [Spigot](https://twetzy.ca)
+ * [Polymart](https://twetzy.ca)
+ * [Github (release)](https://twetzy.ca)
+ * [Github (CI)](https://twetzy.ca)
+
+## Developers
+
+As funds is work in progress, the API is not complete yet. Check back later for finalised instructions
