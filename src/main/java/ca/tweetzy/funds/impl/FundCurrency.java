@@ -138,7 +138,7 @@ public final class FundCurrency implements Currency {
 	}
 
 	@Override
-	public void sync() {
-		Funds.getDataManager().updateCurrency(this, null);
+	public void sync(boolean silent) {
+		Funds.getDataManager().updateCurrency(silent, this, null);
 	}
 }
