@@ -1,6 +1,6 @@
 	
 # Maven
-```
+```xml
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -15,10 +15,9 @@
 </dependency>
 ```
 # Gradle
-```
+```groovy
 allprojects {
     repositories {
-        ...
         maven { url 'https://jitpack.io' }
     }
 }
