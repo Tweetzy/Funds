@@ -8,5 +8,5 @@ package ca.tweetzy.funds.api.interfaces;
  */
 public interface DatabaseSynchronize {
 
-	void sync();
+	void sync(boolean silent);
 }
