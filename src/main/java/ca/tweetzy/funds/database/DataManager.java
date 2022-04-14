@@ -86,7 +86,7 @@ public final class DataManager extends DataManagerAbstract {
 		}));
 	}
 
-	public void updateAccount(@NonNull final Account currency, Callback<Boolean> callback) {
+	public void updateAccount(final boolean silent, @NonNull final Account currency, Callback<Boolean> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
 			long begin = System.nanoTime();
 			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "account SET name = ?, bal_top_blocked = ?, currencies = ? WHERE id = ?")) {
@@ -97,7 +97,9 @@ public final class DataManager extends DataManagerAbstract {
 				statement.setString(4, currency.getOwner().toString());
 
 				int result = statement.executeUpdate();
-				Common.log(String.format("&fSynced user account to data file in &a%s&f ms", String.format("%,.3f", (System.nanoTime() - begin) / 1e+6)));
+
+				if (!silent)
+					Common.log(String.format("&fSynced user account to data file in &a%s&f ms", String.format("%,.3f", (System.nanoTime() - begin) / 1e+6)));
 
 				if (callback != null)
 					callback.accept(null, result > 0);
@@ -218,7 +220,7 @@ public final class DataManager extends DataManagerAbstract {
 		}));
 	}
 
-	public void updateCurrency(@NonNull final Currency currency, Callback<Boolean> callback) {
+	public void updateCurrency(final boolean silent, @NonNull final Currency currency, Callback<Boolean> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
 			long begin = System.nanoTime();
 			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "currency SET name = ?, description = ?, icon = ?, singular_format = ?, plural_format = ?, starting_balance = ?, withdraw_allowed = ?, pay_allowed = ?, is_vault_currency = ? WHERE id = ?")) {
@@ -235,7 +237,8 @@ public final class DataManager extends DataManagerAbstract {
 				statement.setString(10, currency.getId());
 
 				int result = statement.executeUpdate();
-				Common.log(String.format("&fSynced &b%s &fcurrency to data file in &a%s&f ms", currency.getId(), String.format("%,.3f", (System.nanoTime() - begin) / 1e+6)));
+				if (!silent)
+					Common.log(String.format("&fSynced &b%s &fcurrency to data file in &a%s&f ms", currency.getId(), String.format("%,.3f", (System.nanoTime() - begin) / 1e+6)));
 
 				if (callback != null)
 					callback.accept(null, result > 0);
@@ -249,7 +252,7 @@ public final class DataManager extends DataManagerAbstract {
 	//update funds_currency SET is_vault_currency = false WHERE id != 'coins'
 	public void updateVaultCurrency(@NonNull final Currency currency, Callback<Boolean> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "currency SET is_vault_currency = FALSE where id != '?'")) {
+			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "currency SET is_vault_currency = FALSE where id != ?")) {
 
 				statement.setString(1, currency.getName());
 
