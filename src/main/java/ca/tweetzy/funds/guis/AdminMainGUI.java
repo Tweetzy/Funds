@@ -4,7 +4,6 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
 import ca.tweetzy.funds.model.OrList;
-import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.rose.comp.NBTEditor;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.utils.Common;
@@ -60,12 +59,12 @@ public final class AdminMainGUI extends BaseGUI {
 
 						Funds.getCurrencyManager().createCurrency(new FundCurrency(string), (error, created) -> {
 							if (error) {
-								Common.tell(click.player, Locale.CURRENCY_CREATE_ERROR.getString());
+								Common.tell(click.player, "&cSomething went wrong while creating that currency");
 								return;
 							}
 
 							click.manager.showGUI(click.player, new CurrencyListGUI(new AdminMainGUI()));
-							Common.tell(click.player, Locale.CURRENCY_CREATED.getString().replace("%currency_name%", created.getId()));
+							Common.tell(click.player, "&aCreated a new currency named&F: &e%currency_name%".replace("%currency_name%", created.getId()));
 						});
 
 						return true;

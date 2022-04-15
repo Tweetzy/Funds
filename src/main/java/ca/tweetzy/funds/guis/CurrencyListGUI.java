@@ -4,7 +4,6 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.PagedGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
-import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
@@ -73,18 +72,18 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 							return false;
 
 						if (Funds.getCurrencyManager().getCurrency(string) != null) {
-							Common.tell(click.player, Locale.CURRENCY_ALREADY_EXISTS.getString());
+							Common.tell(click.player, "&cA currency by that id already exists!");
 							return false;
 						}
 
 						Funds.getCurrencyManager().createCurrency(new FundCurrency(string), (error, created) -> {
 							if (error) {
-								Common.tell(click.player, Locale.CURRENCY_CREATE_ERROR.getString());
+								Common.tell(click.player, "&cSomething went wrong while creating that currency");
 								return;
 							}
 
 							click.manager.showGUI(click.player, new CurrencyListGUI(new AdminMainGUI()));
-							Common.tell(click.player, Locale.CURRENCY_CREATED.getString().replace("%currency_name%", created.getId()));
+							Common.tell(click.player, "&aCreated a new currency named&F: &e%currency_name%".replace("%currency_name%", created.getId()));
 						});
 						return true;
 					}

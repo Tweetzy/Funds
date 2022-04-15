@@ -4,7 +4,6 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.guis.template.MaterialPicker;
-import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
 import ca.tweetzy.rose.utils.Common;
@@ -104,7 +103,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 			@Override
 			public boolean onResult(String string) {
 				if (!NumberUtils.isNumber(string)) {
-					Common.tell(click.player, Locale.NOT_A_NUMBER.getString().replace("%value%", string));
+					Common.tell(click.player, "&4%value% &cis not a valid number!".replace("%value%", string));
 					return false;
 				}
 

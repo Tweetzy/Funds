@@ -1,25 +1,26 @@
 package ca.tweetzy.funds.settings;
 
 import ca.tweetzy.funds.Funds;
-import ca.tweetzy.rose.configuration.Config;
-import ca.tweetzy.rose.configuration.ConfigSetting;
+import ca.tweetzy.rose.files.ConfigSetting;
+import ca.tweetzy.rose.files.file.YamlFile;
+import lombok.SneakyThrows;
 
 /**
- * Date Created: April 08 2022
- * Time Created: 7:04 p.m.
+ * Date Created: April 15 2022
+ * Time Created: 12:35 a.m.
  *
  * @author Kiran Hart
  */
 public final class Settings {
 
-	private static final Config config = Funds.getInstance().getCoreConfig();
+	static final YamlFile config = Funds.getInstance().getCoreConfig();
 
-	public static final ConfigSetting LANG = new ConfigSetting(config, "Language", "en_US", "The default language for the plugin");
-	public static final ConfigSetting PREFIX = new ConfigSetting(config, "Prefix", "&8(&eFunds&8)", "The plugin's prefix");
+	public static final ConfigSetting PREFIX = new ConfigSetting(config, "prefix", "&8[&eFunds&8]", "The global prefix for the plugin");
 
+
+	@SneakyThrows
 	public static void setup() {
-		config.load();
-		config.setAutosave(true).setAutosave(true);
-		config.saveChanges();
+		config.applySettings();
+		config.save();
 	}
 }

@@ -14,10 +14,10 @@ import ca.tweetzy.funds.model.CurrencyManager;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.rose.RosePlugin;
 import ca.tweetzy.rose.command.CommandManager;
-import ca.tweetzy.rose.configuration.Config;
 import ca.tweetzy.rose.database.DataMigrationManager;
 import ca.tweetzy.rose.database.DatabaseConnector;
 import ca.tweetzy.rose.database.SQLiteConnector;
+import ca.tweetzy.rose.files.file.YamlFile;
 import ca.tweetzy.rose.gui.GuiManager;
 import ca.tweetzy.rose.utils.Common;
 import lombok.SneakyThrows;
@@ -40,18 +40,8 @@ public final class Funds extends RosePlugin {
 	private DatabaseConnector databaseConnector;
 	private DataManager dataManager;
 
-	private Config langConfig;
-
-	@SneakyThrows
 	@Override
 	protected void onWake() {
-		// settings & locale setup
-		Settings.setup();
-		Common.setPrefix(Settings.PREFIX.getString());
-
-		// lang setup
-		this.langConfig = new Config(this, "/locale/", Settings.LANG.getString() + ".yml");
-
 		// Set up the database if enabled
 		this.databaseConnector = new SQLiteConnector(this);
 		this.dataManager = new DataManager(this.databaseConnector, this);
@@ -66,8 +56,11 @@ public final class Funds extends RosePlugin {
 		dataMigrationManager.runMigrations();
 	}
 
-	@Override
+	@SneakyThrows
 	protected void onFlight() {
+		// settings & locale setup
+		Settings.setup();
+		Common.setPrefix(Settings.PREFIX.getString());
 
 		// load currencies -> then accounts
 		this.currencyManager.loadCurrencies((loaded) -> this.accountManager.loadAccounts());
@@ -80,6 +73,7 @@ public final class Funds extends RosePlugin {
 		this.commandManager.registerCommandDynamically("balance").addCommand(new BalanceCommand());
 		this.commandManager.registerCommandDynamically("pay").addCommand(new PayCommand());
 
+		// events / listeners
 		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new AccessListeners(), this);
 		getServer().getPluginManager().registerEvents(new HookListeners(), this);
@@ -113,10 +107,6 @@ public final class Funds extends RosePlugin {
 	// currency manager
 	public static CurrencyManager getCurrencyManager() {
 		return getInstance().currencyManager;
-	}
-
-	public static Config getLangConfig() {
-		return getInstance().langConfig;
 	}
 
 	// data manager

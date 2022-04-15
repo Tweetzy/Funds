@@ -1,4 +1,4 @@
-package ca.tweetzy.funds.api.interfaces.api;
+package ca.tweetzy.funds.api.interfaces;
 
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  *
  * @author Kiran Hart
  */
-public interface AccountAPI {
+public interface FundAPI {
 
 	/**
 	 * Used to create a new {@link Account}
