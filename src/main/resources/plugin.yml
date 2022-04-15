@@ -8,5 +8,8 @@ load: STARTUP
 loadbefore:
   - Vault
 
+softdepend:
+  - PlaceholderAPI
+
 libraries:
   - org.yaml:snakeyaml:1.30
