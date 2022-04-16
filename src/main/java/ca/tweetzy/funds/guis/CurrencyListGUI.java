@@ -28,6 +28,7 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 
 	public CurrencyListGUI(final Gui parent) {
 		super(parent, "&eFunds &8> &7Currency List", 6, Funds.getCurrencyManager().getCurrencies());
+		draw();
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 		return QuickItem
 				.of(currency.getIcon())
 				.name(currency.getName())
+				.glow(currency.isVaultCurrency())
 				.lore(
 						"&8Basic currency information",
 						"&7Identifier&F: &e" + currency.getId(),
