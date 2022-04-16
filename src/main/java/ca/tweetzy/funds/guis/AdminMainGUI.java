@@ -3,7 +3,7 @@ package ca.tweetzy.funds.guis;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
-import ca.tweetzy.funds.model.OrList;
+import ca.tweetzy.funds.model.Helper;
 import ca.tweetzy.rose.comp.NBTEditor;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.utils.Common;
@@ -37,7 +37,7 @@ public final class AdminMainGUI extends BaseGUI {
 		setButton(1, 2, QuickItem.of(CompMaterial.GOLD_INGOT)
 				.name("&e&lCurrencies")
 				.lore("&8All the currencies you've made")
-				.lore(OrList.get(Funds.getCurrencyManager().getCurrencies().isEmpty(),
+				.lore(Helper.orList(Funds.getCurrencyManager().getCurrencies().isEmpty(),
 						Arrays.asList("&cNo currencies found", "", "&e&lClick &8» &7To create your first currency"),
 						Arrays.asList("&a" + Funds.getCurrencyManager().getCurrencies().size() + " &7currencies found", "", "&e&lClick &8» &7To view currencies")
 				)).make(), click -> {
@@ -83,7 +83,7 @@ public final class AdminMainGUI extends BaseGUI {
 						"&7An account is used to store each",
 						"&7player's different currency count",
 						"")
-				.lore(OrList.get(Funds.getAccountManager().getAccounts().isEmpty(),
+				.lore(Helper.orList(Funds.getAccountManager().getAccounts().isEmpty(),
 						Arrays.asList("&cNo accounts found", "", "&e&lClick &8» &7To create your first currency"),
 						Arrays.asList("&a" + Funds.getAccountManager().getAccounts().size() + " &7accounts found", "", "&e&lClick &8» &7To view accounts")
 				))
