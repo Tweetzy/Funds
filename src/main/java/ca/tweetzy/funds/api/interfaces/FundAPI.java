@@ -1,7 +1,5 @@
 package ca.tweetzy.funds.api.interfaces;
 
-import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.api.interfaces.Currency;
 import lombok.NonNull;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;

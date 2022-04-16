@@ -5,7 +5,6 @@ import ca.tweetzy.rose.files.comments.format.YamlCommentFormat;
 import ca.tweetzy.rose.files.file.YamlFile;
 import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
-import lombok.Setter;
 import lombok.SneakyThrows;
 import org.bukkit.command.CommandSender;
 

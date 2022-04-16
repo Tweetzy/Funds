@@ -1,5 +1,5 @@
-	
 # Maven
+
 ```xml
 <repositories>
     <repository>
@@ -14,7 +14,9 @@
     <version>ENTER-RELEASE-VERSION</version>
 </dependency>
 ```
+
 # Gradle
+
 ```groovy
 allprojects {
     repositories {
