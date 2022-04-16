@@ -3,6 +3,7 @@ package ca.tweetzy.funds.guis;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.guis.template.ConfirmGUI;
 import ca.tweetzy.funds.guis.template.CurrencyPicker;
 import ca.tweetzy.funds.guis.template.PagedGUI;
 import ca.tweetzy.funds.model.Helper;
@@ -63,7 +64,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	protected void drawAdditional() {
 
 		// blacklist balance top
-		setButton(5,8, QuickItem.of(account.isBalTopBlocked() ? CompMaterial.RED_DYE : CompMaterial.LIME_DYE)
+		setButton(5, 8, QuickItem.of(account.isBalTopBlocked() ? CompMaterial.RED_DYE : CompMaterial.LIME_DYE)
 				.name("&e&lBalance Top Blocked")
 				.lore(Helper.replaceVariables(Arrays.asList(
 						"&8Blocks user from balance top",
@@ -128,11 +129,14 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 						"",
 						"&c&lClick &8» &7To reset balances"
 				)
-				.make(), click -> {
+				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null, confirmed -> {
 
-			this.account.resetCurrencies();
-			draw();
-		});
+			if (confirmed) {
+				this.account.resetCurrencies();
+			}
+
+			click.manager.showGUI(click.player, new AccountViewGUI(this.account));
+		})));
 	}
 
 	@Override
@@ -168,9 +172,15 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 		}
 
 		if (event.clickType == ClickType.NUMBER_KEY) {
-			this.account.resetCurrencies(currency);
-			this.account.sync(true);
-			draw();
+			event.manager.showGUI(event.player, new ConfirmGUI(null, confirmed -> {
+
+				if (confirmed) {
+					this.account.resetCurrencies(currency);
+					this.account.sync(true);
+				}
+
+				event.manager.showGUI(event.player, new AccountViewGUI(this.account));
+			}));
 		}
 	}
 
