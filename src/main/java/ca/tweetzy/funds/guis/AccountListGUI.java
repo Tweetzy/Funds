@@ -2,6 +2,7 @@ package ca.tweetzy.funds.guis;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.template.ConfirmGUI;
 import ca.tweetzy.funds.guis.template.PagedGUI;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
@@ -54,11 +55,14 @@ public final class AccountListGUI extends PagedGUI<Account> {
 						"",
 						"&c&lClick &8» &7To reset accounts"
 				)
-				.make(), click -> {
+				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null, confirmed -> {
 
-			Funds.getAccountManager().resetPlayerAccountsBalances();
-			draw();
-		});
+			if (confirmed) {
+				Funds.getAccountManager().resetPlayerAccountsBalances();
+			}
+
+			click.manager.showGUI(click.player, new AccountListGUI(new AdminMainGUI()));
+		})));
 	}
 
 	@Override
