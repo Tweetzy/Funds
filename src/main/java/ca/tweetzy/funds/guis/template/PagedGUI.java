@@ -25,7 +25,6 @@ public abstract class PagedGUI<T> extends BaseGUI {
 		super(parent, title, rows);
 		this.parent = parent;
 		this.items = items;
-		draw();
 	}
 
 	public PagedGUI(@NonNull final String title, final int rows, @NonNull final List<T> items) {
