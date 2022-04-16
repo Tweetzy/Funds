@@ -24,6 +24,7 @@ public final class AccountListGUI extends PagedGUI<Account> {
 
 	public AccountListGUI(Gui parent) {
 		super(parent, "&eFunds &8> &7Account List", 6, Funds.getAccountManager().getAccounts());
+		draw();
 	}
 
 	@Override
@@ -61,8 +62,8 @@ public final class AccountListGUI extends PagedGUI<Account> {
 	}
 
 	@Override
-	protected void onClick(Account object, GuiClickEvent clickEvent) {
-
+	protected void onClick(Account account, GuiClickEvent event) {
+		event.manager.showGUI(event.player, new AccountViewGUI(account));
 	}
 
 	@Override
