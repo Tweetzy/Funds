@@ -48,7 +48,7 @@ public final class PayCommand extends Command {
 				return ReturnType.FAIL;
 			}
 
-			// get target account *hopefully*
+			// orList target account *hopefully*
 			final Account targetAccount = Funds.getAccountManager().getAccount(targetPlayer.get());
 			// check if the target user even has an account
 			if (targetAccount == null) {
