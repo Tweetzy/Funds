@@ -23,7 +23,8 @@ public enum Translation {
 	 */
 	MISC_IS_TRUE("misc.is true", "&ATrue"),
 	MISC_IS_FALSE("gui.is false", "&cFalse"),
-
+	MISC_IS_ALLOWED("misc.is allowed", "&aAllowed"),
+	MISC_IS_DISALLOWED("gui.is disallowed", "&cDisallowed"),
 
 	/*
 	============= MAIN MENU =============
@@ -133,6 +134,93 @@ public enum Translation {
 			"&c&lClick &8» &7To reset balances"
 	)),
 
+	/*
+	============= CURRENCY EDIT MENU =============
+	 */
+	GUI_CURRENCY_EDIT_TITLE("gui.currency edit.title", "&eFunds &8> &7Editing &8> &7%currency_id%"),
+	GUI_CURRENCY_EDIT_ITEMS_ICON_NAME("gui.currency edit.items.icon.name", "&b&lIcon"),
+	GUI_CURRENCY_EDIT_ITEMS_ICON_LORE("gui.currency edit.items.icon.lore", Arrays.asList(
+			"&8Change currency's display icon",
+			"&7This will be shown within guis.",
+			"",
+			"&e&lClick &8» &7To change icon"
+	)),
+
+	GUI_CURRENCY_EDIT_ITEMS_FORMATTING_NAME("gui.currency edit.items.formatting.name", "&b&lFormatting"),
+	GUI_CURRENCY_EDIT_ITEMS_FORMATTING_LORE("gui.currency edit.items.formatting.lore", Arrays.asList(
+			"&8Change currency's singular/plural format",
+			"&7These will be used depending on currency amount",
+			"",
+			"&7Singular&f: &e%currency_singular_format%",
+			"&7Plural&f: &e%currency_plural_format%",
+			"",
+			"&e&lLeft Click &8» &7To change singular format",
+			"&e&lRight Click &8» &7To change plural format"
+	)),
+
+	GUI_CURRENCY_EDIT_ITEMS_STARTING_BAL_NAME("gui.currency edit.items.stating balance.name", "&b&lStarting Balance"),
+	GUI_CURRENCY_EDIT_ITEMS_STARTING_BAL_LORE("gui.currency edit.items.stating balance.lore", Arrays.asList(
+			"&8Change currency's starting balance",
+			"&7Reset/New accounts will start with this",
+			"",
+			"&7Current&f: &e%currency_starting_balance% %currency_plural_format%",
+			"",
+			"&e&lClick &8» &7To change starting balance"
+	)),
+
+	GUI_CURRENCY_EDIT_ITEMS_DISPLAY_NAME_NAME("gui.currency edit.items.display name.name", "&b&lName"),
+	GUI_CURRENCY_EDIT_ITEMS_DISPLAY_NAME_LORE("gui.currency edit.items.display name.lore", Arrays.asList(
+			"&8Change currency's display name",
+			"&7This will be shown within guis.",
+			"",
+			"&7Current&f: &e%currency_name%",
+			"",
+			"&e&lClick &8» &7To change display name"
+	)),
+
+	GUI_CURRENCY_EDIT_ITEMS_DESC_NAME("gui.currency edit.items.description.name", "&b&lDescription"),
+	GUI_CURRENCY_EDIT_ITEMS_DESC_LORE("gui.currency edit.items.description.lore", Arrays.asList(
+			"&8Change currency's description",
+			"&7This will be shown within guis.",
+			"",
+			"&7Description&f:",
+			"&e%currency_description%",
+			"",
+			"&e&lClick &8» &7To change description"
+	)),
+
+	GUI_CURRENCY_EDIT_ITEMS_WITHDRAW_NAME("gui.currency edit.items.withdraw.name", "&b&lWithdrawal"),
+	GUI_CURRENCY_EDIT_ITEMS_WITHDRAW_LORE("gui.currency edit.items.withdraw.lore", Arrays.asList(
+			"&8Currency Withdrawal",
+			"&7Enabling this will allow users to withdraw ",
+			"&7the currency into a physical item",
+			"",
+			"&7Current&f: %is_allowed%",
+			"",
+			"&e&lClick &8» &7To toggle state"
+	)),
+
+	GUI_CURRENCY_EDIT_ITEMS_PAYING_NAME("gui.currency edit.items.paying.name", "&b&lPaying"),
+	GUI_CURRENCY_EDIT_ITEMS_PAYING_LORE("gui.currency edit.items.paying.lore", Arrays.asList(
+			"&8Currency Paying",
+			"&7Enabling this will allow users to pay ",
+			"&7other users with this currency",
+			"",
+			"&7Current&f: %is_allowed%",
+			"",
+			"&e&lClick &8» &7To toggle state"
+	)),
+
+	GUI_CURRENCY_EDIT_ITEMS_VAULT_NAME("gui.currency edit.items.vault.name", "&b&lMake Vault Currency"),
+	GUI_CURRENCY_EDIT_ITEMS_VAULT_LORE("gui.currency edit.items.vault.lore", Arrays.asList(
+			"&8Currency Paying",
+			"&7Making a currency the vault currency is the best",
+			"&7way to allow other plugins that use Vault to handle",
+			"&7player balances, it's also funds' default go to.",
+			"",
+			"&7Current&f: %is_true%",
+			"", "&e&lClick &8» &7To make vault currency"
+	)),
 	;
 
 	final String key;

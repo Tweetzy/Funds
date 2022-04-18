@@ -4,6 +4,7 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.guis.template.MaterialPicker;
+import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
 import ca.tweetzy.rose.utils.Common;
@@ -14,6 +15,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import oshi.jna.platform.windows.NtDll;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,7 +32,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 	private final Currency currency;
 
 	public CurrencyEditGUI(Gui parent, @NonNull final Currency currency) {
-		super(parent, "&eFunds &8> &7Editing &8> &7" + currency.getId(), 6);
+		super(parent, Translation.GUI_CURRENCY_EDIT_TITLE.getString("currency_id", currency.getId()), 6);
 		this.parent = parent;
 		this.currency = currency;
 		draw();
@@ -41,13 +43,9 @@ public final class CurrencyEditGUI extends BaseGUI {
 
 		// icon selector
 		setButton(1, 4, QuickItem.of(this.currency.getIcon())
-				.name("&b&lIcon")
-				.lore(
-						"&8Change currency's display icon",
-						"&7This will be shown within guis.",
-						"",
-						"&e&lClick &8» &7To change icon"
-				).make(), click -> click.manager.showGUI(click.player, new MaterialPicker(this, "&eFunds &8> &7" + this.currency.getId() + " &8> &7Select Icon", null, (e, selected) -> {
+				.name(Translation.GUI_CURRENCY_EDIT_ITEMS_ICON_NAME.getString())
+				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_ICON_LORE.getList())
+				.make(), click -> click.manager.showGUI(click.player, new MaterialPicker(this, "&eFunds &8> &7" + this.currency.getId() + " &8> &7Select Icon", null, (e, selected) -> {
 
 			this.currency.setIcon(selected);
 			this.currency.sync(false);
@@ -56,17 +54,12 @@ public final class CurrencyEditGUI extends BaseGUI {
 
 		// formatting
 		setButton(2, 1, QuickItem.of(CompMaterial.PAPER)
-				.name("&b&lFormatting")
-				.lore(
-						"&8Change currency's singular/plural format",
-						"&7These will be used depending on currency amount",
-						"",
-						"&7Singular&f: &e" + this.currency.getSingularFormat(),
-						"&7Plural&f: &e" + this.currency.getPluralFormat(),
-						"",
-						"&e&lLeft Click &8» &7To change singular format",
-						"&e&lRight Click &8» &7To change plural format"
-				).make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter " + (click.clickType == ClickType.LEFT ? "singular" : "plural") + " format for currency")) {
+				.name(Translation.GUI_CURRENCY_EDIT_ITEMS_FORMATTING_NAME.getString())
+				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_FORMATTING_LORE.getList(
+						"currency_singular_format", currency.getSingularFormat(),
+						"currency_plural_format", currency.getPluralFormat()
+				))
+				.make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter " + (click.clickType == ClickType.LEFT ? "singular" : "plural") + " format for currency")) {
 
 			@Override
 			public boolean onResult(String string) {
@@ -90,15 +83,11 @@ public final class CurrencyEditGUI extends BaseGUI {
 
 		// starting balance
 		setButton(2, 2, QuickItem.of(CompMaterial.SUNFLOWER)
-				.name("&b&lStarting Balance")
-				.lore(
-						"&8Change currency's starting balance",
-						"&7Reset/New accounts will start with this",
-						"",
-						"&7Current&f: &e" + this.currency.getStartingBalance() + " " + (this.currency.getStartingBalance() > 1 ? this.currency.getPluralFormat() : this.currency.getSingularFormat()),
-						"",
-						"&e&lClick &8» &7To change starting balance"
-				).make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter starting balance for currency")) {
+				.name(Translation.GUI_CURRENCY_EDIT_ITEMS_STARTING_BAL_NAME.getString())
+				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_STARTING_BAL_LORE.getList(
+						"currency_starting_balance", currency.getStartingBalance(),
+						"currency_plural_format", currency.getPluralFormat()
+				)).make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter starting balance for currency")) {
 
 			@Override
 			public boolean onResult(String string) {
@@ -123,15 +112,11 @@ public final class CurrencyEditGUI extends BaseGUI {
 
 		// name
 		setButton(2, 4, QuickItem.of(CompMaterial.DARK_OAK_SIGN)
-				.name("&b&lName")
-				.lore(
-						"&8Change currency's display name",
-						"&7This will be shown within guis.",
-						"",
-						"&7Current&f: &e" + this.currency.getName(),
-						"",
-						"&e&lClick &8» &7To change display name"
-				).make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter display name for currency")) {
+				.name(Translation.GUI_CURRENCY_EDIT_ITEMS_DISPLAY_NAME_NAME.getString())
+				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_DISPLAY_NAME_LORE.getList(
+						"currency_name", currency.getName()
+				))
+				.make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter display name for currency")) {
 
 			@Override
 			public boolean onResult(String string) {
@@ -151,16 +136,11 @@ public final class CurrencyEditGUI extends BaseGUI {
 
 		// description
 		setButton(4, 4, QuickItem.of(CompMaterial.WRITABLE_BOOK)
-				.name("&b&LDescription")
-				.lore(
-						"&8Change currency's description",
-						"&7This will be shown within guis.",
-						"",
-						"&7Description&f:",
-						"&e" + this.currency.getDescription(),
-						"",
-						"&e&lClick &8» &7To change description"
-				).make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter description for currency")) {
+				.name(Translation.GUI_CURRENCY_EDIT_ITEMS_DESC_NAME.getString())
+				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_DESC_LORE.getList(
+						"currency_description", currency.getDescription()
+				))
+				.make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter description for currency")) {
 
 			@Override
 			public boolean onResult(String string) {
@@ -180,16 +160,11 @@ public final class CurrencyEditGUI extends BaseGUI {
 
 		// withdrawal
 		setButton(2, 6, QuickItem.of(CompMaterial.GOLD_NUGGET)
-				.name("&E&lWithdrawal")
-				.lore(
-						"&8Currency Withdrawal",
-						"&7Enabling this will allow users to withdraw ",
-						"&7the currency into a physical item",
-						"",
-						"&7Current&f: " + (this.currency.isWithdrawAllowed() ? "&aAllowed" : "&cDisallowed"),
-						"",
-						"&e&lClick &8» &7To toggle state"
-				)
+				.name(Translation.GUI_CURRENCY_EDIT_ITEMS_WITHDRAW_NAME.getString())
+				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_WITHDRAW_LORE.getList(
+						"is_allowed", currency.isWithdrawAllowed() ? Translation.MISC_IS_ALLOWED.getString() : Translation.MISC_IS_DISALLOWED.getString()
+
+				))
 				.glow(this.currency.isWithdrawAllowed())
 				.make(), click -> {
 
@@ -200,16 +175,10 @@ public final class CurrencyEditGUI extends BaseGUI {
 
 		// paying
 		setButton(2, 7, QuickItem.of(CompMaterial.PRISMARINE_SHARD)
-				.name("&E&lPaying")
-				.lore(
-						"&8Currency Paying",
-						"&7Enabling this will allow users to pay ",
-						"&7other users with this currency",
-						"",
-						"&7Current&f: " + (this.currency.isPayingAllowed() ? "&aAllowed" : "&cDisallowed"),
-						"",
-						"&e&lClick &8» &7To toggle state"
-				)
+				.name(Translation.GUI_CURRENCY_EDIT_ITEMS_PAYING_NAME.getString())
+				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_PAYING_LORE.getList(
+						"is_allowed", currency.isPayingAllowed() ? Translation.MISC_IS_ALLOWED.getString() : Translation.MISC_IS_DISALLOWED.getString()
+				))
 				.glow(this.currency.isPayingAllowed())
 				.make(), click -> {
 
@@ -220,20 +189,10 @@ public final class CurrencyEditGUI extends BaseGUI {
 
 		// vault currency
 		setButton(4, 6, QuickItem.of(CompMaterial.FLINT)
-				.name("&b&lMake Vault Currency")
-				.lore(
-						"&8Currency Paying",
-						"&7Making a currency the vault currency is the best",
-						"&7way to allow other plugins that use Vault to handle",
-						"&7player balances, it's also funds' default go to.",
-						"",
-						"&7Current&f: " + (this.currency.isVaultCurrency() ? "&aTrue" : "&cFalse"))
-				.lore(this.currency.isVaultCurrency() ?
-						Arrays.asList("&b&oSelecting another currency will automatically",
-								"&b&odisable this one in favour of the other.") : Collections.emptyList()
-				)
-				.lore("", "&e&lClick &8» &7To make vault currency")
-				.make(), click -> {
+				.name(Translation.GUI_CURRENCY_EDIT_ITEMS_VAULT_NAME.getString())
+				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_VAULT_LORE.getList(
+						"is_true", currency.isVaultCurrency() ? Translation.MISC_IS_TRUE.getString() : Translation.MISC_IS_FALSE.getString()
+				)).make(), click -> {
 
 			if (!CurrencyEditGUI.this.currency.isVaultCurrency()) {
 				CurrencyEditGUI.this.currency.setIsVaultCurrency(true);
