@@ -41,6 +41,8 @@ public final class Funds extends RosePlugin {
 	private DatabaseConnector databaseConnector;
 	private DataManager dataManager;
 
+	// fucked up git commits asorhfsdighdig
+
 	@Override
 	protected void onWake() {
 		// Set up the database if enabled
