@@ -58,6 +58,28 @@ public enum Translation {
 	GUI_CONFIRM_ITEMS_CANCEL_NAME("gui.confirm.items.cancel.name", "&c&lCancel"),
 	GUI_CONFIRM_ITEMS_CANCEL_LORE("gui.confirm.items.cancel.lore", Arrays.asList("", "&E&LClick &8» &7To cancel action")),
 
+	/*
+	============= ACCOUNT LIST MENU =============
+	 */
+	GUI_ACCOUNT_LIST_TITLE("gui.account list.title", "&eFunds &8> &7Account List"),
+	GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_NAME("gui.account list.items.account.name", "&B&L%account_name%"),
+	GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_LORE("gui.account list.items.account.lore", Arrays.asList(
+			"&8Player account info",
+			"&7View information about this player's",
+			"&7account (ie, balances, transactions)",
+			"",
+			"&e&lLeft Click &8» &7To view account"
+	)),
+
+	GUI_ACCOUNT_LIST_ITEMS_RESET_NAME("gui.account list.items.reset.name", "&c&lReset Accounts"),
+	GUI_ACCOUNT_LIST_ITEMS_RESET_LORE("gui.account list.items.reset.lore", Arrays.asList(
+			"&8Reset all player accounts",
+			"&7By clicking this you will reset every single",
+			"&7user account account's currency balance.",
+			"",
+			"&c&lClick &8» &7To reset accounts"
+	)),
+
 	;
 
 	final String key;
