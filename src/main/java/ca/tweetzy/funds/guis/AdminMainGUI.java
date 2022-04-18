@@ -4,6 +4,7 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
 import ca.tweetzy.funds.model.Helper;
+import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.NBTEditor;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.utils.Common;
@@ -23,15 +24,13 @@ import java.util.Arrays;
 public final class AdminMainGUI extends BaseGUI {
 
 	public AdminMainGUI() {
-		super("&eFunds &fv&7" + Funds.getInstance().getVersion());
+		super(Translation.GUI_MAIN_TITLE.getString("plugin_version", Funds.getInstance().getVersion()));
 		draw();
 	}
 
 	@Override
 	protected void draw() {
 		reset();
-
-		//
 
 		// Currencies Button
 		setButton(1, 2, QuickItem.of(CompMaterial.GOLD_INGOT)

@@ -25,17 +25,14 @@ public final class Locale {
 
 	private static final Map<String, YamlFile> LOCALES = new HashMap<>();
 	private static final Map<String, Object> PHRASES = new HashMap<>();
-
 	private static String defaultLanguage = "english";
-
-	private static void loadPhrases() {
-		PHRASES.put("hello", "&aHi, nice to meet you!");
-	}
 
 	@SneakyThrows
 	public static void setup() {
+		for (Translation translation : Translation.values())
+			PHRASES.put(translation.getKey(), translation.getValue());
+
 		defaultLanguage = Settings.LANGUAGE.getString();
-		loadPhrases();
 
 		setupDefaults("english"); // we always want to have english ready
 		setupDefaults(defaultLanguage);
@@ -83,6 +80,14 @@ public final class Locale {
 		yamlFile.save();
 
 		LOCALES.put("english", yamlFile);
+	}
+
+	public static String getString(String key) {
+		return (String) getPhrase(key, defaultLanguage);
+	}
+
+	public static List<String> getList(String key) {
+		return (List<String>) getPhrase(key, defaultLanguage);
 	}
 
 	private static Object getPhraseEnglish(String key) {
