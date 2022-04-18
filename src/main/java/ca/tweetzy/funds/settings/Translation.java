@@ -19,6 +19,13 @@ import java.util.List;
 public enum Translation {
 
 	/*
+	============= misc =============
+	 */
+	MISC_IS_TRUE("misc.is true", "&ATrue"),
+	MISC_IS_FALSE("gui.is false", "&cFalse"),
+
+
+	/*
 	============= MAIN MENU =============
 	 */
 	GUI_MAIN_TITLE("gui.main.title", "&eFunds &fv&7%plugin_version%"),
@@ -78,6 +85,52 @@ public enum Translation {
 			"&7user account account's currency balance.",
 			"",
 			"&c&lClick &8» &7To reset accounts"
+	)),
+
+	/*
+	============= ACCOUNT VIEW MENU =============
+	 */
+	GUI_ACCOUNT_VIEW_TITLE("gui.account view.title", "&eFunds &8> &7User &8> &7%account_name%"),
+	GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_NAME("gui.account view.items.currency.name", "%currency_name%"),
+	GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_LORE("gui.account view.items.currency.lore", Arrays.asList(
+			"&7Identifier&F: &e%currency_id%",
+			"&7Description&F:",
+			"&f- %currency_description%",
+			"",
+			"&7Current Balance&F: &e%currency_balance%",
+			"",
+			"&e&lLeft Click &8» &7To set balance",
+			"&b&lRight Click &8» &7To add balance",
+			"&c&lPress 1 &8» &7To reset to &c%currency_starting_balance%"
+	)),
+
+	GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_NAME("gui.account view.items.baltop blacklist.name", "&e&lBalance Top Blocked"),
+	GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_LORE("gui.account view.items.baltop blacklist.lore", Arrays.asList(
+			"&8Blocks user from balance top",
+			"&7If true, this player will be completed blacklisted",
+			"&7from the balance top lists for each currency.",
+			"",
+			"&7Current&f: %is_true%",
+			"",
+			"&e&lClick &8» &7To toggle state"
+	)),
+
+	GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_NAME("gui.account view.items.deposit.name", "&a&lDeposit Currency"),
+	GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_LORE("gui.account view.items.deposit.lore", Arrays.asList(
+			"&8Add another currency balance",
+			"&7Click to add another available currency",
+			"&7to this player's balance list.",
+			"",
+			"&e&lClick &8» &7To deposit currency"
+	)),
+
+	GUI_ACCOUNT_VIEW_ITEMS_RESET_NAME("gui.account view.items.reset.name", "&c&lReset Balances"),
+	GUI_ACCOUNT_VIEW_ITEMS_RESET_LORE("gui.account view.items.reset.lore", Arrays.asList(
+			"&8Reset player balances",
+			"&7By clicking this you will reset every single",
+			"&7currency balance from this user's account",
+			"",
+			"&c&lClick &8» &7To reset balances"
 	)),
 
 	;

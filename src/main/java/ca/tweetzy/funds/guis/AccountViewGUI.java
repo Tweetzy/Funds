@@ -6,7 +6,7 @@ import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.ConfirmGUI;
 import ca.tweetzy.funds.guis.template.CurrencyPicker;
 import ca.tweetzy.funds.guis.template.PagedGUI;
-import ca.tweetzy.funds.model.Helper;
+import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
 import ca.tweetzy.rose.gui.helper.InventoryBorder;
@@ -21,7 +21,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,7 +34,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	private final Account account;
 
 	public AccountViewGUI(@NonNull final Account account) {
-		super(new AccountListGUI(new AdminMainGUI()), String.format("&eFunds &8> &7User &8> &7%s", account.getName()), 6, new ArrayList<>(account.getCurrencies().keySet()));
+		super(new AccountListGUI(new AdminMainGUI()), Translation.GUI_ACCOUNT_VIEW_TITLE.getString("account_name", account.getName()), 6, new ArrayList<>(account.getCurrencies().keySet()));
 		this.account = account;
 		draw();
 	}
@@ -43,19 +42,11 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	@Override
 	protected ItemStack makeDisplayItem(Currency currency) {
 		return QuickItem.of(currency.getIcon())
-				.name(currency.getName())
-				.lore(Helper.replaceVariables(Arrays.asList(
-								"&7Identifier&F: &e" + currency.getId(),
-								"&7Description&F:",
-								"&f- " + currency.getDescription(),
-								"",
-								"&7Current Balance&F: &e%currency_balance%",
-								"",
-								"&e&lLeft Click &8» &7To set balance",
-								"&b&lRight Click &8» &7To add balance",
-								"&c&lPress 1 &8» &7To reset to &c%currency_starting_balance%"
-						), "currency_balance", this.account.getCurrencies().get(currency),
-						"currency_starting_balance", currency.getStartingBalance()
+				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_NAME.getString("currency_name", currency.getName()))
+				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_LORE.getList(
+						"currency_balance", this.account.getCurrencies().get(currency),
+						"currency_starting_balance", currency.getStartingBalance(),
+						"currency_id", currency.getId()
 				))
 				.make();
 	}
@@ -65,16 +56,10 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 
 		// blacklist balance top
 		setButton(5, 8, QuickItem.of(account.isBalTopBlocked() ? CompMaterial.RED_DYE : CompMaterial.LIME_DYE)
-				.name("&e&lBalance Top Blocked")
-				.lore(Helper.replaceVariables(Arrays.asList(
-						"&8Blocks user from balance top",
-						"&7If true, this player will be completed blacklisted",
-						"&7from the balance top lists for each currency.",
-						"",
-						"&7Current&f: %account_balance_top_blocked%",
-						"",
-						"&e&lClick &8» &7To toggle state"
-				), "account_balance_top_blocked", account.isBalTopBlocked() ? "&cBlocked" : "&aNot Blocked"))
+				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_NAME.getString())
+				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_LORE.getList(
+						"is_true", account.isBalTopBlocked() ? Translation.MISC_IS_TRUE.getString() : Translation.MISC_IS_FALSE.getString()
+				))
 				.make(), click -> {
 
 			account.setBalTopBlocked(!account.isBalTopBlocked());
@@ -85,14 +70,9 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 		// add currency player doesn't have
 		if (this.account.getCurrencies().size() != Funds.getCurrencyManager().getCurrencies().size())
 			setButton(5, 4, QuickItem.of(CompMaterial.SLIME_BALL)
-					.name("&a&lDeposit Currency")
-					.lore(
-							"&8Add another currency balance",
-							"&7Click to add another available currency",
-							"&7to this player's balance list.",
-							"",
-							"&e&lClick &8» &7To deposit currency"
-					).make(), click -> click.manager.showGUI(click.player, new CurrencyPicker(this.account, null, (e, selected) -> {
+					.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_NAME.getString())
+					.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_LORE.getList())
+					.make(), click -> click.manager.showGUI(click.player, new CurrencyPicker(this.account, null, (e, selected) -> {
 
 				new TitleInput(e.player, Common.colorize("&eCurrency Deposit"), Common.colorize("&fEnter deposit amount for currency")) {
 
@@ -121,14 +101,8 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 
 		// reset all balances
 		setButton(5, 7, QuickItem.of(CompMaterial.LAVA_BUCKET)
-				.name("&c&lReset Balances")
-				.lore(
-						"&8Reset player balances",
-						"&7By clicking this you will reset every single",
-						"&7currency balance from this user's account",
-						"",
-						"&c&lClick &8» &7To reset balances"
-				)
+				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_RESET_NAME.getString())
+				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_RESET_LORE.getList())
 				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null, confirmed -> {
 
 			if (confirmed) {
