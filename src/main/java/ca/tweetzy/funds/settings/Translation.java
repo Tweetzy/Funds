@@ -18,7 +18,9 @@ import java.util.List;
 @Getter
 public enum Translation {
 
-	// MAIN GUI
+	/*
+	============= MAIN MENU =============
+	 */
 	GUI_MAIN_TITLE("gui.main.title", "&eFunds &fv&7%plugin_version%"),
 	GUI_MAIN_ITEMS_CURRENCY_NAME("gui.main.items.currency.name", "&e&lCurrencies"),
 	GUI_MAIN_ITEMS_CURRENCY_LORE_CREATE("gui.main.items.currency.lore.create", Arrays.asList(
@@ -45,6 +47,16 @@ public enum Translation {
 			"",
 			"&a%total_accounts% &7accounts found", "", "&e&lClick &8» &7To view accounts"
 	)),
+
+
+	/*
+	============= CONFIRM MENU =============
+	 */
+	GUI_CONFIRM_TITLE("gui.confirm.title", "&eConfirm Action"),
+	GUI_CONFIRM_ITEMS_CONFIRM_NAME("gui.confirm.items.confirm.name", "&a&lConfirm"),
+	GUI_CONFIRM_ITEMS_CONFIRM_LORE("gui.confirm.items.confirm.lore", Arrays.asList("", "&E&LClick &8» &7To confirm action")),
+	GUI_CONFIRM_ITEMS_CANCEL_NAME("gui.confirm.items.cancel.name", "&c&lCancel"),
+	GUI_CONFIRM_ITEMS_CANCEL_LORE("gui.confirm.items.cancel.lore", Arrays.asList("", "&E&LClick &8» &7To cancel action")),
 
 	;
 
