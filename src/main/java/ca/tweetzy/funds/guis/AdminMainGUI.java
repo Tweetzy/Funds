@@ -3,7 +3,6 @@ package ca.tweetzy.funds.guis;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
-import ca.tweetzy.funds.model.Helper;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.NBTEditor;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
@@ -12,8 +11,6 @@ import ca.tweetzy.rose.utils.QuickItem;
 import ca.tweetzy.rose.utils.input.TitleInput;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import java.util.Arrays;
 
 /**
  * Date Created: April 10 2022
@@ -34,12 +31,11 @@ public final class AdminMainGUI extends BaseGUI {
 
 		// Currencies Button
 		setButton(1, 2, QuickItem.of(CompMaterial.GOLD_INGOT)
-				.name("&e&lCurrencies")
-				.lore("&8All the currencies you've made")
-				.lore(Helper.orList(Funds.getCurrencyManager().getCurrencies().isEmpty(),
-						Arrays.asList("&cNo currencies found", "", "&e&lClick &8» &7To create your first currency"),
-						Arrays.asList("&a" + Funds.getCurrencyManager().getCurrencies().size() + " &7currencies found", "", "&e&lClick &8» &7To view currencies")
-				)).make(), click -> {
+				.name(Translation.GUI_MAIN_ITEMS_CURRENCY_NAME.getString())
+				.lore(Funds.getCurrencyManager().getCurrencies().isEmpty() ?
+						Translation.GUI_MAIN_ITEMS_CURRENCY_LORE_CREATE.getList() :
+						Translation.GUI_MAIN_ITEMS_CURRENCY_LORE_VIEW.getList("total_currencies", Funds.getCurrencyManager().getCurrencies().size())
+				).make(), click -> {
 
 			if (Funds.getCurrencyManager().getCurrencies().isEmpty()) {
 				new TitleInput(click.player, Common.colorize("&eEnter Currency Name"), Common.colorize("&fEnter the id for the currency into chat")) {
@@ -76,16 +72,11 @@ public final class AdminMainGUI extends BaseGUI {
 		});
 
 		setButton(1, 4, QuickItem.of(NBTEditor.getHead("http://textures.minecraft.net/texture/15dfc521807dce2485c4032b1350303540325715eb309dd2bcbba4e27df83fe1"))
-				.name("&d&lAccounts")
-				.lore(
-						"&8View all known player accounts",
-						"&7An account is used to store each",
-						"&7player's different currency count",
-						"")
-				.lore(Helper.orList(Funds.getAccountManager().getAccounts().isEmpty(),
-						Arrays.asList("&cNo accounts found", "", "&e&lClick &8» &7To create your first currency"),
-						Arrays.asList("&a" + Funds.getAccountManager().getAccounts().size() + " &7accounts found", "", "&e&lClick &8» &7To view accounts")
-				))
+				.name(Translation.GUI_MAIN_ITEMS_ACCOUNTS_NAME.getString())
+				.lore(Funds.getAccountManager().getAccounts().isEmpty() ?
+						Translation.GUI_MAIN_ITEMS_ACCOUNTS_LORE_CREATE.getList() :
+						Translation.GUI_MAIN_ITEMS_ACCOUNTS_LORE_VIEW.getList("total_accounts", Funds.getAccountManager().getAccounts().size())
+				)
 				.make(), click -> click.manager.showGUI(click.player, new AccountListGUI(this)));
 
 		// Discord Button
