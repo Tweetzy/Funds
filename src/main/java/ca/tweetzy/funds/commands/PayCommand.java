@@ -3,6 +3,9 @@ package ca.tweetzy.funds.commands;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.model.Helper;
+import ca.tweetzy.funds.settings.Locale;
+import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.command.AllowedExecutor;
 import ca.tweetzy.rose.command.Command;
 import ca.tweetzy.rose.command.ReturnType;
@@ -44,7 +47,7 @@ public final class PayCommand extends Command {
 
 			// check again to see if lookup found anything
 			if (targetPlayer.get() == null) {
-
+				Common.tell(player, Helper.replaceVariables(Locale.getString(Translation.PLAYER_NOT_FOUND.getKey()), "player", args[0]));
 				return ReturnType.FAIL;
 			}
 
@@ -52,15 +55,18 @@ public final class PayCommand extends Command {
 			final Account targetAccount = Funds.getAccountManager().getAccount(targetPlayer.get());
 			// check if the target user even has an account
 			if (targetAccount == null) {
-
+				Common.tell(player, Helper.replaceVariables(Locale.getString(Translation.PLAYER_DOES_NOT_HAVE_ACCOUNT.getKey()), "player", args[0]));
 				return ReturnType.FAIL;
 			}
 
 			// check is arg 1 (transfer amt) is actually a number
 			if (!NumberUtils.isNumber(args[1])) {
-				// todo tell them to learn what a number is
+				// tell them to learn what a number is
+				Common.tell(player, Helper.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", args[1]));
 				return ReturnType.FAIL;
 			}
+
+			final double transferAmount = Double.parseDouble(args[1]);
 
 
 			return ReturnType.SUCCESS;

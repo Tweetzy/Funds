@@ -30,6 +30,10 @@ public enum Translation {
 	CURRENCY_CREATION_FAIL("misc.currency creation failed", "&cSomething went wrong while creating that currency"),
 	CURRENCY_CREATED("misc.currency created", "&aCreated a new currency named&F: &e%currency_name%"),
 
+	PLAYER_NOT_FOUND("misc.player not found", "&CThe player &4%player% &ccould not be found!"),
+	PLAYER_DOES_NOT_HAVE_ACCOUNT("misc.player does not have account", "&CThe player &4%player% &cdoesn't have an account!"),
+	NOT_ENOUGH_MONEY("misc.not enough money", "&cYou do not have enough %currency_plural_format%"),
+
 	/*
 	============= Titles / Input =============
 	 */

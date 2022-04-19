@@ -73,6 +73,16 @@ public final class VaultHook implements Economy {
 	}
 
 	@Override
+	public boolean hasAccount(String playerName) {
+		return Funds.getAccountManager().getAccount(playerName) != null;
+	}
+
+	@Override
+	public boolean hasAccount(String playerName, String worldName) {
+		return hasAccount(playerName);
+	}
+
+	@Override
 	public double getBalance(OfflinePlayer player) {
 		final Account account = Funds.getAccountManager().getAccount(player);
 		final Currency currency = Funds.getCurrencyManager().getVaultCurrency();
@@ -85,6 +95,18 @@ public final class VaultHook implements Economy {
 	}
 
 	@Override
+	public double getBalance(String playerName) {
+		final Account account = Funds.getAccountManager().getAccount(playerName);
+		final Currency currency = Funds.getCurrencyManager().getVaultCurrency();
+		return account != null && currency != null ? account.getCurrencies().get(currency) : 0D;
+	}
+
+	@Override
+	public double getBalance(String playerName, String world) {
+		return getBalance(playerName);
+	}
+
+	@Override
 	public boolean has(OfflinePlayer player, double amount) {
 		return getBalance(player) >= amount;
 	}
@@ -92,6 +114,16 @@ public final class VaultHook implements Economy {
 	@Override
 	public boolean has(OfflinePlayer player, String worldName, double amount) {
 		return getBalance(player) >= amount;
+	}
+
+	@Override
+	public boolean has(String playerName, double amount) {
+		return getBalance(playerName) >= amount;
+	}
+
+	@Override
+	public boolean has(String playerName, String worldName, double amount) {
+		return getBalance(playerName) >= amount;
 	}
 
 	@Override
@@ -119,6 +151,17 @@ public final class VaultHook implements Economy {
 	}
 
 	@Override
+	public EconomyResponse withdrawPlayer(String playerName, double amount) {
+		return null;
+	}
+
+	@Override
+	public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
+		return null;
+	}
+
+
+	@Override
 	public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
 		final Account account = Funds.getAccountManager().getAccount(player);
 		final Currency currency = Funds.getCurrencyManager().getVaultCurrency();
@@ -140,6 +183,16 @@ public final class VaultHook implements Economy {
 	}
 
 	@Override
+	public EconomyResponse depositPlayer(String playerName, double amount) {
+		return null;
+	}
+
+	@Override
+	public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
+		return null;
+	}
+
+	@Override
 	public boolean createPlayerAccount(OfflinePlayer player) {
 		Funds.getAccountManager().createAccount(new FundAccount(player), (created, account) -> {
 			if (created)
@@ -149,72 +202,9 @@ public final class VaultHook implements Economy {
 		return true;
 	}
 
-
 	@Override
 	public boolean createPlayerAccount(OfflinePlayer player, String worldName) {
 		return createPlayerAccount(player);
-	}
-
-	/*
-	===========================================================================
-	============= oMg GoD wHy U gOtTa UsE nAmEs InStEaD oF UuIdS ==============
-	===========================================================================
-
-							  THE SECTION OF SHAME
-
-	===========================================================================
-	 */
-
-	@Override
-	public boolean hasAccount(String playerName) {
-		return Funds.getAccountManager().getAccount(playerName) != null;
-	}
-
-	@Override
-	public boolean hasAccount(String playerName, String worldName) {
-		return hasAccount(playerName);
-	}
-
-	@Override
-	public double getBalance(String playerName) {
-		final Account account = Funds.getAccountManager().getAccount(playerName);
-		final Currency currency = Funds.getCurrencyManager().getVaultCurrency();
-		return account != null && currency != null ? account.getCurrencies().get(currency) : 0D;
-	}
-
-	@Override
-	public double getBalance(String playerName, String world) {
-		return getBalance(playerName);
-	}
-
-	@Override
-	public boolean has(String playerName, double amount) {
-		return getBalance(playerName) >= amount;
-	}
-
-	@Override
-	public boolean has(String playerName, String worldName, double amount) {
-		return getBalance(playerName) >= amount;
-	}
-
-	@Override
-	public EconomyResponse withdrawPlayer(String playerName, double amount) {
-		return null;
-	}
-
-	@Override
-	public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
-		return null;
-	}
-
-	@Override
-	public EconomyResponse depositPlayer(String playerName, double amount) {
-		return null;
-	}
-
-	@Override
-	public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
-		return null;
 	}
 
 	@Override
@@ -226,7 +216,6 @@ public final class VaultHook implements Economy {
 	public boolean createPlayerAccount(String playerName) {
 		return false;
 	}
-
 
 	/*
 	=========================== BANK SHIT ===========================
