@@ -78,7 +78,6 @@ public final class PayCommand extends Command {
 			final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
 			if (!offlinePlayer.hasPlayedBefore()) {
 				Common.tell(sender, "&fThat player has never played on this server before &f: &e" + args[0]);
-				;
 				return;
 			}
 
