@@ -4,6 +4,8 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.guis.template.MaterialPicker;
+import ca.tweetzy.funds.model.Helper;
+import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
@@ -15,10 +17,6 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import oshi.jna.platform.windows.NtDll;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Date Created: April 10 2022
@@ -59,7 +57,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 						"currency_singular_format", currency.getSingularFormat(),
 						"currency_plural_format", currency.getPluralFormat()
 				))
-				.make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter " + (click.clickType == ClickType.LEFT ? "singular" : "plural") + " format for currency")) {
+				.make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_EDIT_FORMATTING_TITLE.getString()), Common.colorize(click.clickType == ClickType.LEFT ? Translation.CURRENCY_EDIT_FORMATTING_SUBTITLE_SINGULAR.getString() : Translation.CURRENCY_EDIT_FORMATTING_SUBTITLE_PLURAL.getString())) {
 
 			@Override
 			public boolean onResult(String string) {
@@ -87,12 +85,12 @@ public final class CurrencyEditGUI extends BaseGUI {
 				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_STARTING_BAL_LORE.getList(
 						"currency_starting_balance", currency.getStartingBalance(),
 						"currency_plural_format", currency.getPluralFormat()
-				)).make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter starting balance for currency")) {
+				)).make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_EDIT_STARTING_BAL_TITLE.getString()), Common.colorize(Translation.CURRENCY_EDIT_STARTING_BAL_SUBTITLE.getString())) {
 
 			@Override
 			public boolean onResult(String string) {
 				if (!NumberUtils.isNumber(string)) {
-					Common.tell(click.player, "&4%value% &cis not a valid number!".replace("%value%", string));
+					Common.tell(click.player, Helper.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
 					return false;
 				}
 
@@ -116,7 +114,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_DISPLAY_NAME_LORE.getList(
 						"currency_name", currency.getName()
 				))
-				.make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter display name for currency")) {
+				.make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_EDIT_NAME_TITLE.getString()), Common.colorize(Translation.CURRENCY_EDIT_NAME_SUBTITLE.getString())) {
 
 			@Override
 			public boolean onResult(String string) {
@@ -140,7 +138,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_DESC_LORE.getList(
 						"currency_description", currency.getDescription()
 				))
-				.make(), click -> new TitleInput(click.player, Common.colorize("&eCurrency Edit"), Common.colorize("&fEnter description for currency")) {
+				.make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_EDIT_DESC_TITLE.getString()), Common.colorize(Translation.CURRENCY_EDIT_DESC_SUBTITLE.getString())) {
 
 			@Override
 			public boolean onResult(String string) {

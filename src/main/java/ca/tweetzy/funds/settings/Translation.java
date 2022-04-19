@@ -1,6 +1,5 @@
 package ca.tweetzy.funds.settings;
 
-import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.model.Helper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,9 +21,27 @@ public enum Translation {
 	============= misc =============
 	 */
 	MISC_IS_TRUE("misc.is true", "&ATrue"),
-	MISC_IS_FALSE("gui.is false", "&cFalse"),
+	MISC_IS_FALSE("misc.is false", "&cFalse"),
 	MISC_IS_ALLOWED("misc.is allowed", "&aAllowed"),
-	MISC_IS_DISALLOWED("gui.is disallowed", "&cDisallowed"),
+	MISC_IS_DISALLOWED("misc.is disallowed", "&cDisallowed"),
+
+	NOT_A_NUMBER("misc.not a number", "&4%value% &cis not a valid number!"),
+
+	/*
+	============= Titles / Input =============
+	 */
+	CURRENCY_EDIT_FORMATTING_TITLE("input.currency edit.formatting.title", "&eCurrency Edit"),
+	CURRENCY_EDIT_FORMATTING_SUBTITLE_PLURAL("input.currency edit.formatting.subtitle.plural", "&FEnter plural format for currency"),
+	CURRENCY_EDIT_FORMATTING_SUBTITLE_SINGULAR("input.currency edit.formatting.subtitle.singular", "&fEnter singular format for currency"),
+
+	CURRENCY_EDIT_STARTING_BAL_TITLE("input.currency edit.starting balance.title", "&eCurrency Edit"),
+	CURRENCY_EDIT_STARTING_BAL_SUBTITLE("input.currency edit.starting balance.subtitle", "&fEnter starting balance for currency"),
+
+	CURRENCY_EDIT_NAME_TITLE("input.currency edit.name.title", "&eCurrency Edit"),
+	CURRENCY_EDIT_NAME_SUBTITLE("input.currency edit.name.subtitle", "&fEnter display name for currency"),
+
+	CURRENCY_EDIT_DESC_TITLE("input.currency edit.desc.title", "&eCurrency Edit"),
+	CURRENCY_EDIT_DESC_SUBTITLE("input.currency edit.desc.subtitle", "&fEnter description for currency"),
 
 	/*
 	============= MAIN MENU =============
