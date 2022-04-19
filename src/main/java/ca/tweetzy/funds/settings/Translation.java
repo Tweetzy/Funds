@@ -26,6 +26,9 @@ public enum Translation {
 	MISC_IS_DISALLOWED("misc.is disallowed", "&cDisallowed"),
 
 	NOT_A_NUMBER("misc.not a number", "&4%value% &cis not a valid number!"),
+	CURRENCY_ALREADY_EXISTS("misc.currency already exists", "&cA currency by that id already exists!"),
+	CURRENCY_CREATION_FAIL("misc.currency creation failed", "&cSomething went wrong while creating that currency"),
+	CURRENCY_CREATED("misc.currency created", "&aCreated a new currency named&F: &e%currency_name%"),
 
 	/*
 	============= Titles / Input =============
@@ -42,6 +45,18 @@ public enum Translation {
 
 	CURRENCY_EDIT_DESC_TITLE("input.currency edit.desc.title", "&eCurrency Edit"),
 	CURRENCY_EDIT_DESC_SUBTITLE("input.currency edit.desc.subtitle", "&fEnter description for currency"),
+
+	CURRENCY_CREATE_TITLE("input.currency create.title", "&eEnter Currency Name"),
+	CURRENCY_CREATE_SUBTITLE("input.currency create.subtitle", "&fEnter the id for the currency into chat"),
+
+	CURRENCY_DEPOSIT_TITLE("input.currency deposit.title", "&eCurrency Deposit"),
+	CURRENCY_DEPOSIT_SUBTITLE("input.currency deposit.subtitle", "&fEnter deposit amount for currency"),
+
+	CURRENCY_SET_BAL_TITLE("input.currency set bal.title", "&eSet Balance"),
+	CURRENCY_SET_BAL_SUBTITLE("input.currency set bal.subtitle", "&fEnter new balance total"),
+
+	CURRENCY_ADD_BAL_TITLE("input.currency add bal.title", "&eAdd to Balance"),
+	CURRENCY_ADD_BAL_SUBTITLE("input.currency add bal.subtitle", "&fEnter amount to add to balance"),
 
 	/*
 	============= MAIN MENU =============

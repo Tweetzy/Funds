@@ -6,6 +6,8 @@ import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.ConfirmGUI;
 import ca.tweetzy.funds.guis.template.CurrencyPicker;
 import ca.tweetzy.funds.guis.template.PagedGUI;
+import ca.tweetzy.funds.model.Helper;
+import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
@@ -75,7 +77,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 					.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_LORE.getList())
 					.make(), click -> click.manager.showGUI(click.player, new CurrencyPicker(this.account, null, (e, selected) -> {
 
-				new TitleInput(e.player, Common.colorize("&eCurrency Deposit"), Common.colorize("&fEnter deposit amount for currency")) {
+				new TitleInput(e.player, Common.colorize(Translation.CURRENCY_DEPOSIT_TITLE.getString()), Common.colorize(Translation.CURRENCY_DEPOSIT_SUBTITLE.getString())) {
 
 					@Override
 					public void onExit(Player player) {
@@ -85,7 +87,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 					@Override
 					public boolean onResult(String string) {
 						if (!NumberUtils.isNumber(string)) {
-							Common.tell(e.player, "&4%value% &cis not a valid number!".replace("%value%", string));
+							Common.tell(click.player, Helper.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
 							return false;
 						}
 
@@ -117,7 +119,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	@Override
 	protected void onClick(Currency currency, GuiClickEvent event) {
 		if (event.clickType == ClickType.LEFT || event.clickType == ClickType.RIGHT) {
-			new TitleInput(event.player, Common.colorize(event.clickType == ClickType.LEFT ? "&eSet Balance" : "&eAdd To Balance"), Common.colorize(event.clickType == ClickType.LEFT ? "&fEnter new balance total" : "&fEnter amount to add to balance")) {
+			new TitleInput(event.player, Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_TITLE.getString() : Translation.CURRENCY_ADD_BAL_TITLE.getString() ), Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_SUBTITLE.getString()  : Translation.CURRENCY_ADD_BAL_SUBTITLE.getString())) {
 
 				@Override
 				public void onExit(Player player) {
@@ -127,7 +129,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 				@Override
 				public boolean onResult(String string) {
 					if (!NumberUtils.isNumber(string)) {
-						Common.tell(event.player, "&4%value% &cis not a valid number!".replace("%value%", string));
+						Common.tell(event.player, Helper.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
 						return false;
 					}
 

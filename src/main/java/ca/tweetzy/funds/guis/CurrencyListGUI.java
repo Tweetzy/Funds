@@ -4,6 +4,8 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.PagedGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
+import ca.tweetzy.funds.model.Helper;
+import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
@@ -52,7 +54,7 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 		setButton(5, 4, QuickItem.of(CompMaterial.SLIME_BALL)
 						.name(Translation.GUI_CURRENCY_LIST_ITEMS_NEW_NAME.getString())
 						.lore(Translation.GUI_CURRENCY_LIST_ITEMS_NEW_LORE.getList())
-						.make(), click -> new TitleInput(click.player, Common.colorize("&eEnter Currency Name"), Common.colorize("&fEnter the id for the currency into chat")) {
+						.make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_CREATE_TITLE.getString()), Common.colorize(Translation.CURRENCY_CREATE_SUBTITLE.getString())) {
 
 					@Override
 					public void onExit(Player player) {
@@ -67,18 +69,18 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 							return false;
 
 						if (Funds.getCurrencyManager().getCurrency(string) != null) {
-							Common.tell(click.player, "&cA currency by that id already exists!");
+							Locale.tell(click.player, Translation.CURRENCY_ALREADY_EXISTS.getKey());
 							return false;
 						}
 
 						Funds.getCurrencyManager().createCurrency(new FundCurrency(string), (error, created) -> {
 							if (error) {
-								Common.tell(click.player, "&cSomething went wrong while creating that currency");
+								Locale.tell(click.player, Translation.CURRENCY_CREATION_FAIL.getKey());
 								return;
 							}
 
 							click.manager.showGUI(click.player, new CurrencyListGUI(new AdminMainGUI()));
-							Common.tell(click.player, "&aCreated a new currency named&F: &e%currency_name%".replace("%currency_name%", created.getId()));
+							Common.tell(click.player, Helper.replaceVariables(Locale.getString(Translation.CURRENCY_CREATED.getKey()), "%currency_name%", created.getId()));
 						});
 						return true;
 					}
