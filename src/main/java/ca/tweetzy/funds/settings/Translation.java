@@ -221,6 +221,33 @@ public enum Translation {
 			"&7Current&f: %is_true%",
 			"", "&e&lClick &8» &7To make vault currency"
 	)),
+
+	/*
+	============= CURRENCY LIST MENU =============
+	 */
+	GUI_CURRENCY_LIST_TITLE("gui.currency list.title", "&eFunds &8> &7Currency List"),
+	GUI_CURRENCY_LIST_ITEMS_CURRENCY_NAME("gui.currency list.items.currency.name", "%currency_name%"),
+	GUI_CURRENCY_LIST_ITEMS_CURRENCY_LORE("gui.currency list.items.currency.lore", Arrays.asList(
+			"&8Basic currency information",
+			"&7Identifier&F: &e%currency_id%",
+			"&7Description&F:",
+			"&f- %currency_description%",
+			"",
+			"&7Singular Format&f: &e%currency_singular_format%",
+			"&7Plural Format&f: &e%currency_plural_format%",
+			"",
+			"&e&lLeft Click &8» &7To Edit Currency",
+			"&c&lPress 1 &8» &7To Delete Currency"
+	)),
+
+	GUI_CURRENCY_LIST_ITEMS_NEW_NAME("gui.currency list.items.new.name", "&a&lNew Currency"),
+	GUI_CURRENCY_LIST_ITEMS_NEW_LORE("gui.currency list.items.new.lore", Arrays.asList(
+			"&8Currency creation",
+			"&7Create another currency to be used",
+			"",
+			"&E&lClick &8» &7To Create Currency"
+	)),
+
 	;
 
 	final String key;

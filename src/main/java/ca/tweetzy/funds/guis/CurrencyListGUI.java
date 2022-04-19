@@ -4,6 +4,7 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.PagedGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
+import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
@@ -27,7 +28,7 @@ import java.util.List;
 public final class CurrencyListGUI extends PagedGUI<Currency> {
 
 	public CurrencyListGUI(final Gui parent) {
-		super(parent, "&eFunds &8> &7Currency List", 6, Funds.getCurrencyManager().getCurrencies());
+		super(parent, Translation.GUI_CURRENCY_LIST_TITLE.getString(), 6, Funds.getCurrencyManager().getCurrencies());
 		draw();
 	}
 
@@ -35,31 +36,23 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 	protected ItemStack makeDisplayItem(Currency currency) {
 		return QuickItem
 				.of(currency.getIcon())
-				.name(currency.getName())
+				.name(Translation.GUI_CURRENCY_LIST_ITEMS_CURRENCY_NAME.getString("currency_name", currency.getName()))
 				.glow(currency.isVaultCurrency())
-				.lore(
-						"&8Basic currency information",
-						"&7Identifier&F: &e" + currency.getId(),
-						"&7Description&F:",
-						"&f- " + currency.getDescription(),
-						"",
-						"&7Singular Format&f: &e" + currency.getSingularFormat(),
-						"&7Plural Format&f: &e" + currency.getPluralFormat(),
-						"",
-						"&e&lLeft Click &8» &7To Edit Currency",
-						"&c&lPress 1 &8» &7To Delete Currency"
-				)
+				.lore(Translation.GUI_CURRENCY_LIST_ITEMS_CURRENCY_LORE.getList(
+						"currency_id", currency.getId(),
+						"currency_description", currency.getDescription(),
+						"currency_singular_format", currency.getSingularFormat(),
+						"currency_plural_format", currency.getPluralFormat()
+				))
 				.make();
 	}
 
 	@Override
 	protected void drawAdditional() {
-		setButton(5, 4, QuickItem.of(CompMaterial.SLIME_BALL).name("&a&lNew Currency").lore(
-						"&8Currency creation",
-						"&7Create another currency to be used",
-						"",
-						"&E&lClick &8» &7To Create Currency"
-				).make(), click -> new TitleInput(click.player, Common.colorize("&eEnter Currency Name"), Common.colorize("&fEnter the id for the currency into chat")) {
+		setButton(5, 4, QuickItem.of(CompMaterial.SLIME_BALL)
+						.name(Translation.GUI_CURRENCY_LIST_ITEMS_NEW_NAME.getString())
+						.lore(Translation.GUI_CURRENCY_LIST_ITEMS_NEW_LORE.getList())
+						.make(), click -> new TitleInput(click.player, Common.colorize("&eEnter Currency Name"), Common.colorize("&fEnter the id for the currency into chat")) {
 
 					@Override
 					public void onExit(Player player) {
