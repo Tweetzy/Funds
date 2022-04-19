@@ -33,6 +33,8 @@ public enum Translation {
 	PLAYER_NOT_FOUND("misc.player not found", "&CThe player &4%player% &ccould not be found!"),
 	PLAYER_DOES_NOT_HAVE_ACCOUNT("misc.player does not have account", "&CThe player &4%player% &cdoesn't have an account!"),
 	NOT_ENOUGH_MONEY("misc.not enough money", "&cYou do not have enough %currency_plural_format%"),
+	DOES_NOT_OWN_CURRENCY("misc.does not own currency", "&cYou do not own any %currency_plural_format%"),
+	NO_CURRENCY_SET("misc.no currency set", "&cContact a server admin, there are no currencies or vault currency not set!"),
 
 	/*
 	============= Titles / Input =============

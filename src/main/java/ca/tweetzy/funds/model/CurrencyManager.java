@@ -49,6 +49,11 @@ public final class CurrencyManager {
 		});
 	}
 
+	public Currency getVaultOrFirst() {
+		if (this.vaultCurrency != null) return this.vaultCurrency;
+		return this.currencies.values().stream().findFirst().orElse(null);
+	}
+
 	/*
 	======================== DATA MODIFICATION ========================
 	 */

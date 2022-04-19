@@ -16,8 +16,10 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 /**
  * Date Created: April 13 2022
@@ -39,20 +41,15 @@ public final class PayCommand extends Command {
 			// for whatever reason if the payer account is not found, stop entirely
 			if (payerAccount == null) return ReturnType.FAIL;
 
-			final AtomicReference<OfflinePlayer> targetPlayer = new AtomicReference<>(Bukkit.getPlayerExact(args[0]));
-			if (targetPlayer.get() == null) {
-				// try looking them up
-				Common.runAsync(() -> targetPlayer.set(Bukkit.getOfflinePlayer(args[0])));
-			}
+			final Player targetPlayer = Bukkit.getPlayerExact(args[0]);
 
-			// check again to see if lookup found anything
-			if (targetPlayer.get() == null) {
+			// check to see if lookup found anything
+			if (targetPlayer == null) {
 				Common.tell(player, Helper.replaceVariables(Locale.getString(Translation.PLAYER_NOT_FOUND.getKey()), "player", args[0]));
 				return ReturnType.FAIL;
 			}
 
-			// orList target account *hopefully*
-			final Account targetAccount = Funds.getAccountManager().getAccount(targetPlayer.get());
+			final Account targetAccount = Funds.getAccountManager().getAccount(targetPlayer);
 			// check if the target user even has an account
 			if (targetAccount == null) {
 				Common.tell(player, Helper.replaceVariables(Locale.getString(Translation.PLAYER_DOES_NOT_HAVE_ACCOUNT.getKey()), "player", args[0]));
@@ -68,6 +65,32 @@ public final class PayCommand extends Command {
 
 			final double transferAmount = Double.parseDouble(args[1]);
 
+			Currency currency = Funds.getCurrencyManager().getVaultOrFirst();
+
+			if (args.length == 3 && args[2] != null && Funds.getCurrencyManager().getCurrency(args[2]) != null)
+				currency = Funds.getCurrencyManager().getCurrency(args[2]);
+
+			if (currency == null) {
+				Common.tell(player, Locale.getString(Translation.NO_CURRENCY_SET.getKey()));
+				return ReturnType.FAIL;
+			}
+
+			if (!payerAccount.getCurrencies().containsKey(currency)) {
+				Common.tell(player, Helper.replaceVariables(Locale.getString(Translation.DOES_NOT_OWN_CURRENCY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+				return ReturnType.FAIL;
+			}
+
+			// does the player even have enough money
+			// todo add method to interface
+			if (payerAccount.getCurrencies().get(currency) < transferAmount) {
+				Common.tell(player, Helper.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+				return ReturnType.FAIL;
+			}
+
+			// finally, transfer money
+			payerAccount.transferCurrency(targetAccount, currency, transferAmount);
+			// todo determine whether I should handle this within the Account#transferCurrency method
+			Funds.getAccountManager().updateAccounts(Arrays.asList(payerAccount, targetAccount), null);
 
 			return ReturnType.SUCCESS;
 		}
@@ -115,6 +138,10 @@ public final class PayCommand extends Command {
 
 	@Override
 	protected List<String> tab(CommandSender sender, String... args) {
+		if (args.length == 1)
+			return Bukkit.getOnlinePlayers().stream().map(Player::getName).filter(name -> !name.equalsIgnoreCase(sender.getName())).collect(Collectors.toList());
+		if (args.length == 3)
+			return Funds.getCurrencyManager().getCurrencies().stream().map(Currency::getId).collect(Collectors.toList());
 		return null;
 	}
 
