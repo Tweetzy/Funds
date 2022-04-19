@@ -45,6 +45,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_NAME.getString("currency_name", currency.getName()))
 				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_LORE.getList(
 						"currency_balance", this.account.getCurrencies().get(currency),
+						"currency_description", currency.getDescription(),
 						"currency_starting_balance", currency.getStartingBalance(),
 						"currency_id", currency.getId()
 				))

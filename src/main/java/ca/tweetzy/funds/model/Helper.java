@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @UtilityClass
 public final class Helper {
 
-	private final Pattern TOKEN_PATTERN = Pattern.compile("[\\{|%]([^}]+)[\\}|%]");
+	private final Pattern TOKEN_PATTERN = Pattern.compile("[\\{|%]([^}|%]+)[\\}|%]");
 
 	public List<String> orList(boolean expression, List<String> ifTrue, List<String> ifFalse) {
 		return expression ? ifTrue : ifFalse;
