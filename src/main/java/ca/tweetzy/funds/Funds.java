@@ -8,6 +8,7 @@ import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
 import ca.tweetzy.funds.database.migrations._2_AccountTableMigration;
 import ca.tweetzy.funds.database.migrations._3_VaultCurrencyMigration;
+import ca.tweetzy.funds.hooks.PlaceholderAPIHook;
 import ca.tweetzy.funds.listeners.AccessListeners;
 import ca.tweetzy.funds.listeners.HookListeners;
 import ca.tweetzy.funds.model.AccountManager;
@@ -22,6 +23,7 @@ import ca.tweetzy.rose.database.SQLiteConnector;
 import ca.tweetzy.rose.gui.GuiManager;
 import ca.tweetzy.rose.utils.Common;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -40,8 +42,6 @@ public final class Funds extends RosePlugin {
 
 	private DatabaseConnector databaseConnector;
 	private DataManager dataManager;
-
-	// fucked up git commits asorhfsdighdig
 
 	@Override
 	protected void onWake() {
@@ -69,6 +69,11 @@ public final class Funds extends RosePlugin {
 
 		// load currencies -> then accounts
 		this.currencyManager.loadCurrencies((loaded) -> this.accountManager.loadAccounts());
+
+		// placeholder api
+		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+			new PlaceholderAPIHook().register();
+		}
 
 		// initialize gui manager
 		this.guiManager.init();
