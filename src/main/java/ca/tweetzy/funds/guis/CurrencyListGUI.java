@@ -93,8 +93,13 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 
 		if (click.clickType == ClickType.NUMBER_KEY)
 			Funds.getCurrencyManager().deleteCurrency(currency.getId(), deleted -> {
-				if (deleted)
+				if (deleted) {
+					// remove from player accounts
+					Funds.getAccountManager().getAccounts().forEach(account -> account.deleteCurrency(currency));
+					Funds.getAccountManager().updateAccounts(Funds.getAccountManager().getAccounts(), null);
+
 					click.manager.showGUI(click.player, Funds.getCurrencyManager().getCurrencies().isEmpty() ? new AdminMainGUI() : new CurrencyListGUI(new AdminMainGUI()));
+				}
 			});
 	}
 

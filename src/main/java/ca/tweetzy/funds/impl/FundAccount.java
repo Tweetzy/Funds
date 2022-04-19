@@ -133,6 +133,12 @@ public final class FundAccount implements Account {
 	}
 
 	@Override
+	public void deleteCurrency(Currency currency) {
+		if (!this.currencies.containsKey(currency)) return;
+		this.currencies.remove(currency);
+	}
+
+	@Override
 	public String getCurrencyJson() {
 		final JsonArray jsonArray = new JsonArray();
 

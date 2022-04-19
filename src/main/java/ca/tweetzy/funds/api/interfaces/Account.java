@@ -36,4 +36,6 @@ public interface Account extends DatabaseSynchronize {
 	boolean setCurrency(Currency currency, double amount);
 
 	boolean resetCurrencies(Currency... currencies);
+
+	void deleteCurrency(Currency currency);
 }
