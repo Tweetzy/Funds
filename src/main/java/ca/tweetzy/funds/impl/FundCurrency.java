@@ -1,9 +1,9 @@
 package ca.tweetzy.funds.impl;
 
 import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.Inflector;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
+import ca.tweetzy.rose.utils.Inflector;
 import lombok.AllArgsConstructor;
 import org.bukkit.ChatColor;
 

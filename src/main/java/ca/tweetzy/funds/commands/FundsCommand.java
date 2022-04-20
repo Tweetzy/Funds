@@ -1,7 +1,7 @@
 package ca.tweetzy.funds.commands;
 
 import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.guis.AdminMainGUI;
+import ca.tweetzy.funds.guis.admin.AdminMainGUI;
 import ca.tweetzy.rose.command.AllowedExecutor;
 import ca.tweetzy.rose.command.Command;
 import ca.tweetzy.rose.command.ReturnType;

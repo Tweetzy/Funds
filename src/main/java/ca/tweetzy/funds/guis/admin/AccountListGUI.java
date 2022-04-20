@@ -1,4 +1,4 @@
-package ca.tweetzy.funds.guis;
+package ca.tweetzy.funds.guis.admin;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;

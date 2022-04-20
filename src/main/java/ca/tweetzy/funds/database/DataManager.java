@@ -277,6 +277,7 @@ public final class DataManager extends DataManagerAbstract {
 				resultSet.getString("name"),
 				FundAccount.getCurrencyMapFromJson(resultSet.getString("currencies")),
 				resultSet.getBoolean("bal_top_blocked"),
+				null,
 				resultSet.getLong("created_at")
 
 		);
