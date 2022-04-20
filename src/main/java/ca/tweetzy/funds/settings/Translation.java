@@ -1,5 +1,6 @@
 package ca.tweetzy.funds.settings;
 
+import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.rose.utils.Replacer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -290,6 +291,14 @@ public enum Translation {
 
 	final String key;
 	final Object value;
+
+	public String getString(Account account, Object... replacements) {
+		return Replacer.replaceVariables(Locale.getString(this.key, account.getPreferredLanguage().getFileName()), replacements);
+	}
+
+	public List<String> getList(Account account, Object... replacements) {
+		return Replacer.replaceVariables(Locale.getList(this.key, account.getPreferredLanguage().getFileName()), replacements);
+	}
 
 	public String getString(Object... replacements) {
 		return Replacer.replaceVariables(Locale.getString(this.key), replacements);

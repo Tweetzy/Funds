@@ -36,7 +36,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	private final Account account;
 
 	public AccountViewGUI(@NonNull final Account account) {
-		super(new AccountListGUI(new AdminMainGUI()), Translation.GUI_ACCOUNT_VIEW_TITLE.getString("account_name", account.getName()), 6, new ArrayList<>(account.getCurrencies().keySet()));
+		super(new AccountListGUI(new AdminMainGUI(account), account), Translation.GUI_ACCOUNT_VIEW_TITLE.getString(account, "account_name", account.getName()), 6, new ArrayList<>(account.getCurrencies().keySet()));
 		this.account = account;
 		draw();
 	}
@@ -44,8 +44,8 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	@Override
 	protected ItemStack makeDisplayItem(Currency currency) {
 		return QuickItem.of(currency.getIcon())
-				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_NAME.getString("currency_name", currency.getName()))
-				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_LORE.getList(
+				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_NAME.getString(this.account, "currency_name", currency.getName()))
+				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_LORE.getList(this.account,
 						"currency_balance", this.account.getCurrencies().get(currency),
 						"currency_description", currency.getDescription(),
 						"currency_starting_balance", currency.getStartingBalance(),
@@ -59,9 +59,9 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 
 		// blacklist balance top
 		setButton(5, 8, QuickItem.of(account.isBalTopBlocked() ? CompMaterial.RED_DYE : CompMaterial.LIME_DYE)
-				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_NAME.getString())
-				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_LORE.getList(
-						"is_true", account.isBalTopBlocked() ? Translation.MISC_IS_TRUE.getString() : Translation.MISC_IS_FALSE.getString()
+				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_NAME.getString(this.account))
+				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_LORE.getList(this.account,
+						"is_true", account.isBalTopBlocked() ? Translation.MISC_IS_TRUE.getString(this.account) : Translation.MISC_IS_FALSE.getString(this.account)
 				))
 				.make(), click -> {
 
@@ -73,11 +73,11 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 		// add currency player doesn't have
 		if (this.account.getCurrencies().size() != Funds.getCurrencyManager().getCurrencies().size())
 			setButton(5, 4, QuickItem.of(CompMaterial.SLIME_BALL)
-					.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_NAME.getString())
-					.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_LORE.getList())
+					.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_NAME.getString(this.account))
+					.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_LORE.getList(this.account))
 					.make(), click -> click.manager.showGUI(click.player, new CurrencyPicker(this.account, null, (e, selected) -> {
 
-				new TitleInput(e.player, Common.colorize(Translation.CURRENCY_DEPOSIT_TITLE.getString()), Common.colorize(Translation.CURRENCY_DEPOSIT_SUBTITLE.getString())) {
+				new TitleInput(e.player, Common.colorize(Translation.CURRENCY_DEPOSIT_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_DEPOSIT_SUBTITLE.getString(this.account))) {
 
 					@Override
 					public void onExit(Player player) {
@@ -87,7 +87,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 					@Override
 					public boolean onResult(String string) {
 						if (!NumberUtils.isNumber(string)) {
-							Common.tell(click.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
+							Common.tell(click.player, Replacer.replaceVariables(Locale.getString(account, Translation.NOT_A_NUMBER.getKey()), "value", string));
 							return false;
 						}
 
@@ -104,9 +104,9 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 
 		// reset all balances
 		setButton(5, 7, QuickItem.of(CompMaterial.LAVA_BUCKET)
-				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_RESET_NAME.getString())
-				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_RESET_LORE.getList())
-				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null, confirmed -> {
+				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_RESET_NAME.getString(this.account))
+				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_RESET_LORE.getList(this.account))
+				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null, this.account, confirmed -> {
 
 			if (confirmed) {
 				this.account.resetCurrencies();
@@ -119,7 +119,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	@Override
 	protected void onClick(Currency currency, GuiClickEvent event) {
 		if (event.clickType == ClickType.LEFT || event.clickType == ClickType.RIGHT) {
-			new TitleInput(event.player, Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_TITLE.getString() : Translation.CURRENCY_ADD_BAL_TITLE.getString()), Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_SUBTITLE.getString() : Translation.CURRENCY_ADD_BAL_SUBTITLE.getString())) {
+			new TitleInput(event.player, Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_TITLE.getString(this.account) : Translation.CURRENCY_ADD_BAL_TITLE.getString(this.account)), Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_SUBTITLE.getString(this.account) : Translation.CURRENCY_ADD_BAL_SUBTITLE.getString(this.account))) {
 
 				@Override
 				public void onExit(Player player) {
@@ -129,7 +129,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 				@Override
 				public boolean onResult(String string) {
 					if (!NumberUtils.isNumber(string)) {
-						Common.tell(event.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
+						Common.tell(event.player, Replacer.replaceVariables(Locale.getString(account, Translation.NOT_A_NUMBER.getKey()), "value", string));
 						return false;
 					}
 
@@ -149,7 +149,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 		}
 
 		if (event.clickType == ClickType.NUMBER_KEY) {
-			event.manager.showGUI(event.player, new ConfirmGUI(null, confirmed -> {
+			event.manager.showGUI(event.player, new ConfirmGUI(null, this.account, confirmed -> {
 
 				if (confirmed) {
 					this.account.resetCurrencies(currency);

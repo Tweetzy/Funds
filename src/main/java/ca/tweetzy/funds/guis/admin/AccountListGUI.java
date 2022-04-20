@@ -10,6 +10,7 @@ import ca.tweetzy.rose.gui.events.GuiClickEvent;
 import ca.tweetzy.rose.gui.helper.InventoryBorder;
 import ca.tweetzy.rose.gui.template.PagedGUI;
 import ca.tweetzy.rose.utils.QuickItem;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
@@ -24,8 +25,11 @@ import java.util.List;
  */
 public final class AccountListGUI extends PagedGUI<Account> {
 
-	public AccountListGUI(Gui parent) {
-		super(parent, Translation.GUI_ACCOUNT_LIST_TITLE.getString(), 6, Funds.getAccountManager().getAccounts());
+	private final Account account;
+
+	public AccountListGUI(Gui parent, @NonNull final Account account) {
+		super(parent, Translation.GUI_ACCOUNT_LIST_TITLE.getString(account), 6, Funds.getAccountManager().getAccounts());
+		this.account = account;
 		draw();
 	}
 
@@ -33,8 +37,8 @@ public final class AccountListGUI extends PagedGUI<Account> {
 	protected ItemStack makeDisplayItem(Account account) {
 		final OfflinePlayer player = Bukkit.getOfflinePlayer(account.getOwner());
 		return QuickItem.of(player)
-				.name(Translation.GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_NAME.getString("account_name", player.getName()))
-				.lore(Translation.GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_LORE.getList())
+				.name(Translation.GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_NAME.getString(this.account, "account_name", player.getName()))
+				.lore(Translation.GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_LORE.getList(this.account))
 				.make();
 	}
 
@@ -42,15 +46,15 @@ public final class AccountListGUI extends PagedGUI<Account> {
 	protected void drawAdditional() {
 		// wipe account currencies
 		setButton(5, 7, QuickItem.of(CompMaterial.LAVA_BUCKET)
-				.name(Translation.GUI_ACCOUNT_LIST_ITEMS_RESET_NAME.getString())
-				.lore(Translation.GUI_ACCOUNT_LIST_ITEMS_RESET_LORE.getList())
-				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null, confirmed -> {
+				.name(Translation.GUI_ACCOUNT_LIST_ITEMS_RESET_NAME.getString(this.account))
+				.lore(Translation.GUI_ACCOUNT_LIST_ITEMS_RESET_LORE.getList(this.account))
+				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null,this.account, confirmed -> {
 
 			if (confirmed) {
 				Funds.getAccountManager().resetPlayerAccountsBalances();
 			}
 
-			click.manager.showGUI(click.player, new AccountListGUI(new AdminMainGUI()));
+			click.manager.showGUI(click.player, new AccountListGUI(new AdminMainGUI(this.account), this.account));
 		})));
 	}
 

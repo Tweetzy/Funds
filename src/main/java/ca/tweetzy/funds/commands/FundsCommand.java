@@ -1,6 +1,7 @@
 package ca.tweetzy.funds.commands;
 
 import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.guis.admin.AdminMainGUI;
 import ca.tweetzy.rose.command.AllowedExecutor;
 import ca.tweetzy.rose.command.Command;
@@ -25,7 +26,9 @@ public final class FundsCommand extends Command {
 	@Override
 	protected ReturnType execute(CommandSender sender, String... args) {
 		final Player player = (Player) sender;
-		Funds.getGuiManager().showGUI(player, new AdminMainGUI());
+		final Account account = Funds.getAccountManager().getAccount(player);
+
+		Funds.getGuiManager().showGUI(player, new AdminMainGUI(account));
 		return ReturnType.SUCCESS;
 	}
 

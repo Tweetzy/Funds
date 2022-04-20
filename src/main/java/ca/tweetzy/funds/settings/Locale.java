@@ -1,6 +1,7 @@
 package ca.tweetzy.funds.settings;
 
 import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Language;
 import ca.tweetzy.funds.impl.FundLanguage;
 import ca.tweetzy.rose.files.comments.format.YamlCommentFormat;
@@ -117,12 +118,32 @@ public final class Locale {
 			LANGUAGES.put(name, new FundLanguage(StringUtils.capitalize(name), yamlFile.getName().replace(".yml", ""), yamlFile.getString("flag texture", "https://textures.minecraft.net/texture/879e54cbe87867d14b2fbdf3f1870894352048dfecd962846dea893b2154c85")));
 	}
 
+	public static Language getLanague(String name) {
+		return LANGUAGES.getOrDefault(name, LANGUAGES.get("english"));
+	}
+
+	public static String getString(Account account, String key) {
+		return (String) getPhrase(key, account.getPreferredLanguage().getFileName());
+	}
+
+	public static List<String> getList(Account account, String key) {
+		return (List<String>) getPhrase(key, account.getPreferredLanguage().getFileName());
+	}
+
 	public static String getString(String key) {
 		return (String) getPhrase(key, defaultLanguage);
 	}
 
 	public static List<String> getList(String key) {
 		return (List<String>) getPhrase(key, defaultLanguage);
+	}
+
+	public static String getString(String key, String language) {
+		return (String) getPhrase(key, language);
+	}
+
+	public static List<String> getList(String key, String language) {
+		return (List<String>) getPhrase(key, language);
 	}
 
 	private static Object getPhraseEnglish(String key) {
@@ -139,6 +160,7 @@ public final class Locale {
 	}
 
 	public static void tell(CommandSender sender, String key) {
+
 		tell(sender, defaultLanguage, key);
 	}
 

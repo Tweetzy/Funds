@@ -4,6 +4,7 @@ import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.impl.FundAccount;
 import ca.tweetzy.funds.impl.FundCurrency;
+import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.database.Callback;
 import ca.tweetzy.rose.database.DataManagerAbstract;
@@ -41,7 +42,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void createAccount(@NotNull final Account account, Callback<Account> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "INSERT INTO " + this.getTablePrefix() + "account (id, name, bal_top_blocked, currencies, created_at) VALUES (?, ?, ?, ?, ?)";
+			final String query = "INSERT INTO " + this.getTablePrefix() + "account (id, name, bal_top_blocked, currencies, preferred_language, created_at) VALUES (?, ?, ?, ?, ?, ?)";
 			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "account WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -53,7 +54,8 @@ public final class DataManager extends DataManagerAbstract {
 				preparedStatement.setString(2, account.getName());
 				preparedStatement.setBoolean(3, account.isBalTopBlocked());
 				preparedStatement.setString(4, account.getCurrencyJson());
-				preparedStatement.setLong(5, account.getCreatedAt());
+				preparedStatement.setString(5, account.getPreferredLanguage().getFileName());
+				preparedStatement.setLong(6, account.getCreatedAt());
 
 				preparedStatement.executeUpdate();
 
@@ -89,12 +91,13 @@ public final class DataManager extends DataManagerAbstract {
 	public void updateAccount(final boolean silent, @NonNull final Account currency, Callback<Boolean> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
 			long begin = System.nanoTime();
-			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "account SET name = ?, bal_top_blocked = ?, currencies = ? WHERE id = ?")) {
+			try (PreparedStatement statement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "account SET name = ?, bal_top_blocked = ?, currencies = ?, preferred_language = ? WHERE id = ?")) {
 
 				statement.setString(1, currency.getName());
 				statement.setBoolean(2, currency.isBalTopBlocked());
 				statement.setString(3, currency.getCurrencyJson());
-				statement.setString(4, currency.getOwner().toString());
+				statement.setString(4, currency.getPreferredLanguage().getFileName());
+				statement.setString(5, currency.getOwner().toString());
 
 				int result = statement.executeUpdate();
 
@@ -277,7 +280,7 @@ public final class DataManager extends DataManagerAbstract {
 				resultSet.getString("name"),
 				FundAccount.getCurrencyMapFromJson(resultSet.getString("currencies")),
 				resultSet.getBoolean("bal_top_blocked"),
-				null,
+				Locale.getLanague(resultSet.getString("preferred_language")),
 				resultSet.getLong("created_at")
 
 		);

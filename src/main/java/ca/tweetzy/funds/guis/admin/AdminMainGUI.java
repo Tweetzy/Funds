@@ -1,6 +1,7 @@
 package ca.tweetzy.funds.guis.admin;
 
 import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.impl.FundCurrency;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.NBTEditor;
@@ -9,6 +10,7 @@ import ca.tweetzy.rose.gui.template.BaseGUI;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;
 import ca.tweetzy.rose.utils.input.TitleInput;
+import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -20,8 +22,11 @@ import org.bukkit.entity.Player;
  */
 public final class AdminMainGUI extends BaseGUI {
 
-	public AdminMainGUI() {
-		super(Translation.GUI_MAIN_TITLE.getString("plugin_version", Funds.getInstance().getVersion()));
+	private final Account account;
+
+	public AdminMainGUI(@NonNull final Account account) {
+		super(Translation.GUI_MAIN_TITLE.getString(account, "plugin_version", Funds.getInstance().getVersion()));
+		this.account = account;
 		draw();
 	}
 
@@ -31,10 +36,10 @@ public final class AdminMainGUI extends BaseGUI {
 
 		// Currencies Button
 		setButton(1, 2, QuickItem.of(CompMaterial.GOLD_INGOT)
-				.name(Translation.GUI_MAIN_ITEMS_CURRENCY_NAME.getString())
+				.name(Translation.GUI_MAIN_ITEMS_CURRENCY_NAME.getString(this.account))
 				.lore(Funds.getCurrencyManager().getCurrencies().isEmpty() ?
-						Translation.GUI_MAIN_ITEMS_CURRENCY_LORE_CREATE.getList() :
-						Translation.GUI_MAIN_ITEMS_CURRENCY_LORE_VIEW.getList("total_currencies", Funds.getCurrencyManager().getCurrencies().size())
+						Translation.GUI_MAIN_ITEMS_CURRENCY_LORE_CREATE.getList(this.account) :
+						Translation.GUI_MAIN_ITEMS_CURRENCY_LORE_VIEW.getList(this.account, "total_currencies", Funds.getCurrencyManager().getCurrencies().size())
 				).make(), click -> {
 
 			if (Funds.getCurrencyManager().getCurrencies().isEmpty()) {
@@ -58,7 +63,7 @@ public final class AdminMainGUI extends BaseGUI {
 								return;
 							}
 
-							click.manager.showGUI(click.player, new CurrencyListGUI(new AdminMainGUI()));
+							click.manager.showGUI(click.player, new CurrencyListGUI(new AdminMainGUI(account), account));
 							Common.tell(click.player, "&aCreated a new currency named&F: &e%currency_name%".replace("%currency_name%", created.getId()));
 						});
 
@@ -68,16 +73,16 @@ public final class AdminMainGUI extends BaseGUI {
 				return;
 			}
 
-			click.manager.showGUI(click.player, new CurrencyListGUI(this));
+			click.manager.showGUI(click.player, new CurrencyListGUI(this, this.account));
 		});
 
 		setButton(1, 4, QuickItem.of(NBTEditor.getHead("http://textures.minecraft.net/texture/15dfc521807dce2485c4032b1350303540325715eb309dd2bcbba4e27df83fe1"))
-				.name(Translation.GUI_MAIN_ITEMS_ACCOUNTS_NAME.getString())
+				.name(Translation.GUI_MAIN_ITEMS_ACCOUNTS_NAME.getString(this.account))
 				.lore(Funds.getAccountManager().getAccounts().isEmpty() ?
-						Translation.GUI_MAIN_ITEMS_ACCOUNTS_LORE_CREATE.getList() :
-						Translation.GUI_MAIN_ITEMS_ACCOUNTS_LORE_VIEW.getList("total_accounts", Funds.getAccountManager().getAccounts().size())
+						Translation.GUI_MAIN_ITEMS_ACCOUNTS_LORE_CREATE.getList(this.account) :
+						Translation.GUI_MAIN_ITEMS_ACCOUNTS_LORE_VIEW.getList(this.account, "total_accounts", Funds.getAccountManager().getAccounts().size())
 				)
-				.make(), click -> click.manager.showGUI(click.player, new AccountListGUI(this)));
+				.make(), click -> click.manager.showGUI(click.player, new AccountListGUI(this, this.account)));
 
 		// Discord Button
 		setItem(4, 1, QuickItem.of(NBTEditor.getHead("http://textures.minecraft.net/texture/4d42337be0bdca2128097f1c5bb1109e5c633c17926af5fb6fc20000011aeb53"))
