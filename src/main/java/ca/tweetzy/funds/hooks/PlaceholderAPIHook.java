@@ -15,17 +15,20 @@ import org.jetbrains.annotations.Nullable;
 public final class PlaceholderAPIHook extends PlaceholderExpansion {
 
 	@Override
-	public @NotNull String getIdentifier() {
+	public @NotNull
+	String getIdentifier() {
 		return "funds";
 	}
 
 	@Override
-	public @NotNull String getAuthor() {
+	public @NotNull
+	String getAuthor() {
 		return "Kiran Hart";
 	}
 
 	@Override
-	public @NotNull String getVersion() {
+	public @NotNull
+	String getVersion() {
 		return "1.0.0";
 	}
 
@@ -35,7 +38,8 @@ public final class PlaceholderAPIHook extends PlaceholderExpansion {
 	}
 
 	@Override
-	public @Nullable String onRequest(OfflinePlayer player, @NotNull String params) {
+	public @Nullable
+	String onRequest(OfflinePlayer player, @NotNull String params) {
 		if (params.equalsIgnoreCase("total_currencies"))
 			return String.valueOf(Funds.getCurrencyManager().getCurrencies().size());
 

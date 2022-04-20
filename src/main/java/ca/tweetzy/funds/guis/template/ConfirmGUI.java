@@ -2,6 +2,7 @@ package ca.tweetzy.funds.guis.template;
 
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
+import ca.tweetzy.rose.gui.template.BaseGUI;
 import ca.tweetzy.rose.utils.QuickItem;
 import lombok.NonNull;
 

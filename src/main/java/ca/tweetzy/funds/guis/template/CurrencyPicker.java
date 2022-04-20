@@ -5,6 +5,7 @@ import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
 import ca.tweetzy.rose.gui.helper.InventoryBorder;
+import ca.tweetzy.rose.gui.template.PagedGUI;
 import ca.tweetzy.rose.utils.QuickItem;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;

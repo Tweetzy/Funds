@@ -1,11 +1,11 @@
 package ca.tweetzy.funds.guis;
 
 import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.guis.template.BaseGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.NBTEditor;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
+import ca.tweetzy.rose.gui.template.BaseGUI;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;
 import ca.tweetzy.rose.utils.input.TitleInput;

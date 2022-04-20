@@ -5,15 +5,15 @@ import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.ConfirmGUI;
 import ca.tweetzy.funds.guis.template.CurrencyPicker;
-import ca.tweetzy.funds.guis.template.PagedGUI;
-import ca.tweetzy.funds.model.Helper;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
 import ca.tweetzy.rose.gui.helper.InventoryBorder;
+import ca.tweetzy.rose.gui.template.PagedGUI;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;
+import ca.tweetzy.rose.utils.Replacer;
 import ca.tweetzy.rose.utils.input.TitleInput;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
@@ -87,7 +87,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 					@Override
 					public boolean onResult(String string) {
 						if (!NumberUtils.isNumber(string)) {
-							Common.tell(click.player, Helper.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
+							Common.tell(click.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
 							return false;
 						}
 
@@ -119,7 +119,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	@Override
 	protected void onClick(Currency currency, GuiClickEvent event) {
 		if (event.clickType == ClickType.LEFT || event.clickType == ClickType.RIGHT) {
-			new TitleInput(event.player, Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_TITLE.getString() : Translation.CURRENCY_ADD_BAL_TITLE.getString() ), Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_SUBTITLE.getString()  : Translation.CURRENCY_ADD_BAL_SUBTITLE.getString())) {
+			new TitleInput(event.player, Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_TITLE.getString() : Translation.CURRENCY_ADD_BAL_TITLE.getString()), Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_SUBTITLE.getString() : Translation.CURRENCY_ADD_BAL_SUBTITLE.getString())) {
 
 				@Override
 				public void onExit(Player player) {
@@ -129,7 +129,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 				@Override
 				public boolean onResult(String string) {
 					if (!NumberUtils.isNumber(string)) {
-						Common.tell(event.player, Helper.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
+						Common.tell(event.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
 						return false;
 					}
 

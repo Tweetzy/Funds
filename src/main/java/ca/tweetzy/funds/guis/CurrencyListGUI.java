@@ -2,17 +2,17 @@ package ca.tweetzy.funds.guis;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.funds.guis.template.PagedGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
-import ca.tweetzy.funds.model.Helper;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
 import ca.tweetzy.rose.gui.helper.InventoryBorder;
+import ca.tweetzy.rose.gui.template.PagedGUI;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;
+import ca.tweetzy.rose.utils.Replacer;
 import ca.tweetzy.rose.utils.input.TitleInput;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -80,7 +80,7 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 							}
 
 							click.manager.showGUI(click.player, new CurrencyListGUI(new AdminMainGUI()));
-							Common.tell(click.player, Helper.replaceVariables(Locale.getString(Translation.CURRENCY_CREATED.getKey()), "%currency_name%", created.getId()));
+							Common.tell(click.player, Replacer.replaceVariables(Locale.getString(Translation.CURRENCY_CREATED.getKey()), "%currency_name%", created.getId()));
 						});
 						return true;
 					}

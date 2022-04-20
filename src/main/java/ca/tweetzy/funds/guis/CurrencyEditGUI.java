@@ -2,15 +2,15 @@ package ca.tweetzy.funds.guis;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.funds.guis.template.BaseGUI;
-import ca.tweetzy.funds.guis.template.MaterialPicker;
-import ca.tweetzy.funds.model.Helper;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.Gui;
+import ca.tweetzy.rose.gui.template.BaseGUI;
+import ca.tweetzy.rose.gui.template.MaterialPickerGUI;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;
+import ca.tweetzy.rose.utils.Replacer;
 import ca.tweetzy.rose.utils.input.TitleInput;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
@@ -43,7 +43,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 		setButton(1, 4, QuickItem.of(this.currency.getIcon())
 				.name(Translation.GUI_CURRENCY_EDIT_ITEMS_ICON_NAME.getString())
 				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_ICON_LORE.getList())
-				.make(), click -> click.manager.showGUI(click.player, new MaterialPicker(this, "&eFunds &8> &7" + this.currency.getId() + " &8> &7Select Icon", null, (e, selected) -> {
+				.make(), click -> click.manager.showGUI(click.player, new MaterialPickerGUI(this, "&eFunds &8> &7" + this.currency.getId() + " &8> &7Select Icon", null, (e, selected) -> {
 
 			this.currency.setIcon(selected);
 			this.currency.sync(false);
@@ -90,7 +90,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 			@Override
 			public boolean onResult(String string) {
 				if (!NumberUtils.isNumber(string)) {
-					Common.tell(click.player, Helper.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
+					Common.tell(click.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
 					return false;
 				}
 
