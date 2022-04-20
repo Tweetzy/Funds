@@ -1,6 +1,6 @@
 package ca.tweetzy.funds.settings;
 
-import ca.tweetzy.funds.model.Helper;
+import ca.tweetzy.rose.utils.Replacer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -292,10 +292,10 @@ public enum Translation {
 	final Object value;
 
 	public String getString(Object... replacements) {
-		return Helper.replaceVariables(Locale.getString(this.key), replacements);
+		return Replacer.replaceVariables(Locale.getString(this.key), replacements);
 	}
 
 	public List<String> getList(Object... replacements) {
-		return Helper.replaceVariables(Locale.getList(this.key), replacements);
+		return Replacer.replaceVariables(Locale.getList(this.key), replacements);
 	}
 }
