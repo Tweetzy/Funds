@@ -4,6 +4,8 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.api.interfaces.Language;
+import ca.tweetzy.funds.settings.Locale;
+import ca.tweetzy.funds.settings.Settings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -33,11 +35,11 @@ public final class FundAccount implements Account {
 	private final long createdAt;
 
 	public FundAccount(@NonNull final OfflinePlayer owner) {
-		this(owner.getUniqueId(), owner.getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, null, System.currentTimeMillis());
+		this(owner.getUniqueId(), owner.getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, Locale.getLanague(Settings.LANGUAGE.getString()), System.currentTimeMillis());
 	}
 
 	public FundAccount(@NonNull final UUID owner) {
-		this(owner, Bukkit.getOfflinePlayer(owner).getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, null, System.currentTimeMillis());
+		this(owner, Bukkit.getOfflinePlayer(owner).getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, Locale.getLanague(Settings.LANGUAGE.getString()), System.currentTimeMillis());
 	}
 
 	@Override

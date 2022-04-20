@@ -26,6 +26,7 @@ public final class FundsCommand extends Command {
 	@Override
 	protected ReturnType execute(CommandSender sender, String... args) {
 		final Player player = (Player) sender;
+
 		final Account account = Funds.getAccountManager().getAccount(player);
 
 		Funds.getGuiManager().showGUI(player, new AdminMainGUI(account));
