@@ -19,11 +19,15 @@ public interface Account extends DatabaseSynchronize {
 
 	boolean isBalTopBlocked();
 
+	Language getPreferredLanguage();
+
 	long getCreatedAt();
 
 	String getCurrencyJson();
 
 	void setBalTopBlocked(boolean blocked);
+
+	void setPreferredLanguage(Language language);
 
 	void setName(String name);
 

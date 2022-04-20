@@ -3,6 +3,7 @@ package ca.tweetzy.funds.impl;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.api.interfaces.Language;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -28,14 +29,15 @@ public final class FundAccount implements Account {
 	private String name;
 	private final Map<Currency, Double> currencies;
 	private boolean balTopBlocked;
+	private Language preferredLanguage;
 	private final long createdAt;
 
 	public FundAccount(@NonNull final OfflinePlayer owner) {
-		this(owner.getUniqueId(), owner.getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, System.currentTimeMillis());
+		this(owner.getUniqueId(), owner.getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, null, System.currentTimeMillis());
 	}
 
 	public FundAccount(@NonNull final UUID owner) {
-		this(owner, Bukkit.getOfflinePlayer(owner).getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, System.currentTimeMillis());
+		this(owner, Bukkit.getOfflinePlayer(owner).getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, null, System.currentTimeMillis());
 	}
 
 	@Override
@@ -59,6 +61,11 @@ public final class FundAccount implements Account {
 	}
 
 	@Override
+	public Language getPreferredLanguage() {
+		return this.preferredLanguage;
+	}
+
+	@Override
 	public long getCreatedAt() {
 		return this.createdAt;
 	}
@@ -66,6 +73,11 @@ public final class FundAccount implements Account {
 	@Override
 	public void setBalTopBlocked(boolean balTopBlocked) {
 		this.balTopBlocked = balTopBlocked;
+	}
+
+	@Override
+	public void setPreferredLanguage(Language language) {
+		this.preferredLanguage = language;
 	}
 
 	@Override
