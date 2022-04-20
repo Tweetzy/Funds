@@ -1,11 +1,14 @@
 package ca.tweetzy.funds.settings;
 
 import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Language;
+import ca.tweetzy.funds.impl.FundLanguage;
 import ca.tweetzy.rose.files.comments.format.YamlCommentFormat;
 import ca.tweetzy.rose.files.file.YamlFile;
 import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
@@ -25,7 +28,14 @@ public final class Locale {
 
 	private static final Map<String, YamlFile> LOCALES = new HashMap<>();
 	private static final Map<String, Object> PHRASES = new HashMap<>();
+	private static final Map<String, Language> LANGUAGES = new HashMap<>();
+
 	private static String defaultLanguage = "english";
+
+	static {
+		// english will always be available
+		LANGUAGES.put("english", new FundLanguage("English", "english", "https://textures.minecraft.net/texture/879d99d9c46474e2713a7e84a95e4ce7e8ff8ea4d164413a592e4435d2c6f9dc"));
+	}
 
 	@SneakyThrows
 	public static void setup() {
@@ -52,9 +62,27 @@ public final class Locale {
 			});
 
 			yamlFile.path("file language").set(file.getName().replace(".yml", "")).comment("For internal use, this is auto generated based on file name");
+
+			if (!yamlFile.isSet("language name"))
+				yamlFile.set("language name", StringUtils.capitalize(file.getName().replace(".yml", "")));
+
+			if (!yamlFile.isSet("allow usage")) {
+				yamlFile.set("allow usage", true);
+				yamlFile.setComment("allow usage", "If true, Funds will let players select this language. By doing so any" +
+						"\nmenu or message that can be translated will use translations found in this fle.");
+			}
+
 			yamlFile.save();
 
 			LOCALES.put(file.getName().replace(".yml", ""), yamlFile);
+
+			if (yamlFile.getBoolean("allow usage")) {
+				LANGUAGES.put(file.getName().replace(".yml", ""), new FundLanguage(
+						yamlFile.getString("language name"),
+						yamlFile.getString("file language"),
+						yamlFile.getString("flag texture", "https://textures.minecraft.net/texture/879e54cbe87867d14b2fbdf3f1870894352048dfecd962846dea893b2154c85"))
+				);
+			}
 
 		}
 	}
@@ -77,9 +105,16 @@ public final class Locale {
 						"\nif the file does not exists, it will generate using the default english" +
 						"\ntranslations, you can then make edits from there.");
 
+		if (!yamlFile.isSet("language name"))
+			yamlFile.set("language name", StringUtils.capitalize(name.replace(".yml", "")));
+
+
 		yamlFile.save();
 
-		LOCALES.put("english", yamlFile);
+		LOCALES.put(name, yamlFile);
+
+		if (!name.equalsIgnoreCase("english"))
+			LANGUAGES.put(name, new FundLanguage(StringUtils.capitalize(name), yamlFile.getName().replace(".yml", ""), yamlFile.getString("flag texture", "https://textures.minecraft.net/texture/879e54cbe87867d14b2fbdf3f1870894352048dfecd962846dea893b2154c85")));
 	}
 
 	public static String getString(String key) {
