@@ -67,6 +67,9 @@ public final class Locale {
 			if (!yamlFile.isSet("language name"))
 				yamlFile.set("language name", StringUtils.capitalize(file.getName().replace(".yml", "")));
 
+			if (!yamlFile.isSet("flag texture"))
+				yamlFile.set("flag texture", "https://textures.minecraft.net/texture/879e54cbe87867d14b2fbdf3f1870894352048dfecd962846dea893b2154c85");
+
 			if (!yamlFile.isSet("allow usage")) {
 				yamlFile.set("allow usage", true);
 				yamlFile.setComment("allow usage", "If true, Funds will let players select this language. By doing so any" +
@@ -120,6 +123,10 @@ public final class Locale {
 
 	public static Language getLanague(String name) {
 		return LANGUAGES.getOrDefault(name, LANGUAGES.get("english"));
+	}
+
+	public static List<Language> getLanguages() {
+		return LANGUAGES.values().stream().toList();
 	}
 
 	public static String getString(Account account, String key) {

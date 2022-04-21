@@ -1,9 +1,6 @@
 package ca.tweetzy.funds;
 
-import ca.tweetzy.funds.commands.BalanceCommand;
-import ca.tweetzy.funds.commands.FundsCommand;
-import ca.tweetzy.funds.commands.PayCommand;
-import ca.tweetzy.funds.commands.SupportCommand;
+import ca.tweetzy.funds.commands.*;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
 import ca.tweetzy.funds.database.migrations._2_AccountTableMigration;
@@ -16,8 +13,10 @@ import ca.tweetzy.funds.model.AccountManager;
 import ca.tweetzy.funds.model.CurrencyManager;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Settings;
+import ca.tweetzy.rose.RoseCore;
 import ca.tweetzy.rose.RosePlugin;
 import ca.tweetzy.rose.command.CommandManager;
+import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.database.DataMigrationManager;
 import ca.tweetzy.rose.database.DatabaseConnector;
 import ca.tweetzy.rose.database.SQLiteConnector;
@@ -63,6 +62,8 @@ public final class Funds extends RosePlugin {
 
 	@SneakyThrows
 	protected void onFlight() {
+		RoseCore.registerPlugin(this, 7, CompMaterial.GOLD_INGOT.name());
+
 		// settings & locale setup
 		Settings.setup();
 		Locale.setup();
@@ -81,7 +82,7 @@ public final class Funds extends RosePlugin {
 		this.guiManager.init();
 
 		// register main command
-		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand()).addSubCommand(new SupportCommand());
+		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand()).addSubCommands(new SupportCommand(), new LanguageCommand());
 		this.commandManager.registerCommandDynamically("balance").addCommand(new BalanceCommand());
 		this.commandManager.registerCommandDynamically("pay").addCommand(new PayCommand());
 

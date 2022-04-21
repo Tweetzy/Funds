@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,6 +37,7 @@ public enum Translation {
 	NOT_ENOUGH_MONEY("misc.not enough money", "&cYou do not have enough %currency_plural_format%"),
 	DOES_NOT_OWN_CURRENCY("misc.does not own currency", "&cYou do not own any %currency_plural_format%"),
 	NO_CURRENCY_SET("misc.no currency set", "&cContact a server admin, there are no currencies or vault currency not set!"),
+	UPDATED_LANGUAGE("misc.updated language", "&aUpdated your language to &e%language%"),
 
 	/*
 	============= Titles / Input =============
@@ -64,6 +66,15 @@ public enum Translation {
 
 	CURRENCY_ADD_BAL_TITLE("input.currency add bal.title", "&eAdd to Balance"),
 	CURRENCY_ADD_BAL_SUBTITLE("input.currency add bal.subtitle", "&fEnter amount to add to balance"),
+
+
+	/*
+	============= LANG MENU =============
+	 */
+
+	GUI_SELECT_LANGUAGE_TITLE("gui.select language.title", "&eFunds &7Select Language"),
+	GUI_SELECT_LANGUAGE_ITEMS_LANG_NAME("gui.select language.items.lang.name", "&b&l%language_name%"),
+	GUI_SELECT_LANGUAGE_ITEMS_LANG_LORE("gui.select language.items.lang.lore", Collections.singletonList("&e&lClick &8» &7To select language")),
 
 	/*
 	============= MAIN MENU =============
