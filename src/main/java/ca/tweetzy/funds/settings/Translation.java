@@ -72,6 +72,21 @@ public enum Translation {
 	============= LANG MENU =============
 	 */
 
+	GUI_SELECT_CURRENCY_TITLE("gui.currency picker.title", "&eFunds &7Select Currency"),
+	GUI_SELECT_CURRENCY_ITEMS_CURRENCY_NAME("gui.currency picker.items.lang.name", "%currency_name%"),
+	GUI_SELECT_CURRENCY_ITEMS_CURRENCY_LORE("gui.currency picker.items.lang.lore", Arrays.asList(
+			"&7Identifier&F: &e%currency_id%",
+			"&7Description&F:",
+			"&f- %currency_description%",
+			"",
+			"&e&LLeft Click &8» &7To select currency"
+	)),
+
+
+	/*
+	============= LANG MENU =============
+	 */
+
 	GUI_SELECT_LANGUAGE_TITLE("gui.select language.title", "&eFunds &7Select Language"),
 	GUI_SELECT_LANGUAGE_ITEMS_LANG_NAME("gui.select language.items.lang.name", "&b&l%language_name%"),
 	GUI_SELECT_LANGUAGE_ITEMS_LANG_LORE("gui.select language.items.lang.lore", Collections.singletonList("&e&lClick &8» &7To select language")),
@@ -115,6 +130,17 @@ public enum Translation {
 	GUI_CONFIRM_ITEMS_CONFIRM_LORE("gui.confirm.items.confirm.lore", Arrays.asList("", "&E&LClick &8» &7To confirm action")),
 	GUI_CONFIRM_ITEMS_CANCEL_NAME("gui.confirm.items.cancel.name", "&c&lCancel"),
 	GUI_CONFIRM_ITEMS_CANCEL_LORE("gui.confirm.items.cancel.lore", Arrays.asList("", "&E&LClick &8» &7To cancel action")),
+
+	/*
+	============= ACCOUNT PICKER MENU =============
+	 */
+	GUI_ACCOUNT_PICKER_TITLE("gui.account picker.title", "&eFunds &8> &7Select Account"),
+	GUI_ACCOUNT_PICKER_ITEMS_ACCOUNT_NAME("gui.account picker.items.account.name", "&B&L%account_name%"),
+	GUI_ACCOUNT_PICKER_ITEMS_ACCOUNT_LORE("gui.account picker.items.account.lore", Arrays.asList(
+			"",
+			"&e&lLeft Click &8» &7To pay user",
+			"&e&lRight Click &8» &7To request from user"
+	)),
 
 	/*
 	============= ACCOUNT LIST MENU =============

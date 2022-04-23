@@ -75,7 +75,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 			setButton(5, 4, QuickItem.of(CompMaterial.SLIME_BALL)
 					.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_NAME.getString(this.account))
 					.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_LORE.getList(this.account))
-					.make(), click -> click.manager.showGUI(click.player, new CurrencyPicker(this.account, null, (e, selected) -> {
+					.make(), click -> click.manager.showGUI(click.player, new CurrencyPicker(this.account, null, false, (e, selected) -> {
 
 				new TitleInput(e.player, Common.colorize(Translation.CURRENCY_DEPOSIT_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_DEPOSIT_SUBTITLE.getString(this.account))) {
 
