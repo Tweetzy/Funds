@@ -3,6 +3,8 @@ package ca.tweetzy.funds.commands;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.guis.player.AccountPickerGUI;
+import ca.tweetzy.funds.guis.template.CurrencyPicker;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.command.AllowedExecutor;
@@ -39,6 +41,14 @@ public final class PayCommand extends Command {
 
 			// for whatever reason if the payer account is not found, stop entirely
 			if (payerAccount == null) return ReturnType.FAIL;
+
+			if (args.length == 0) {
+				Funds.getGuiManager().showGUI(player, new AccountPickerGUI(payerAccount, (click, selected) -> click.manager.showGUI(click.player, new CurrencyPicker(payerAccount, null, true, (event, currency) -> {
+
+				}))));
+
+				return ReturnType.FAIL;
+			}
 
 			final Player targetPlayer = Bukkit.getPlayerExact(args[0]);
 
