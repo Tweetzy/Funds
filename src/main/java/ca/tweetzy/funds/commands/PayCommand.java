@@ -44,39 +44,8 @@ public final class PayCommand extends Command {
 			if (payerAccount == null) return ReturnType.FAIL;
 
 			if (args.length == 0) {
-				Funds.getGuiManager().showGUI(player, new AccountPickerGUI(payerAccount, (click, selectedAccount) -> click.manager.showGUI(click.player, new CurrencyPicker(payerAccount, null, true, (event, currency) -> {
-					double currencyTotal = payerAccount.getCurrencies().get(currency);
-
-					new TitleInput(player, Common.colorize(Translation.SEND_CURRENCY_AMT_TITLE.getString(payerAccount)), Common.colorize(Translation.SEND_CURRENCY_AMT_SUBTITLE.getString(payerAccount)), Common.colorize(
-							String.format("&e%s %s", String.format("%,.2f", currencyTotal), currencyTotal > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat())
-					)) {
-
-						@Override
-						public boolean onResult(String string) {
-							if (!NumberUtils.isNumber(string)) {
-								// tell them to learn what a number is
-								Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
-								return false;
-							}
-
-							final double transferAmount = Double.parseDouble(string);
-
-							// does the player even have enough money
-							// todo add method to interface
-							if (payerAccount.getCurrencies().get(currency) < transferAmount) {
-								Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
-								return false;
-							}
-
-							payerAccount.transferCurrency(selectedAccount, currency, transferAmount);
-							// todo determine whether I should handle this within the Account#transferCurrency method
-							Funds.getAccountManager().updateAccounts(Arrays.asList(payerAccount, selectedAccount), null);
-							return true;
-						}
-					};
-				}))));
-
-				return ReturnType.FAIL;
+				payerAccount.initiateTransfer(player, null);
+				return ReturnType.SUCCESS;
 			}
 
 			final Player targetPlayer = Bukkit.getPlayerExact(args[0]);

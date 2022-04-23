@@ -1,6 +1,8 @@
 package ca.tweetzy.funds.listeners;
 
+import ca.tweetzy.funds.api.events.CurrencyDepositEvent;
 import ca.tweetzy.funds.api.events.CurrencyTransferEvent;
+import ca.tweetzy.funds.api.events.CurrencyWithdrawEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
@@ -20,7 +22,7 @@ import org.bukkit.event.Listener;
  */
 public final class FundsListeners implements Listener {
 
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onCurrencyTransferEvent(final CurrencyTransferEvent event) {
 		final Account payee = event.getPayee();
 		final Account payer = event.getPayer();
@@ -45,5 +47,15 @@ public final class FundsListeners implements Listener {
 					"payer_name", payee.getName()
 			));
 		}
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onCurrencyWithdrawEvent(final CurrencyWithdrawEvent event) {
+
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onCurrencyDepositEvent(final CurrencyDepositEvent event) {
+
 	}
 }

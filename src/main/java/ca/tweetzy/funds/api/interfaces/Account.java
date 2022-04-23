@@ -1,5 +1,7 @@
 package ca.tweetzy.funds.api.interfaces;
 
+import org.bukkit.entity.Player;
+
 import java.util.Map;
 import java.util.UUID;
 
@@ -42,4 +44,6 @@ public interface Account extends DatabaseSynchronize {
 	boolean resetCurrencies(Currency... currencies);
 
 	void deleteCurrency(Currency currency);
+
+	void initiateTransfer(Player player, Currency currency);
 }

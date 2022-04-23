@@ -83,7 +83,7 @@ public final class Funds extends RosePlugin {
 		this.guiManager.init();
 
 		// register main command
-		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand()).addSubCommands(new SupportCommand(), new LanguageCommand());
+		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand()).addSubCommands(new SupportCommand(), new LanguageCommand(), new BalanceCommand(), new PayCommand());
 		this.commandManager.registerCommandDynamically("balance").addCommand(new BalanceCommand());
 		this.commandManager.registerCommandDynamically("pay").addCommand(new PayCommand());
 

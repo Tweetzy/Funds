@@ -5,16 +5,25 @@ import ca.tweetzy.funds.api.events.CurrencyTransferEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.api.interfaces.Language;
+import ca.tweetzy.funds.guis.player.AccountPickerGUI;
+import ca.tweetzy.funds.guis.template.CurrencyPicker;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Settings;
+import ca.tweetzy.funds.settings.Translation;
+import ca.tweetzy.rose.utils.Common;
+import ca.tweetzy.rose.utils.Replacer;
+import ca.tweetzy.rose.utils.input.TitleInput;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -155,6 +164,52 @@ public final class FundAccount implements Account {
 	public void deleteCurrency(Currency currency) {
 		if (!this.currencies.containsKey(currency)) return;
 		this.currencies.remove(currency);
+	}
+
+	@Override
+	public void initiateTransfer(Player player, Currency providedCurrency) {
+		Funds.getGuiManager().showGUI(player, new AccountPickerGUI(this, (click, selectedAccount) -> {
+			if (providedCurrency != null) {
+				double currencyTotal = this.getCurrencies().get(providedCurrency);
+				requestTransferAmount(player, selectedAccount, providedCurrency, currencyTotal);
+				return;
+			}
+
+			click.manager.showGUI(click.player, new CurrencyPicker(this, null, true, (event, currency) -> {
+				double currencyTotal = this.getCurrencies().get(currency);
+				requestTransferAmount(player, selectedAccount, currency, currencyTotal);
+			}));
+		}));
+	}
+
+	private void requestTransferAmount(Player player, Account selectedAccount, Currency currency, double currencyTotal) {
+		new TitleInput(player, Common.colorize(Translation.SEND_CURRENCY_AMT_TITLE.getString(this)), Common.colorize(Translation.SEND_CURRENCY_AMT_SUBTITLE.getString(this)), Common.colorize(
+				String.format("&e%s %s", String.format("%,.2f", currencyTotal), currencyTotal > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat())
+		)) {
+
+			@Override
+			public boolean onResult(String string) {
+				if (!NumberUtils.isNumber(string)) {
+					// tell them to learn what a number is
+					Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
+					return false;
+				}
+
+				final double transferAmount = Double.parseDouble(string);
+
+				// does the player even have enough money
+				// todo add method to interface
+				if (getCurrencies().get(currency) < transferAmount) {
+					Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+					return false;
+				}
+
+				transferCurrency(selectedAccount, currency, transferAmount);
+				// todo determine whether I should handle this within the Account#transferCurrency method
+				Funds.getAccountManager().updateAccounts(Arrays.asList(FundAccount.this, selectedAccount), null);
+				return true;
+			}
+		};
 	}
 
 	@Override

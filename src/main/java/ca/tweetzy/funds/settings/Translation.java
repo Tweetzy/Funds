@@ -127,6 +127,19 @@ public enum Translation {
 			"&a%total_accounts% &7accounts found", "", "&e&lClick &8» &7To view accounts"
 	)),
 
+	/*
+	============= BALANCE MENU =============
+	 */
+	GUI_BALANCES_TITLE("gui.balances.title", "&eFunds &8> &7Your Balances"),
+	GUI_BALANCES_ITEMS_CURRENCY_NAME("gui.balances.items.currency.name", "%currency_name%"),
+	GUI_BALANCES_ITEMS_CURRENCY_LORE("gui.balances.items.currency.lore", Arrays.asList(
+			"&8Handle this currency balance",
+			"",
+			"&7Total&F: &a%currency_balance%",
+			"",
+			"&e&lLeft Click &8» &7To pay a user",
+			"&e&lRight Click &8» &7To withdraw"
+	)),
 
 	/*
 	============= CONFIRM MENU =============

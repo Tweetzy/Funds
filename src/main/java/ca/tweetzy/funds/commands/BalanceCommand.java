@@ -1,5 +1,8 @@
 package ca.tweetzy.funds.commands;
 
+import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.player.BalanceGUI;
 import ca.tweetzy.rose.command.AllowedExecutor;
 import ca.tweetzy.rose.command.Command;
 import ca.tweetzy.rose.command.ReturnType;
@@ -23,7 +26,19 @@ public final class BalanceCommand extends Command {
 
 	@Override
 	protected ReturnType execute(CommandSender sender, String... args) {
-		final Player player = (Player) sender;
+		if (sender instanceof final Player player) {
+			if (args.length == 0) {
+				final Account account = Funds.getAccountManager().getAccount(player);
+
+				// for whatever reason if the payer account is not found, stop entirely
+				if (account == null) return ReturnType.FAIL;
+
+				Funds.getGuiManager().showGUI(player, new BalanceGUI(null, account));
+				return ReturnType.SUCCESS;
+			}
+
+			return ReturnType.SUCCESS;
+		}
 
 		return ReturnType.SUCCESS;
 	}
@@ -40,7 +55,7 @@ public final class BalanceCommand extends Command {
 
 	@Override
 	public String getSyntax() {
-		return null;
+		return "[]";
 	}
 
 	@Override
