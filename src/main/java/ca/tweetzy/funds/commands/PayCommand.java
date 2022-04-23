@@ -169,6 +169,15 @@ public final class PayCommand extends Command {
 
 			account.depositCurrency(currency, amount);
 			account.sync(true);
+
+			if (offlinePlayer.isOnline()) {
+				assert offlinePlayer.getPlayer() != null;
+				Common.tell(offlinePlayer.getPlayer(), Replacer.replaceVariables(Locale.getString(account, Translation.MONEY_RECEIVED.getKey()),
+						"amount", amount,
+						"currency_auto_format", amount > 1.0 ? currency.getPluralFormat() : currency.getSingularFormat(),
+						"payer_name", sender.getName()
+				));
+			}
 		});
 
 		return ReturnType.SUCCESS;
