@@ -1,6 +1,6 @@
 package ca.tweetzy.funds.api.interfaces;
 
-import ca.tweetzy.funds.api.TransactionResponse;
+import ca.tweetzy.funds.api.TransactionType;
 
 import java.util.UUID;
 
@@ -14,13 +14,13 @@ public interface Transaction {
 
 	UUID getId();
 
+	TransactionType getTransactionType();
+
 	UUID getPayee();
 
 	UUID getPayer();
 
 	double getAmount();
-
-	TransactionResponse getResponse();
 
 	long getCompletionTime();
 }
