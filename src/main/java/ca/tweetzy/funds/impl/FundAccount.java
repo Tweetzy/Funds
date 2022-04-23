@@ -1,6 +1,7 @@
 package ca.tweetzy.funds.impl;
 
 import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.events.CurrencyTransferEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.api.interfaces.Language;
@@ -95,6 +96,10 @@ public final class FundAccount implements Account {
 
 		final double payeeBalance = this.currencies.get(currency);
 		if (payeeBalance < amount) return false;
+
+		final CurrencyTransferEvent currencyTransferEvent = new CurrencyTransferEvent(true, this, account, currency, amount);
+		Funds.getInstance().getServer().getPluginManager().callEvent(currencyTransferEvent);
+		if (currencyTransferEvent.isCancelled()) return false;
 
 		this.currencies.put(currency, payeeBalance - amount);
 		account.depositCurrency(currency, amount);

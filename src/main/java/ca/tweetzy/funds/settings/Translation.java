@@ -39,6 +39,9 @@ public enum Translation {
 	NO_CURRENCY_SET("misc.no currency set", "&cContact a server admin, there are no currencies or vault currency not set!"),
 	UPDATED_LANGUAGE("misc.updated language", "&aUpdated your language to &e%language%"),
 
+	MONEY_PAID("misc.money paid", "&aYou sent &e%amount% %currency_auto_format% &ato &e%payee_name%"),
+	MONEY_RECEIVED("misc.money received", "&aYou received &e%amount% %currency_auto_format% &afrom &e%payer_name%"),
+
 	/*
 	============= Titles / Input =============
 	 */
@@ -66,6 +69,9 @@ public enum Translation {
 
 	CURRENCY_ADD_BAL_TITLE("input.currency add bal.title", "&eAdd to Balance"),
 	CURRENCY_ADD_BAL_SUBTITLE("input.currency add bal.subtitle", "&fEnter amount to add to balance"),
+
+	SEND_CURRENCY_AMT_TITLE("input.send currency amount.title", "&ESending Currency"),
+	SEND_CURRENCY_AMT_SUBTITLE("input.send currency amount.subtitle", "&fEnter amount you want to send"),
 
 
 	/*
