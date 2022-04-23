@@ -3,12 +3,14 @@ package ca.tweetzy.funds.guis.admin;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.impl.FundCurrency;
+import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.NBTEditor;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.template.BaseGUI;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;
+import ca.tweetzy.rose.utils.Replacer;
 import ca.tweetzy.rose.utils.input.TitleInput;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
@@ -43,7 +45,7 @@ public final class AdminMainGUI extends BaseGUI {
 				).make(), click -> {
 
 			if (Funds.getCurrencyManager().getCurrencies().isEmpty()) {
-				new TitleInput(click.player, Common.colorize("&eEnter Currency Name"), Common.colorize("&fEnter the id for the currency into chat")) {
+				new TitleInput(click.player, Common.colorize(Translation.CURRENCY_CREATE_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_CREATE_SUBTITLE.getString(this.account))) {
 
 					@Override
 					public void onExit(Player player) {
@@ -59,12 +61,12 @@ public final class AdminMainGUI extends BaseGUI {
 
 						Funds.getCurrencyManager().createCurrency(new FundCurrency(string), (error, created) -> {
 							if (error) {
-								Common.tell(click.player, "&cSomething went wrong while creating that currency");
+								Locale.tell(click.player, Translation.CURRENCY_CREATION_FAIL.getKey());
 								return;
 							}
 
 							click.manager.showGUI(click.player, new CurrencyListGUI(new AdminMainGUI(account), account));
-							Common.tell(click.player, "&aCreated a new currency named&F: &e%currency_name%".replace("%currency_name%", created.getId()));
+							Common.tell(click.player, Replacer.replaceVariables(Locale.getString(account, Translation.CURRENCY_CREATED.getKey()), "%currency_name%", created.getId()));
 						});
 
 						return true;
