@@ -21,7 +21,6 @@ public final class BalanceCommand extends Command {
 
 	public BalanceCommand() {
 		super(AllowedExecutor.PLAYER, "balance");
-
 	}
 
 	@Override
@@ -36,6 +35,8 @@ public final class BalanceCommand extends Command {
 				Funds.getGuiManager().showGUI(player, new BalanceGUI(null, account));
 				return ReturnType.SUCCESS;
 			}
+
+
 
 			return ReturnType.SUCCESS;
 		}

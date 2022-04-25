@@ -46,12 +46,17 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 
 	@Override
 	protected void onClick(Currency currency, GuiClickEvent clickEvent) {
+		final double currencyTotal = this.account.getCurrencies().get(currency);
+
+		if (currencyTotal <= 0D) {
+			Common.tell(clickEvent.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+			return;
+		}
+
 		if (currency.isPayingAllowed() && clickEvent.clickType == ClickType.LEFT)
 			this.account.initiateTransfer(clickEvent.player, currency);
 
 		if (currency.isWithdrawAllowed() && clickEvent.clickType == ClickType.RIGHT) {
-
-			final double currencyTotal = this.account.getCurrencies().get(currency);
 
 			new TitleInput(clickEvent.player, Common.colorize("&eWithdrawing Currency"), Common.colorize("&fEnter amount to withdraw"), Common.colorize(
 					String.format("&e%s %s", String.format("%,.2f", currencyTotal), currencyTotal > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat())
