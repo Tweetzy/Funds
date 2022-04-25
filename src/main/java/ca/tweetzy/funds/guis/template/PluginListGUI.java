@@ -6,6 +6,8 @@ import ca.tweetzy.funds.impl.TweetzyPlugin;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.gui.events.GuiClickEvent;
 import ca.tweetzy.rose.gui.template.PagedGUI;
+import ca.tweetzy.rose.utils.ChatUtil;
+import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.QuickItem;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
@@ -27,9 +29,9 @@ public final class PluginListGUI extends PagedGUI<TweetzyPlugin> {
 				new TweetzyPlugin(60325, CompMaterial.CHEST, "Auction House", List.of("The most feature packed, up to date auction plugin"), 12),
 				new TweetzyPlugin(75600, CompMaterial.BARREL, "Shops", List.of("Shops is the ultimate server shop. Create", "unlimited shops with unlimited items."), 12),
 				new TweetzyPlugin(92178, CompMaterial.LIME_SHULKER_BOX, "Markets", List.of("Markets is a completely new take on traditional player owned shops"), 12),
-				new TweetzyPlugin(89864, CompMaterial.PAPER, "Vouchers", List.of("An easy to use voucher plugin, completely GUI based."),0),
-				new TweetzyPlugin(90098, CompMaterial.ZOMBIE_HEAD, "Skulls", List.of("Skulls is a collection of 43k+ custom textured Minecraft heads.", "A free alternative to Head Database"),0),
-				new TweetzyPlugin(29641, CompMaterial.NAME_TAG, "Item Name Tags", List.of("Allow players to rename items with ease, includes", "item name tags, lore tags, and delore tags."),0)
+				new TweetzyPlugin(89864, CompMaterial.PAPER, "Vouchers", List.of("An easy to use voucher plugin, completely GUI based."), 0),
+				new TweetzyPlugin(90098, CompMaterial.ZOMBIE_HEAD, "Skulls", List.of("Skulls is a collection of 43k+ custom textured Minecraft heads.", "A free alternative to Head Database"), 0),
+				new TweetzyPlugin(29641, CompMaterial.NAME_TAG, "Item Name Tags", List.of("Allow players to rename items with ease, includes", "item name tags, lore tags, and delore tags."), 0)
 		));
 
 		this.account = account;
@@ -48,6 +50,14 @@ public final class PluginListGUI extends PagedGUI<TweetzyPlugin> {
 
 	@Override
 	protected void onClick(TweetzyPlugin object, GuiClickEvent clickEvent) {
+		clickEvent.gui.close();
+		Common.tellNoPrefix(clickEvent.player,
+				"&8&m-----------------------------------------------------",
+				"",
+				ChatUtil.centerMessage("&e" + object.name()),
+				ChatUtil.centerMessage("&bhttps://spigotmc.org/resources/" + object.spigotId()),
+				"&8&m-----------------------------------------------------"
+		);
 	}
 
 	@Override
