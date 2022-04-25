@@ -34,7 +34,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public final class FundsListeners implements Listener {
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onCurrencyTransferEvent(final CurrencyTransferEvent event) {
 		final Account payee = event.getPayee();
 		final Account payer = event.getPayer();
@@ -61,12 +61,12 @@ public final class FundsListeners implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onCurrencyWithdrawEvent(final CurrencyWithdrawEvent event) {
 
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onCurrencyDepositEvent(final CurrencyDepositEvent event) {
 
 	}
@@ -89,6 +89,10 @@ public final class FundsListeners implements Listener {
 
 		if (currency == null) return;
 		final double currencyAmount = Double.parseDouble(NBTEditor.getString(item, "Funds:CurrencyAmount"));
+
+		final CurrencyDepositEvent currencyDepositEvent = new CurrencyDepositEvent(false, account, currency, currencyAmount);
+		Funds.getInstance().getServer().getPluginManager().callEvent(currencyDepositEvent);
+		if (currencyDepositEvent.isCancelled()) return;
 
 		account.depositCurrency(currency, currencyAmount);
 		account.sync(true);
@@ -118,6 +122,10 @@ public final class FundsListeners implements Listener {
 
 		if (currency == null) return;
 		final double currencyAmount = Double.parseDouble(NBTEditor.getString(itemStack, "Funds:CurrencyAmount"));
+
+		final CurrencyDepositEvent currencyDepositEvent = new CurrencyDepositEvent(false, account, currency, currencyAmount);
+		Funds.getInstance().getServer().getPluginManager().callEvent(currencyDepositEvent);
+		if (currencyDepositEvent.isCancelled()) return;
 
 		event.setCancelled(true);
 		event.getItem().remove();

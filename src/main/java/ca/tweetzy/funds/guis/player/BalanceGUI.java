@@ -1,5 +1,8 @@
 package ca.tweetzy.funds.guis.player;
 
+import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.events.CurrencyTransferEvent;
+import ca.tweetzy.funds.api.events.CurrencyWithdrawEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.settings.Locale;
@@ -77,6 +80,10 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 						Common.tell(clickEvent.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
 						return false;
 					}
+
+					final CurrencyWithdrawEvent withdrawEvent = new CurrencyWithdrawEvent(true, account, currency, withdrawAmount);
+					Funds.getInstance().getServer().getPluginManager().callEvent(withdrawEvent);
+					if (withdrawEvent.isCancelled()) return false;
 
 					BalanceGUI.this.account.withdrawCurrency(currency, withdrawAmount);
 					BalanceGUI.this.account.sync(true);
