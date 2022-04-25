@@ -135,7 +135,7 @@ public final class DataManager extends DataManagerAbstract {
 				}
 
 				int[] result = statement.executeBatch();
-				Common.log(String.format("&fSynced user account(s) to data file in &a%s&f ms", String.format("%,.3f", (System.nanoTime() - begin) / 1e+6)));
+//				Common.log(String.format("&fSynced user account(s) to data file in &a%s&f ms", String.format("%,.3f", (System.nanoTime() - begin) / 1e+6)));
 
 				if (err == null)
 					connection.commit();
