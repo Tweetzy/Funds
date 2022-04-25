@@ -94,6 +94,11 @@ public final class Funds extends RosePlugin {
 		getServer().getPluginManager().registerEvents(new FundsListeners(), this);
 	}
 
+	@Override
+	protected void onSleep() {
+		shutdownDataManager(this.dataManager);
+	}
+
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent chatEvent) {
 		chatEvent.setMessage(Common.colorize(chatEvent.getMessage()));

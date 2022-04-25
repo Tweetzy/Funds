@@ -55,7 +55,7 @@ public final class BalanceCommand extends Command {
 
 	@Override
 	public String getSyntax() {
-		return "[]";
+		return "";
 	}
 
 	@Override

@@ -2,10 +2,13 @@ package ca.tweetzy.funds.impl;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.utils.Inflector;
+import ca.tweetzy.rose.utils.QuickItem;
 import lombok.AllArgsConstructor;
 import org.bukkit.ChatColor;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Date Created: April 08 2022
@@ -135,6 +138,16 @@ public final class FundCurrency implements Currency {
 	@Override
 	public void setIsVaultCurrency(boolean isVaultCurrency) {
 		this.isVaultCurrency = isVaultCurrency;
+	}
+
+	@Override
+	public ItemStack buildPhysicalItem(double amount) {
+		return QuickItem.of(this.icon)
+				.name(Translation.PHYSICAL_CURRENCY_NAME.getString("total", amount, "currency_auto_format", amount > 1.0 ? getPluralFormat() : getSingularFormat()))
+				.lore(Translation.PHYSICAL_CURRENCY_LORE.getList())
+				.tag("Funds:CurrencyID", getId())
+				.tag("Funds:CurrencyAmount", String.valueOf(amount))
+				.make();
 	}
 
 	@Override

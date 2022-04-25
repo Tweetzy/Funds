@@ -42,6 +42,12 @@ public enum Translation {
 	MONEY_PAID("misc.money paid", "&aYou sent &e%amount% %currency_auto_format% &ato &e%payee_name%"),
 	MONEY_RECEIVED("misc.money received", "&aYou received &e%amount% %currency_auto_format% &afrom &e%payer_name%"),
 
+	WITHDRAW("misc.withdraw", "&c-%amount% %currency_auto_format%"),
+	DEPOSIT("misc.deposit", "&a+%amount% %currency_auto_format%"),
+
+	PHYSICAL_CURRENCY_NAME("physical currency.name", "&F%total% %currency_auto_format%"),
+	PHYSICAL_CURRENCY_LORE("physical currency.lore", Collections.singletonList("&e&lClick &8» &7To deposit currency")),
+
 	/*
 	============= Titles / Input =============
 	 */

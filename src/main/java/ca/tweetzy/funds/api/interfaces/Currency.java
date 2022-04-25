@@ -1,6 +1,7 @@
 package ca.tweetzy.funds.api.interfaces;
 
 import ca.tweetzy.rose.comp.enums.CompMaterial;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Date Created: April 08 2022
@@ -47,4 +48,6 @@ public interface Currency extends DatabaseSynchronize {
 	void setStartingBalance(double startingBalance);
 
 	void setIsVaultCurrency(boolean isVaultCurrency);
+
+	ItemStack buildPhysicalItem(double amount);
 }
