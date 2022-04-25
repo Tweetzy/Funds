@@ -25,22 +25,13 @@ public final class BalanceCommand extends Command {
 
 	@Override
 	protected ReturnType execute(CommandSender sender, String... args) {
-		if (sender instanceof final Player player) {
-			if (args.length == 0) {
-				final Account account = Funds.getAccountManager().getAccount(player);
+		final Player player = (Player) sender;
+		final Account account = Funds.getAccountManager().getAccount(player);
 
-				// for whatever reason if the payer account is not found, stop entirely
-				if (account == null) return ReturnType.FAIL;
+		// for whatever reason if the payer account is not found, stop entirely
+		if (account == null) return ReturnType.FAIL;
 
-				Funds.getGuiManager().showGUI(player, new BalanceGUI(null, account));
-				return ReturnType.SUCCESS;
-			}
-
-
-
-			return ReturnType.SUCCESS;
-		}
-
+		Funds.getGuiManager().showGUI(player, new BalanceGUI(null, account));
 		return ReturnType.SUCCESS;
 	}
 
@@ -56,7 +47,7 @@ public final class BalanceCommand extends Command {
 
 	@Override
 	public String getSyntax() {
-		return "";
+		return null;
 	}
 
 	@Override
