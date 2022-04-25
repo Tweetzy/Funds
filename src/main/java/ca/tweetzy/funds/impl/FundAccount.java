@@ -177,6 +177,11 @@ public final class FundAccount implements Account {
 
 			click.manager.showGUI(click.player, new CurrencyPicker(this, null, true, (event, currency) -> {
 				double currencyTotal = this.getCurrencies().get(currency);
+				if (currencyTotal <= 0D) {
+					Common.tell(click.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+					return;
+				}
+
 				requestTransferAmount(player, selectedAccount, currency, currencyTotal);
 			}));
 		}));
