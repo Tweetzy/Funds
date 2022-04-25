@@ -64,7 +64,7 @@ public final class CurrencyManager {
 				this.addCurrency(created);
 
 			if (consumer != null)
-				consumer.accept(error != null, created);
+				consumer.accept(error == null, created);
 		});
 	}
 
