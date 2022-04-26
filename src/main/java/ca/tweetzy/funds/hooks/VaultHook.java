@@ -27,6 +27,10 @@ public final class VaultHook implements Economy {
 		Common.log("&aHooked into Vault");
 	}
 
+	public void unregister() {
+		Bukkit.getServer().getServicesManager().unregister(Economy.class, this);
+	}
+
 	@Override
 	public boolean isEnabled() {
 		return true;

@@ -1,5 +1,6 @@
 package ca.tweetzy.funds.listeners;
 
+import ca.tweetzy.funds.hooks.HookManager;
 import ca.tweetzy.funds.hooks.VaultHook;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,6 +21,6 @@ public final class HookListeners implements Listener {
 		final Plugin plugin = event.getPlugin();
 
 		if (plugin.getName().equals("Vault"))
-			new VaultHook();
+			HookManager.getInstance().registerVault();
 	}
 }

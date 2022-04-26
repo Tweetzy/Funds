@@ -6,6 +6,7 @@ import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
 import ca.tweetzy.funds.database.migrations._2_AccountTableMigration;
 import ca.tweetzy.funds.database.migrations._3_VaultCurrencyMigration;
 import ca.tweetzy.funds.database.migrations._4_AccountLanguageMigration;
+import ca.tweetzy.funds.hooks.HookManager;
 import ca.tweetzy.funds.hooks.PlaceholderAPIHook;
 import ca.tweetzy.funds.listeners.AccessListeners;
 import ca.tweetzy.funds.listeners.FundsListeners;
@@ -75,9 +76,7 @@ public final class Funds extends RosePlugin {
 		this.currencyManager.loadCurrencies((loaded) -> this.accountManager.loadAccounts());
 
 		// placeholder api
-		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-			new PlaceholderAPIHook().register();
-		}
+		HookManager.getInstance().registerPlaceholders();
 
 		// initialize gui manager
 		this.guiManager.init();
@@ -97,6 +96,7 @@ public final class Funds extends RosePlugin {
 	@Override
 	protected void onSleep() {
 		shutdownDataManager(this.dataManager);
+		HookManager.getInstance().unregisterVault();
 	}
 
 	@EventHandler
