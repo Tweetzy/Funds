@@ -70,6 +70,9 @@ public final class CurrencyManager {
 
 	public void deleteCurrency(@NonNull final String id, final Consumer<Boolean> wasDeleted) {
 		Funds.getDataManager().deleteCurrency(id, (error, deleted) -> {
+			if (error != null)
+				error.printStackTrace();
+
 			if (error == null && deleted)
 				this.removeCurrency(id);
 

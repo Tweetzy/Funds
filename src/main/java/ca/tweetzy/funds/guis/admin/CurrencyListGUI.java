@@ -78,8 +78,8 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 							return false;
 						}
 
-						Funds.getCurrencyManager().createCurrency(new FundCurrency(string), (error, created) -> {
-							if (error) {
+						Funds.getCurrencyManager().createCurrency(new FundCurrency(string), (success, created) -> {
+							if (!success) {
 								Locale.tell(click.player, Translation.CURRENCY_CREATION_FAIL.getKey());
 								return;
 							}

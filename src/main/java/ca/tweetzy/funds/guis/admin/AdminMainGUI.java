@@ -61,14 +61,14 @@ public final class AdminMainGUI extends BaseGUI {
 						if (string.isEmpty())
 							return false;
 
-						Funds.getCurrencyManager().createCurrency(new FundCurrency(string), (error, created) -> {
-							if (error) {
+						Funds.getCurrencyManager().createCurrency(new FundCurrency(string), (success, created) -> {
+							if (!success) {
 								Locale.tell(click.player, Translation.CURRENCY_CREATION_FAIL.getKey());
 								return;
 							}
 
 							click.manager.showGUI(click.player, new CurrencyListGUI(new AdminMainGUI(account), account));
-							Common.tell(click.player, Replacer.replaceVariables(Locale.getString(account, Translation.CURRENCY_CREATED.getKey()), "%currency_name%", created.getId()));
+							Common.tell(click.player, Replacer.replaceVariables(Locale.getString(account, Translation.CURRENCY_CREATED.getKey()), "currency_name", created.getId()));
 						});
 
 						return true;
