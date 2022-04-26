@@ -85,6 +85,8 @@ public final class PayCommand extends Command {
 				return ReturnType.FAIL;
 			}
 
+			if (!currency.isPayingAllowed()) return ReturnType.FAIL;
+
 			if (!payerAccount.getCurrencies().containsKey(currency)) {
 				Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.DOES_NOT_OWN_CURRENCY.getKey()), "currency_plural_format", currency.getPluralFormat()));
 				return ReturnType.FAIL;
