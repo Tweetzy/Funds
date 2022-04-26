@@ -33,7 +33,7 @@ public interface Account extends DatabaseSynchronize {
 
 	void setName(String name);
 
-	boolean transferCurrency(Account account, Currency currency, double amount);
+	boolean transferCurrency(Account account, Currency currency, double amount, boolean asyncEvent);
 
 	boolean withdrawCurrency(Currency currency, double amount);
 

@@ -93,7 +93,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 			@Override
 			public boolean onResult(String string) {
 				if (!NumberUtils.isNumber(string)) {
-					Common.tell(click.player, Replacer.replaceVariables(Locale.getString(account,Translation.NOT_A_NUMBER.getKey()), "value", string));
+					Common.tell(click.player, Replacer.replaceVariables(Locale.getString(account, Translation.NOT_A_NUMBER.getKey()), "value", string));
 					return false;
 				}
 

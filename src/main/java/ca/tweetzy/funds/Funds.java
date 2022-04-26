@@ -69,7 +69,7 @@ public final class Funds extends RosePlugin {
 		Settings.setup();
 		Locale.setup();
 
-		Common.setPrefix(Settings.PREFIX.getString());
+		Common.setPrefix(Settings.METRICS.getBoolean() ? Settings.PREFIX.getString() : "&8[&eFunds&8]");
 
 		// load currencies -> then accounts
 		this.currencyManager.loadCurrencies((loaded) -> this.accountManager.loadAccounts());
@@ -106,7 +106,7 @@ public final class Funds extends RosePlugin {
 
 	@Override
 	protected int getBStatsId() {
-		return 14883;
+		return !Settings.METRICS.getBoolean() ? -1 : 14883;
 	}
 
 	// instance

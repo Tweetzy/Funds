@@ -3,28 +3,25 @@
 
 # Funds
 
-**gotta think of smth.**
+<p align="center">
+  <b>The ultimate custom currency plugin, create unlimited currencies with ease.</b>
+<p align="center">
 
 <!-- Shields -->
-[![Discord](https://img.shields.io/discord/821837624272617473?color=7289DA&label=Discord&logo=discord&logoColor=7289DA)](https://discord.tweetzy.ca)
-<br>
-[![Latest version](https://img.shields.io/badge/dynamic/xml?style=flat&color=blue&logo=github&logoColor=white&label=Latest&url=https%3A%2F%2Fraw.githubusercontent.com%2Ftweetzy%2FFunds%2Fmain%2Fpom.xml&query=%2F*%5Blocal-name()%3D'project'%5D%2F*%5Blocal-name()%3D'version'%5D)]()
-[![GitHub last commit](https://img.shields.io/github/last-commit/tweetzy/Funds?label=Last+commit)](https://github.com/Tweetzy/Funds/commits)
-<br>
-[![bStats Servers](https://img.shields.io/bstats/servers/14883?label=Servers)](https://bstats.org/plugin/bukkit/Funds/14883)
+[![Discord](https://img.shields.io/discord/821837624272617473?color=7289DA&label=Discord&logo=discord&logoColor=7289DA&style=for-the-badge)](https://discord.tweetzy.ca)
+[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/tweetzy/funds?style=for-the-badge)](https://www.codefactor.io/repository/github/tweetzy/funds)
+[![Latest version](https://img.shields.io/badge/dynamic/xml?style=for-the-badge&color=blue&logo=github&logoColor=white&label=Latest&url=https%3A%2F%2Fraw.githubusercontent.com%2Ftweetzy%2FFunds%2Fmain%2Fpom.xml&query=%2F*%5Blocal-name()%3D'project'%5D%2F*%5Blocal-name()%3D'version'%5D)]()
+[![bStats Servers](https://img.shields.io/bstats/servers/14883?label=Servers&style=for-the-badge)](https://bstats.org/plugin/bukkit/Funds/14883)
 </div>
 
-Funds is an upcoming multi-currently plugin with ChestGUIs, Vault integration and a developer API.
+## Contents
+
+* [Wiki](https://docs.tweetzy.ca)
+* [Support](https://discord.tweetzy.ca)
+* [Developer API](/wiki/API.md)
 
 ## Downloads
 
 * [Spigot](https://twetzy.ca)
+* [Songoda](https://twetzy.ca)
 * [Polymart](https://twetzy.ca)
-* [Github (release)](https://twetzy.ca)
-* [Github (CI)](https://twetzy.ca)
-
-## Developers
-
-As funds is work in progress, the API is not complete yet. Check back later for finalised instructions
-
-See [Funds API](/wiki/API.md)

@@ -2,7 +2,6 @@ package ca.tweetzy.funds.commands;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.guis.admin.AdminMainGUI;
 import ca.tweetzy.funds.guis.player.LanguagePickerGUI;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;

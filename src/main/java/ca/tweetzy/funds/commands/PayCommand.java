@@ -3,8 +3,6 @@ package ca.tweetzy.funds.commands;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.funds.guis.player.AccountPickerGUI;
-import ca.tweetzy.funds.guis.template.CurrencyPicker;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.command.AllowedExecutor;
@@ -12,7 +10,6 @@ import ca.tweetzy.rose.command.Command;
 import ca.tweetzy.rose.command.ReturnType;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.Replacer;
-import ca.tweetzy.rose.utils.input.TitleInput;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -56,11 +53,17 @@ public final class PayCommand extends Command {
 				return ReturnType.FAIL;
 			}
 
+			if (targetPlayer.getUniqueId().equals(player.getUniqueId())) return ReturnType.FAIL;
+
 			final Account targetAccount = Funds.getAccountManager().getAccount(targetPlayer);
 			// check if the target user even has an account
 			if (targetAccount == null) {
 				Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.PLAYER_DOES_NOT_HAVE_ACCOUNT.getKey()), "player", args[0]));
 				return ReturnType.FAIL;
+			}
+
+			if (args.length < 2) {
+				return ReturnType.INVALID_SYNTAX;
 			}
 
 			// check is arg 1 (transfer amt) is actually a number
@@ -95,10 +98,9 @@ public final class PayCommand extends Command {
 			}
 
 			// finally, transfer money
-			payerAccount.transferCurrency(targetAccount, currency, transferAmount);
+			payerAccount.transferCurrency(targetAccount, currency, transferAmount, false);
 			// todo determine whether I should handle this within the Account#transferCurrency method
 			Funds.getAccountManager().updateAccounts(Arrays.asList(payerAccount, targetAccount), null);
-
 			return ReturnType.SUCCESS;
 		}
 

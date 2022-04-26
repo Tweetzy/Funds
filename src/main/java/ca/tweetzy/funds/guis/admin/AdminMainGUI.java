@@ -80,7 +80,7 @@ public final class AdminMainGUI extends BaseGUI {
 			click.manager.showGUI(click.player, new CurrencyListGUI(this, this.account));
 		});
 
-		setButton(1, 4, QuickItem.of(NBTEditor.getHead("http://textures.minecraft.net/texture/15dfc521807dce2485c4032b1350303540325715eb309dd2bcbba4e27df83fe1"))
+		setButton(1, 6, QuickItem.of(NBTEditor.getHead("http://textures.minecraft.net/texture/15dfc521807dce2485c4032b1350303540325715eb309dd2bcbba4e27df83fe1"))
 				.name(Translation.GUI_MAIN_ITEMS_ACCOUNTS_NAME.getString(this.account))
 				.lore(Funds.getAccountManager().getAccounts().isEmpty() ?
 						Translation.GUI_MAIN_ITEMS_ACCOUNTS_LORE_CREATE.getList(this.account) :

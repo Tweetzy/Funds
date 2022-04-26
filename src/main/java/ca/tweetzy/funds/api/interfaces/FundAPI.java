@@ -150,7 +150,7 @@ public interface FundAPI {
 	/**
 	 * Used to delete an existing currency, this will automatically call {@link #removeCurrency}
 	 *
-	 * @param id is the {@link Currency} id to be deleted
+	 * @param id         is the {@link Currency} id to be deleted
 	 * @param wasDeleted returns true if the currency was deleted
 	 */
 	void deleteCurrency(@NonNull final String id, final Consumer<Boolean> wasDeleted);

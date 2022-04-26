@@ -13,17 +13,14 @@ import ca.tweetzy.rose.comp.NBTEditor;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
 import ca.tweetzy.rose.utils.Common;
 import ca.tweetzy.rose.utils.Replacer;
-import net.minecraft.world.item.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
@@ -57,7 +54,7 @@ public final class FundsListeners implements Listener {
 			Common.tell(payeeUser.getPlayer(), Replacer.replaceVariables(Locale.getString(payee, Translation.MONEY_RECEIVED.getKey()),
 					"amount", event.getAmount(),
 					"currency_auto_format", event.getAmount() > 1.0 ? event.getCurrency().getPluralFormat() : event.getCurrency().getSingularFormat(),
-					"payer_name", payee.getName()
+					"payer_name", payer.getName()
 			));
 		}
 	}

@@ -17,6 +17,7 @@ public final class Settings {
 
 	public static final ConfigSetting PREFIX = new ConfigSetting(config, "prefix", "&8[&eFunds&8]", "The global prefix for the plugin");
 	public static final ConfigSetting LANGUAGE = new ConfigSetting(config, "language", "english", "The default language for the plugin");
+	public static final ConfigSetting METRICS = new ConfigSetting(config, "metrics", true, "Allows me to see how many servers are using Funds");
 
 	public static final ConfigSetting AUTO_DEPOSIT_PICKED_UP_CURRENCY = new ConfigSetting(config, "settings.auto deposit picked up currency", true, "If true, if a player picks up a currency item, it will be automatically deposited");
 

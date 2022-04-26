@@ -98,7 +98,7 @@ public final class FundAccount implements Account {
 	}
 
 	@Override
-	public boolean transferCurrency(Account account, Currency currency, double amount) {
+	public boolean transferCurrency(Account account, Currency currency, double amount, boolean asyncEvent) {
 		if (account == null) return false;
 		if (currency == null) return false;
 		if (!this.currencies.containsKey(currency)) return false;
@@ -106,7 +106,7 @@ public final class FundAccount implements Account {
 		final double payeeBalance = this.currencies.get(currency);
 		if (payeeBalance < amount) return false;
 
-		final CurrencyTransferEvent currencyTransferEvent = new CurrencyTransferEvent(true, this, account, currency, amount);
+		final CurrencyTransferEvent currencyTransferEvent = new CurrencyTransferEvent(asyncEvent, this, account, currency, amount);
 		Funds.getInstance().getServer().getPluginManager().callEvent(currencyTransferEvent);
 		if (currencyTransferEvent.isCancelled()) return false;
 
@@ -209,7 +209,7 @@ public final class FundAccount implements Account {
 					return false;
 				}
 
-				transferCurrency(selectedAccount, currency, transferAmount);
+				transferCurrency(selectedAccount, currency, transferAmount, true);
 				// todo determine whether I should handle this within the Account#transferCurrency method
 				Funds.getAccountManager().updateAccounts(Arrays.asList(FundAccount.this, selectedAccount), null);
 				return true;

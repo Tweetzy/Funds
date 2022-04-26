@@ -28,7 +28,7 @@ public final class CurrencyPicker extends PagedGUI<Currency> {
 	private final BiConsumer<GuiClickEvent, Currency> selected;
 
 	public CurrencyPicker(@NonNull final Account account, final String titleOverride, final boolean showHas, @NonNull final BiConsumer<GuiClickEvent, Currency> selected) {
-		super(null, titleOverride == null ? Translation.GUI_SELECT_CURRENCY_TITLE.getString(account): titleOverride, 6, Funds.getCurrencyManager().getCurrencies().stream().filter(currency -> showHas ? account.getCurrencies().containsKey(currency) && account.getCurrencies().get(currency) > 0 : !account.getCurrencies().containsKey(currency)).collect(Collectors.toList()));
+		super(null, titleOverride == null ? Translation.GUI_SELECT_CURRENCY_TITLE.getString(account) : titleOverride, 6, Funds.getCurrencyManager().getCurrencies().stream().filter(currency -> showHas ? account.getCurrencies().containsKey(currency) && account.getCurrencies().get(currency) > 0 : !account.getCurrencies().containsKey(currency)).collect(Collectors.toList()));
 		this.account = account;
 		this.selected = selected;
 		draw();

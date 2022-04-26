@@ -48,7 +48,7 @@ public final class AccountListGUI extends PagedGUI<Account> {
 		setButton(5, 7, QuickItem.of(CompMaterial.LAVA_BUCKET)
 				.name(Translation.GUI_ACCOUNT_LIST_ITEMS_RESET_NAME.getString(this.account))
 				.lore(Translation.GUI_ACCOUNT_LIST_ITEMS_RESET_LORE.getList(this.account))
-				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null,this.account, confirmed -> {
+				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null, this.account, confirmed -> {
 
 			if (confirmed) {
 				Funds.getAccountManager().resetPlayerAccountsBalances();

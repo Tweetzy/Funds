@@ -1,7 +1,6 @@
 package ca.tweetzy.funds.guis.player;
 
 import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.events.CurrencyTransferEvent;
 import ca.tweetzy.funds.api.events.CurrencyWithdrawEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;

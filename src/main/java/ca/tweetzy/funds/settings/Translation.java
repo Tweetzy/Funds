@@ -163,8 +163,7 @@ public enum Translation {
 	GUI_ACCOUNT_PICKER_ITEMS_ACCOUNT_NAME("gui.account picker.items.account.name", "&B&L%account_name%"),
 	GUI_ACCOUNT_PICKER_ITEMS_ACCOUNT_LORE("gui.account picker.items.account.lore", Arrays.asList(
 			"",
-			"&e&lLeft Click &8» &7To pay user",
-			"&e&lRight Click &8» &7To request from user"
+			"&e&lClick &8» &7To pay user"
 	)),
 
 	/*
