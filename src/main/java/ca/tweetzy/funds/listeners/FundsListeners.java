@@ -7,6 +7,7 @@ import ca.tweetzy.funds.api.events.CurrencyWithdrawEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.settings.Locale;
+import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.rose.comp.NBTEditor;
 import ca.tweetzy.rose.comp.enums.CompMaterial;
@@ -109,6 +110,7 @@ public final class FundsListeners implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onCurrencyPickup(final EntityPickupItemEvent event) {
+		if (!Settings.AUTO_DEPOSIT_PICKED_UP_CURRENCY.getBoolean()) return;
 		if (!(event.getEntity() instanceof final Player player)) return;
 
 		final ItemStack itemStack = event.getItem().getItemStack();
