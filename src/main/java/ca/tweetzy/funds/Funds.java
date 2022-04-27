@@ -1,5 +1,6 @@
 package ca.tweetzy.funds;
 
+import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.commands.*;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
@@ -102,6 +103,15 @@ public final class Funds extends RosePlugin {
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent chatEvent) {
 		chatEvent.setMessage(Common.colorize(chatEvent.getMessage()));
+
+		if (chatEvent.getMessage().equalsIgnoreCase("useracc")) {
+			Account account = Funds.getAccountManager().getAccount("ItsMeKiran");
+
+			if (account == null)
+				chatEvent.getPlayer().sendMessage("null");
+			else
+				chatEvent.getPlayer().sendMessage("not null");
+		}
 	}
 
 	@Override

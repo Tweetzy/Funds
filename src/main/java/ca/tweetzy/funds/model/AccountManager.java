@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -39,18 +39,10 @@ public final class AccountManager {
 	}
 
 	public Account getAccount(@NonNull final String name) {
-		synchronized (this.accounts) {
-			final AtomicReference<Account> accountReference = new AtomicReference<>(null);
-
-			Common.runAsync(() -> {
-				final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
-				final Account account = getAccount(offlinePlayer);
-
-				accountReference.set(account);
-			});
-
-			return accountReference.get();
-		}
+		return CompletableFuture.supplyAsync(() -> {
+			final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+			return getAccount(offlinePlayer);
+		}).join();
 	}
 
 	public Account getAccount(@NonNull final OfflinePlayer player) {
