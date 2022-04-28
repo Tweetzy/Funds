@@ -100,20 +100,6 @@ public final class Funds extends RosePlugin {
 		HookManager.getInstance().unregisterVault();
 	}
 
-	@EventHandler
-	public void onChat(AsyncPlayerChatEvent chatEvent) {
-		chatEvent.setMessage(Common.colorize(chatEvent.getMessage()));
-
-		if (chatEvent.getMessage().equalsIgnoreCase("useracc")) {
-			Account account = Funds.getAccountManager().getAccount("ItsMeKiran");
-
-			if (account == null)
-				chatEvent.getPlayer().sendMessage("null");
-			else
-				chatEvent.getPlayer().sendMessage("not null");
-		}
-	}
-
 	@Override
 	protected int getBStatsId() {
 		return !Settings.METRICS.getBoolean() ? -1 : 14883;
