@@ -3,6 +3,7 @@ package ca.tweetzy.funds.commands;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.guis.player.BalanceGUI;
+import ca.tweetzy.funds.guis.player.BalanceTopGUI;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.funds.settings.Translation;
@@ -20,10 +21,10 @@ import java.util.List;
  *
  * @author Kiran Hart
  */
-public final class BalanceCommand extends Command {
+public final class BalanceTopCommand extends Command {
 
-	public BalanceCommand() {
-		super(AllowedExecutor.PLAYER, "balance");
+	public BalanceTopCommand() {
+		super(AllowedExecutor.PLAYER, "baltop");
 	}
 
 	@Override
@@ -34,20 +35,7 @@ public final class BalanceCommand extends Command {
 		// for whatever reason if the payer account is not found, stop entirely
 		if (account == null) return ReturnType.FAIL;
 
-		if (Settings.USE_CHAT_BALANCE.getBoolean()) {
-
-			Locale.tell(player, Translation.CURRENCY_BALANCE_CHAT_HEADER.getKey());
-
-			account.getCurrencies().keySet().forEach(currency -> Translation.CURRENCY_BALANCE_CHAT_CURRENCY.getList(account,
-					"currency_name", currency.getName(),
-					"currency_balance", String.format("%,.2f", account.getCurrencies().getOrDefault(currency, 0D))
-			).forEach(player::sendMessage));
-
-			Locale.tell(player, Translation.CURRENCY_BALANCE_CHAT_FOOTER.getKey());
-			return ReturnType.SUCCESS;
-		}
-
-		Funds.getGuiManager().showGUI(player, new BalanceGUI(null, account));
+		Funds.getGuiManager().showGUI(player, new BalanceTopGUI(account, Funds.getCurrencyManager().getVaultOrFirst()));
 		return ReturnType.SUCCESS;
 	}
 
@@ -58,7 +46,7 @@ public final class BalanceCommand extends Command {
 
 	@Override
 	public String getPermissionNode() {
-		return "funds.cmd.balance";
+		return "funds.cmd.baltop";
 	}
 
 	@Override
@@ -68,6 +56,6 @@ public final class BalanceCommand extends Command {
 
 	@Override
 	public String getDescription() {
-		return "Check your balance";
+		return "Check the highest balances";
 	}
 }

@@ -2,18 +2,18 @@ package ca.tweetzy.funds.model;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.impl.TopBalanceRecord;
 import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Date Created: April 11 2022
@@ -58,6 +58,19 @@ public final class AccountManager {
 	public List<Account> getAccounts() {
 		synchronized (this.accounts) {
 			return Collections.unmodifiableList(this.accounts);
+		}
+	}
+
+	public List<TopBalanceRecord> getHighestBalances(@NonNull Currency currency) {
+		synchronized (this.accounts) {
+			final List<TopBalanceRecord> map = new ArrayList<>();
+
+			this.accounts.forEach(account -> {
+				if (!account.getCurrencies().containsKey(currency)) return;
+				map.add(new TopBalanceRecord(account, account.getCurrencies().get(currency)));
+			});
+
+			return map.stream().sorted(Comparator.comparing(TopBalanceRecord::amount).reversed()).collect(Collectors.toList());
 		}
 	}
 

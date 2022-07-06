@@ -48,6 +48,10 @@ public enum Translation {
 	PHYSICAL_CURRENCY_NAME("physical currency.name", "&F%total% %currency_auto_format%"),
 	PHYSICAL_CURRENCY_LORE("physical currency.lore", Collections.singletonList("&e&lClick &8» &7To deposit currency")),
 
+	CURRENCY_BALANCE_CHAT_HEADER("currency balance chat format.header", Collections.singletonList("&8&m-----------------------------------------------------")),
+	CURRENCY_BALANCE_CHAT_CURRENCY("currency balance chat format.currency", Collections.singletonList("%currency_name% &f/ &a%currency_balance%")),
+	CURRENCY_BALANCE_CHAT_FOOTER("currency balance chat format.footer", Collections.singletonList("&8&m-----------------------------------------------------")),
+
 	/*
 	============= Titles / Input =============
 	 */
@@ -164,6 +168,15 @@ public enum Translation {
 	GUI_ACCOUNT_PICKER_ITEMS_ACCOUNT_LORE("gui.account picker.items.account.lore", Arrays.asList(
 			"",
 			"&e&lClick &8» &7To pay user"
+	)),
+
+	GUI_TOP_BALANCE_TITLE("gui.top balance.title", "&eFunds &8> &7Top Balances"),
+	GUI_TOP_BALANCE_ITEMS_ACCOUNT_NAME("gui.top balance.items.account.name", "&B&L%account_name%"),
+	GUI_TOP_BALANCE_ITEMS_ACCOUNT_LORE("gui.top balance.items.account.lore", Arrays.asList(
+			"",
+			"&7Currency&F: &e%currency_name%",
+			"&7Current Balance&F: &e%currency_balance%",
+			""
 	)),
 
 	/*

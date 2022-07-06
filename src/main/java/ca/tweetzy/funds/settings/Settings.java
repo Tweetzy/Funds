@@ -20,6 +20,7 @@ public final class Settings {
 	public static final ConfigSetting METRICS = new ConfigSetting(config, "metrics", true, "Allows me to see how many servers are using Funds");
 
 	public static final ConfigSetting AUTO_DEPOSIT_PICKED_UP_CURRENCY = new ConfigSetting(config, "settings.auto deposit picked up currency", true, "If true, if a player picks up a currency item, it will be automatically deposited");
+	public static final ConfigSetting USE_CHAT_BALANCE = new ConfigSetting(config, "settings.use chat balance", false, "If true, currency balances will show up in chat after /balance instead of a gui.");
 
 	@SneakyThrows
 	public static void setup() {

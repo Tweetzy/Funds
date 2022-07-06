@@ -1,6 +1,5 @@
 package ca.tweetzy.funds;
 
-import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.commands.*;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
@@ -8,7 +7,6 @@ import ca.tweetzy.funds.database.migrations._2_AccountTableMigration;
 import ca.tweetzy.funds.database.migrations._3_VaultCurrencyMigration;
 import ca.tweetzy.funds.database.migrations._4_AccountLanguageMigration;
 import ca.tweetzy.funds.hooks.HookManager;
-import ca.tweetzy.funds.hooks.PlaceholderAPIHook;
 import ca.tweetzy.funds.listeners.AccessListeners;
 import ca.tweetzy.funds.listeners.FundsListeners;
 import ca.tweetzy.funds.listeners.HookListeners;
@@ -26,9 +24,6 @@ import ca.tweetzy.rose.database.SQLiteConnector;
 import ca.tweetzy.rose.gui.GuiManager;
 import ca.tweetzy.rose.utils.Common;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
  * Date Created: April 08 2022
@@ -83,8 +78,12 @@ public final class Funds extends RosePlugin {
 		this.guiManager.init();
 
 		// register main command
-		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand()).addSubCommands(new SupportCommand(), new LanguageCommand(), new BalanceCommand(), new PayCommand());
+		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand()).addSubCommands(
+				new SupportCommand(), new LanguageCommand(), new BalanceCommand(), new PayCommand()
+		);
+
 		this.commandManager.registerCommandDynamically("balance").addCommand(new BalanceCommand());
+		this.commandManager.registerCommandDynamically("baltop").addCommand(new BalanceTopCommand());
 		this.commandManager.registerCommandDynamically("pay").addCommand(new PayCommand());
 
 		// events / listeners

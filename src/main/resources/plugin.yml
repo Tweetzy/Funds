@@ -10,6 +10,3 @@ loadbefore:
 
 softdepend:
   - PlaceholderAPI
-
-libraries:
-  - org.yaml:snakeyaml:1.30
