@@ -6,15 +6,15 @@ import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.impl.FundCurrency;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.comp.enums.CompMaterial;
-import ca.tweetzy.rose.gui.Gui;
-import ca.tweetzy.rose.gui.events.GuiClickEvent;
-import ca.tweetzy.rose.gui.helper.InventoryBorder;
-import ca.tweetzy.rose.gui.template.PagedGUI;
-import ca.tweetzy.rose.utils.Common;
-import ca.tweetzy.rose.utils.QuickItem;
-import ca.tweetzy.rose.utils.Replacer;
-import ca.tweetzy.rose.utils.input.TitleInput;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.gui.Gui;
+import ca.tweetzy.flight.gui.events.GuiClickEvent;
+import ca.tweetzy.flight.gui.helper.InventoryBorder;
+import ca.tweetzy.flight.gui.template.PagedGUI;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.flight.utils.Replacer;
+import ca.tweetzy.flight.utils.input.TitleInput;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -59,7 +59,7 @@ public final class CurrencyListGUI extends PagedGUI<Currency> {
 		setButton(5, 4, QuickItem.of(CompMaterial.SLIME_BALL)
 						.name(Translation.GUI_CURRENCY_LIST_ITEMS_NEW_NAME.getString(this.account))
 						.lore(Translation.GUI_CURRENCY_LIST_ITEMS_NEW_LORE.getList(this.account))
-						.make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_CREATE_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_CREATE_SUBTITLE.getString(this.account))) {
+						.make(), click -> new TitleInput(Funds.getInstance(),click.player, Common.colorize(Translation.CURRENCY_CREATE_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_CREATE_SUBTITLE.getString(this.account))) {
 
 					@Override
 					public void onExit(Player player) {

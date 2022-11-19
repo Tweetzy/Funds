@@ -3,12 +3,12 @@ package ca.tweetzy.funds.guis.template;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.guis.admin.AdminMainGUI;
 import ca.tweetzy.funds.impl.TweetzyPlugin;
-import ca.tweetzy.rose.comp.enums.CompMaterial;
-import ca.tweetzy.rose.gui.events.GuiClickEvent;
-import ca.tweetzy.rose.gui.template.PagedGUI;
-import ca.tweetzy.rose.utils.ChatUtil;
-import ca.tweetzy.rose.utils.Common;
-import ca.tweetzy.rose.utils.QuickItem;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.gui.events.GuiClickEvent;
+import ca.tweetzy.flight.gui.template.PagedGUI;
+import ca.tweetzy.flight.utils.ChatUtil;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.QuickItem;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 

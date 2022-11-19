@@ -1,6 +1,6 @@
 package ca.tweetzy.funds.impl;
 
-import ca.tweetzy.rose.comp.enums.CompMaterial;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
 
 import java.util.List;
 

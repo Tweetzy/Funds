@@ -4,7 +4,7 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.impl.FundAccount;
-import ca.tweetzy.rose.utils.Common;
+import ca.tweetzy.flight.utils.Common;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;

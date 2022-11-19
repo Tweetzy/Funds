@@ -5,11 +5,11 @@ import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.guis.player.LanguagePickerGUI;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.command.AllowedExecutor;
-import ca.tweetzy.rose.command.Command;
-import ca.tweetzy.rose.command.ReturnType;
-import ca.tweetzy.rose.utils.Common;
-import ca.tweetzy.rose.utils.Replacer;
+import ca.tweetzy.flight.command.AllowedExecutor;
+import ca.tweetzy.flight.command.Command;
+import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.Replacer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

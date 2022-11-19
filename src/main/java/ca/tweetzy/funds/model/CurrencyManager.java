@@ -2,7 +2,7 @@ package ca.tweetzy.funds.model;
 
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.rose.utils.Common;
+import ca.tweetzy.flight.utils.Common;
 import lombok.Getter;
 import lombok.NonNull;
 

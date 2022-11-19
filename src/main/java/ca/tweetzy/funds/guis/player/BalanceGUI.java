@@ -6,14 +6,14 @@ import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.gui.Gui;
-import ca.tweetzy.rose.gui.events.GuiClickEvent;
-import ca.tweetzy.rose.gui.helper.InventoryBorder;
-import ca.tweetzy.rose.gui.template.PagedGUI;
-import ca.tweetzy.rose.utils.Common;
-import ca.tweetzy.rose.utils.QuickItem;
-import ca.tweetzy.rose.utils.Replacer;
-import ca.tweetzy.rose.utils.input.TitleInput;
+import ca.tweetzy.flight.gui.Gui;
+import ca.tweetzy.flight.gui.events.GuiClickEvent;
+import ca.tweetzy.flight.gui.helper.InventoryBorder;
+import ca.tweetzy.flight.gui.template.PagedGUI;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.flight.utils.Replacer;
+import ca.tweetzy.flight.utils.input.TitleInput;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.event.inventory.ClickType;
@@ -60,7 +60,7 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 
 		if (currency.isWithdrawAllowed() && clickEvent.clickType == ClickType.RIGHT) {
 
-			new TitleInput(clickEvent.player, Common.colorize("&eWithdrawing Currency"), Common.colorize("&fEnter amount to withdraw"), Common.colorize(
+			new TitleInput(Funds.getInstance(),clickEvent.player, Common.colorize("&eWithdrawing Currency"), Common.colorize("&fEnter amount to withdraw"), Common.colorize(
 					String.format("&e%s %s", String.format("%,.2f", currencyTotal), currencyTotal > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat())
 			)) {
 

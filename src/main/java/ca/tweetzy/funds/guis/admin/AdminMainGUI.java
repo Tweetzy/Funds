@@ -6,14 +6,14 @@ import ca.tweetzy.funds.guis.template.PluginListGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.comp.NBTEditor;
-import ca.tweetzy.rose.comp.enums.CompMaterial;
-import ca.tweetzy.rose.gui.template.BaseGUI;
-import ca.tweetzy.rose.utils.ChatUtil;
-import ca.tweetzy.rose.utils.Common;
-import ca.tweetzy.rose.utils.QuickItem;
-import ca.tweetzy.rose.utils.Replacer;
-import ca.tweetzy.rose.utils.input.TitleInput;
+import ca.tweetzy.flight.comp.NBTEditor;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.gui.template.BaseGUI;
+import ca.tweetzy.flight.utils.ChatUtil;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.flight.utils.Replacer;
+import ca.tweetzy.flight.utils.input.TitleInput;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -47,7 +47,7 @@ public final class AdminMainGUI extends BaseGUI {
 				).make(), click -> {
 
 			if (Funds.getCurrencyManager().getCurrencies().isEmpty()) {
-				new TitleInput(click.player, Common.colorize(Translation.CURRENCY_CREATE_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_CREATE_SUBTITLE.getString(this.account))) {
+				new TitleInput(Funds.getInstance(),click.player, Common.colorize(Translation.CURRENCY_CREATE_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_CREATE_SUBTITLE.getString(this.account))) {
 
 					@Override
 					public void onExit(Player player) {

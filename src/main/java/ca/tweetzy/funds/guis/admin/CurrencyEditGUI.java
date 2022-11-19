@@ -5,14 +5,14 @@ import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.comp.enums.CompMaterial;
-import ca.tweetzy.rose.gui.Gui;
-import ca.tweetzy.rose.gui.template.BaseGUI;
-import ca.tweetzy.rose.gui.template.MaterialPickerGUI;
-import ca.tweetzy.rose.utils.Common;
-import ca.tweetzy.rose.utils.QuickItem;
-import ca.tweetzy.rose.utils.Replacer;
-import ca.tweetzy.rose.utils.input.TitleInput;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.gui.Gui;
+import ca.tweetzy.flight.gui.template.BaseGUI;
+import ca.tweetzy.flight.gui.template.MaterialPickerGUI;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.flight.utils.Replacer;
+import ca.tweetzy.flight.utils.input.TitleInput;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
@@ -60,7 +60,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 						"currency_singular_format", currency.getSingularFormat(),
 						"currency_plural_format", currency.getPluralFormat()
 				))
-				.make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_EDIT_FORMATTING_TITLE.getString(this.account)), Common.colorize(click.clickType == ClickType.LEFT ? Translation.CURRENCY_EDIT_FORMATTING_SUBTITLE_SINGULAR.getString(this.account) : Translation.CURRENCY_EDIT_FORMATTING_SUBTITLE_PLURAL.getString(this.account))) {
+				.make(), click -> new TitleInput(Funds.getInstance(),click.player, Common.colorize(Translation.CURRENCY_EDIT_FORMATTING_TITLE.getString(this.account)), Common.colorize(click.clickType == ClickType.LEFT ? Translation.CURRENCY_EDIT_FORMATTING_SUBTITLE_SINGULAR.getString(this.account) : Translation.CURRENCY_EDIT_FORMATTING_SUBTITLE_PLURAL.getString(this.account))) {
 
 			@Override
 			public boolean onResult(String string) {
@@ -88,7 +88,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_STARTING_BAL_LORE.getList(this.account,
 						"currency_starting_balance", currency.getStartingBalance(),
 						"currency_plural_format", currency.getPluralFormat()
-				)).make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_EDIT_STARTING_BAL_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_EDIT_STARTING_BAL_SUBTITLE.getString(this.account))) {
+				)).make(), click -> new TitleInput(Funds.getInstance(),click.player, Common.colorize(Translation.CURRENCY_EDIT_STARTING_BAL_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_EDIT_STARTING_BAL_SUBTITLE.getString(this.account))) {
 
 			@Override
 			public boolean onResult(String string) {
@@ -117,7 +117,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_DISPLAY_NAME_LORE.getList(this.account,
 						"currency_name", currency.getName()
 				))
-				.make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_EDIT_NAME_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_EDIT_NAME_SUBTITLE.getString(this.account))) {
+				.make(), click -> new TitleInput(Funds.getInstance(),click.player, Common.colorize(Translation.CURRENCY_EDIT_NAME_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_EDIT_NAME_SUBTITLE.getString(this.account))) {
 
 			@Override
 			public boolean onResult(String string) {
@@ -141,7 +141,7 @@ public final class CurrencyEditGUI extends BaseGUI {
 				.lore(Translation.GUI_CURRENCY_EDIT_ITEMS_DESC_LORE.getList(this.account,
 						"currency_description", currency.getDescription()
 				))
-				.make(), click -> new TitleInput(click.player, Common.colorize(Translation.CURRENCY_EDIT_DESC_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_EDIT_DESC_SUBTITLE.getString(this.account))) {
+				.make(), click -> new TitleInput(Funds.getInstance(),click.player, Common.colorize(Translation.CURRENCY_EDIT_DESC_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_EDIT_DESC_SUBTITLE.getString(this.account))) {
 
 			@Override
 			public boolean onResult(String string) {

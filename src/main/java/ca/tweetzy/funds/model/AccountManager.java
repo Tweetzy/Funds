@@ -1,10 +1,10 @@
 package ca.tweetzy.funds.model;
 
+import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.impl.TopBalanceRecord;
-import ca.tweetzy.rose.utils.Common;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -75,7 +75,7 @@ public final class AccountManager {
 	}
 
 	public void resetPlayerAccountsBalances() {
-		Common.runAsync(() -> {
+		Bukkit.getServer().getScheduler().runTaskAsynchronously(Funds.getInstance(), () -> {
 			synchronized (this.accounts) {
 				this.accounts.forEach(Account::resetCurrencies);
 				updateAccounts(this.accounts, null);

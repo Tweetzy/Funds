@@ -6,9 +6,9 @@ import ca.tweetzy.funds.guis.player.BalanceGUI;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.command.AllowedExecutor;
-import ca.tweetzy.rose.command.Command;
-import ca.tweetzy.rose.command.ReturnType;
+import ca.tweetzy.flight.command.AllowedExecutor;
+import ca.tweetzy.flight.command.Command;
+import ca.tweetzy.flight.command.ReturnType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

@@ -4,12 +4,12 @@ import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Language;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.comp.NBTEditor;
-import ca.tweetzy.rose.gui.Gui;
-import ca.tweetzy.rose.gui.events.GuiClickEvent;
-import ca.tweetzy.rose.gui.helper.InventoryBorder;
-import ca.tweetzy.rose.gui.template.PagedGUI;
-import ca.tweetzy.rose.utils.QuickItem;
+import ca.tweetzy.flight.comp.NBTEditor;
+import ca.tweetzy.flight.gui.Gui;
+import ca.tweetzy.flight.gui.events.GuiClickEvent;
+import ca.tweetzy.flight.gui.helper.InventoryBorder;
+import ca.tweetzy.flight.gui.template.PagedGUI;
+import ca.tweetzy.flight.utils.QuickItem;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 

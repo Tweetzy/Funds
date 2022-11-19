@@ -1,7 +1,7 @@
 package ca.tweetzy.funds.settings;
 
 import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.rose.utils.Replacer;
+import ca.tweetzy.flight.utils.Replacer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

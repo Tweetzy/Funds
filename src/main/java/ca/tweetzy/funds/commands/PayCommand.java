@@ -1,15 +1,15 @@
 package ca.tweetzy.funds.commands;
 
+import ca.tweetzy.flight.command.AllowedExecutor;
+import ca.tweetzy.flight.command.Command;
+import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.Replacer;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.command.AllowedExecutor;
-import ca.tweetzy.rose.command.Command;
-import ca.tweetzy.rose.command.ReturnType;
-import ca.tweetzy.rose.utils.Common;
-import ca.tweetzy.rose.utils.Replacer;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -108,7 +108,7 @@ public final class PayCommand extends Command {
 
 		// is from console so infinite money
 		// also run this async since looking up the player by name may make an api call
-		Common.runAsync(() -> {
+		Bukkit.getScheduler().runTaskAsynchronously(Funds.getInstance(), () -> {
 			final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
 			if (!offlinePlayer.hasPlayedBefore()) {
 				Common.tell(sender, "&fThat player has never played on this server before &f: &e" + args[0]);

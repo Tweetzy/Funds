@@ -1,10 +1,10 @@
 package ca.tweetzy.funds.commands;
 
-import ca.tweetzy.rose.command.AllowedExecutor;
-import ca.tweetzy.rose.command.Command;
-import ca.tweetzy.rose.command.ReturnType;
-import ca.tweetzy.rose.utils.ChatUtil;
-import ca.tweetzy.rose.utils.Common;
+import ca.tweetzy.flight.command.AllowedExecutor;
+import ca.tweetzy.flight.command.Command;
+import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.flight.utils.ChatUtil;
+import ca.tweetzy.flight.utils.Common;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;

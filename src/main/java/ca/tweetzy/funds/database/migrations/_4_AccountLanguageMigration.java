@@ -1,6 +1,6 @@
 package ca.tweetzy.funds.database.migrations;
 
-import ca.tweetzy.rose.database.DataMigration;
+import ca.tweetzy.flight.database.DataMigration;
 
 import java.sql.Connection;
 import java.sql.SQLException;

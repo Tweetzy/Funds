@@ -1,5 +1,7 @@
 package ca.tweetzy.funds;
 
+import ca.tweetzy.flight.FlightPlugin;
+import ca.tweetzy.flight.config.tweetzy.TweetzyYamlConfig;
 import ca.tweetzy.funds.commands.*;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
@@ -14,15 +16,13 @@ import ca.tweetzy.funds.model.AccountManager;
 import ca.tweetzy.funds.model.CurrencyManager;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Settings;
-import ca.tweetzy.rose.RoseCore;
-import ca.tweetzy.rose.RosePlugin;
-import ca.tweetzy.rose.command.CommandManager;
-import ca.tweetzy.rose.comp.enums.CompMaterial;
-import ca.tweetzy.rose.database.DataMigrationManager;
-import ca.tweetzy.rose.database.DatabaseConnector;
-import ca.tweetzy.rose.database.SQLiteConnector;
-import ca.tweetzy.rose.gui.GuiManager;
-import ca.tweetzy.rose.utils.Common;
+import ca.tweetzy.flight.command.CommandManager;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.database.DataMigrationManager;
+import ca.tweetzy.flight.database.DatabaseConnector;
+import ca.tweetzy.flight.database.SQLiteConnector;
+import ca.tweetzy.flight.gui.GuiManager;
+import ca.tweetzy.flight.utils.Common;
 import lombok.SneakyThrows;
 
 /**
@@ -31,7 +31,9 @@ import lombok.SneakyThrows;
  *
  * @author Kiran Hart
  */
-public final class Funds extends RosePlugin {
+public final class Funds extends FlightPlugin {
+
+	private final TweetzyYamlConfig coreConfig = new TweetzyYamlConfig(this, "config.yml");
 
 	private final AccountManager accountManager = new AccountManager();
 	private final CurrencyManager currencyManager = new CurrencyManager();
@@ -60,10 +62,10 @@ public final class Funds extends RosePlugin {
 
 	@SneakyThrows
 	protected void onFlight() {
-		RoseCore.registerPlugin(this, 7, CompMaterial.GOLD_INGOT.name());
 
 		// settings & locale setup
 		Settings.setup();
+
 		Locale.setup();
 
 		Common.setPrefix(Settings.METRICS.getBoolean() ? Settings.PREFIX.getString() : "&8[&eFunds&8]");
@@ -106,7 +108,11 @@ public final class Funds extends RosePlugin {
 
 	// instance
 	public static Funds getInstance() {
-		return (Funds) RosePlugin.getInstance();
+		return (Funds) FlightPlugin.getInstance();
+	}
+
+	public TweetzyYamlConfig getCoreConfig() {
+		return getInstance().coreConfig;
 	}
 
 	// gui manager

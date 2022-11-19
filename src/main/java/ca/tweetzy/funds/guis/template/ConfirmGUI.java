@@ -2,9 +2,9 @@ package ca.tweetzy.funds.guis.template;
 
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.comp.enums.CompMaterial;
-import ca.tweetzy.rose.gui.template.BaseGUI;
-import ca.tweetzy.rose.utils.QuickItem;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.gui.template.BaseGUI;
+import ca.tweetzy.flight.utils.QuickItem;
 import lombok.NonNull;
 
 import java.util.Arrays;

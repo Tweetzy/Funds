@@ -1,6 +1,6 @@
 package ca.tweetzy.funds.api.interfaces;
 
-import ca.tweetzy.rose.comp.enums.CompMaterial;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
 import org.bukkit.inventory.ItemStack;
 
 /**

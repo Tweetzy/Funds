@@ -7,14 +7,14 @@ import ca.tweetzy.funds.guis.template.ConfirmGUI;
 import ca.tweetzy.funds.guis.template.CurrencyPicker;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.comp.enums.CompMaterial;
-import ca.tweetzy.rose.gui.events.GuiClickEvent;
-import ca.tweetzy.rose.gui.helper.InventoryBorder;
-import ca.tweetzy.rose.gui.template.PagedGUI;
-import ca.tweetzy.rose.utils.Common;
-import ca.tweetzy.rose.utils.QuickItem;
-import ca.tweetzy.rose.utils.Replacer;
-import ca.tweetzy.rose.utils.input.TitleInput;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.gui.events.GuiClickEvent;
+import ca.tweetzy.flight.gui.helper.InventoryBorder;
+import ca.tweetzy.flight.gui.template.PagedGUI;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.flight.utils.Replacer;
+import ca.tweetzy.flight.utils.input.TitleInput;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
@@ -77,7 +77,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 					.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_LORE.getList(this.account))
 					.make(), click -> click.manager.showGUI(click.player, new CurrencyPicker(this.account, null, false, (e, selected) -> {
 
-				new TitleInput(e.player, Common.colorize(Translation.CURRENCY_DEPOSIT_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_DEPOSIT_SUBTITLE.getString(this.account))) {
+				new TitleInput(Funds.getInstance(),e.player, Common.colorize(Translation.CURRENCY_DEPOSIT_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_DEPOSIT_SUBTITLE.getString(this.account))) {
 
 					@Override
 					public void onExit(Player player) {
@@ -119,7 +119,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	@Override
 	protected void onClick(Currency currency, GuiClickEvent event) {
 		if (event.clickType == ClickType.LEFT || event.clickType == ClickType.RIGHT) {
-			new TitleInput(event.player, Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_TITLE.getString(this.account) : Translation.CURRENCY_ADD_BAL_TITLE.getString(this.account)), Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_SUBTITLE.getString(this.account) : Translation.CURRENCY_ADD_BAL_SUBTITLE.getString(this.account))) {
+			new TitleInput(Funds.getInstance(),event.player, Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_TITLE.getString(this.account) : Translation.CURRENCY_ADD_BAL_TITLE.getString(this.account)), Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_SUBTITLE.getString(this.account) : Translation.CURRENCY_ADD_BAL_SUBTITLE.getString(this.account))) {
 
 				@Override
 				public void onExit(Player player) {

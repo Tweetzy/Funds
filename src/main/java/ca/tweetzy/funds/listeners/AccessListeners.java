@@ -3,7 +3,7 @@ package ca.tweetzy.funds.listeners;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.impl.FundAccount;
-import ca.tweetzy.rose.utils.Common;
+import ca.tweetzy.flight.utils.Common;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

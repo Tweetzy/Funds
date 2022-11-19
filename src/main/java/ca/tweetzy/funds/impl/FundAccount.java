@@ -1,5 +1,8 @@
 package ca.tweetzy.funds.impl;
 
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.Replacer;
+import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.events.CurrencyTransferEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
@@ -10,9 +13,6 @@ import ca.tweetzy.funds.guis.template.CurrencyPicker;
 import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Settings;
 import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.rose.utils.Common;
-import ca.tweetzy.rose.utils.Replacer;
-import ca.tweetzy.rose.utils.input.TitleInput;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -188,7 +188,7 @@ public final class FundAccount implements Account {
 	}
 
 	private void requestTransferAmount(Player player, Account selectedAccount, Currency currency, double currencyTotal) {
-		new TitleInput(player, Common.colorize(Translation.SEND_CURRENCY_AMT_TITLE.getString(this)), Common.colorize(Translation.SEND_CURRENCY_AMT_SUBTITLE.getString(this)), Common.colorize(
+		new TitleInput(Funds.getInstance(), player, Common.colorize(Translation.SEND_CURRENCY_AMT_TITLE.getString(this)), Common.colorize(Translation.SEND_CURRENCY_AMT_SUBTITLE.getString(this)), Common.colorize(
 				String.format("&e%s %s", String.format("%,.2f", currencyTotal), currencyTotal > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat())
 		)) {
 
