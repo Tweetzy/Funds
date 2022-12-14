@@ -42,7 +42,7 @@ public final class AccountManager {
 		return CompletableFuture.supplyAsync(() -> {
 			final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
 			return getAccount(offlinePlayer);
-		}).join();
+		}, (task) -> Bukkit.getScheduler().runTaskAsynchronously(Funds.getInstance(), task)).join();
 	}
 
 	public Account getAccount(@NonNull final OfflinePlayer player) {
