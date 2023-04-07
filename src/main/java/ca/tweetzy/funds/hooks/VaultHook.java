@@ -90,7 +90,12 @@ public final class VaultHook implements Economy {
 	public double getBalance(OfflinePlayer player) {
 		final Account account = Funds.getAccountManager().getAccount(player);
 		final Currency currency = Funds.getCurrencyManager().getVaultOrFirst();
-		return account != null && currency != null ? account.getCurrencies().get(currency) : 0D;
+
+		if (account != null && currency != null) {
+			return account.getCurrencies().getOrDefault(currency, 0D);
+		}
+
+		return 0D;
 	}
 
 	@Override
@@ -102,7 +107,12 @@ public final class VaultHook implements Economy {
 	public double getBalance(String playerName) {
 		final Account account = Funds.getAccountManager().getAccount(playerName);
 		final Currency currency = Funds.getCurrencyManager().getVaultOrFirst();
-		return account != null && currency != null ? account.getCurrencies().get(currency) : 0D;
+
+		if (account != null && currency != null) {
+			return account.getCurrencies().getOrDefault(currency, 0D);
+		}
+
+		return 0D;
 	}
 
 	@Override
