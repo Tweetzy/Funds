@@ -3,13 +3,12 @@ package ca.tweetzy.funds.commands;
 import ca.tweetzy.flight.command.AllowedExecutor;
 import ca.tweetzy.flight.command.Command;
 import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.Common;
-import ca.tweetzy.flight.utils.Replacer;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.funds.settings.Locale;
-import ca.tweetzy.funds.settings.Translation;
+import ca.tweetzy.funds.settings.Translations;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -49,7 +48,7 @@ public final class PayCommand extends Command {
 
 			// check to see if lookup found anything
 			if (targetPlayer == null) {
-				Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.PLAYER_NOT_FOUND.getKey()), "player", args[0]));
+				Common.tell(player, TranslationManager.string(Translations.PLAYER_NOT_FOUND, "player", args[0]));
 				return ReturnType.FAIL;
 			}
 
@@ -58,7 +57,7 @@ public final class PayCommand extends Command {
 			final Account targetAccount = Funds.getAccountManager().getAccount(targetPlayer);
 			// check if the target user even has an account
 			if (targetAccount == null) {
-				Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.PLAYER_DOES_NOT_HAVE_ACCOUNT.getKey()), "player", args[0]));
+				Common.tell(player, TranslationManager.string(Translations.PLAYER_DOES_NOT_HAVE_ACCOUNT, "player", args[0]));
 				return ReturnType.FAIL;
 			}
 
@@ -69,7 +68,7 @@ public final class PayCommand extends Command {
 			// check is arg 1 (transfer amt) is actually a number
 			if (!NumberUtils.isNumber(args[1])) {
 				// tell them to learn what a number is
-				Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", args[1]));
+				Common.tell(player, TranslationManager.string(Translations.NOT_A_NUMBER, "value", args[1]));
 				return ReturnType.FAIL;
 			}
 
@@ -81,21 +80,21 @@ public final class PayCommand extends Command {
 				currency = Funds.getCurrencyManager().getCurrency(args[2]);
 
 			if (currency == null) {
-				Common.tell(player, Locale.getString(Translation.NO_CURRENCY_SET.getKey()));
+				Common.tell(player, TranslationManager.string(Translations.NO_CURRENCY_SET));
 				return ReturnType.FAIL;
 			}
 
 			if (!currency.isPayingAllowed()) return ReturnType.FAIL;
 
 			if (!payerAccount.getCurrencies().containsKey(currency)) {
-				Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.DOES_NOT_OWN_CURRENCY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+				Common.tell(player, TranslationManager.string(Translations.DOES_NOT_OWN_CURRENCY, "currency_plural_format", currency.getPluralFormat()));
 				return ReturnType.FAIL;
 			}
 
 			// does the player even have enough money
 			// todo add method to interface
 			if (payerAccount.getCurrencies().get(currency) < transferAmount) {
-				Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+				Common.tell(player, TranslationManager.string(Translations.NOT_ENOUGH_MONEY, "currency_plural_format", currency.getPluralFormat()));
 				return ReturnType.FAIL;
 			}
 
@@ -145,7 +144,7 @@ public final class PayCommand extends Command {
 
 			if (offlinePlayer.isOnline()) {
 				assert offlinePlayer.getPlayer() != null;
-				Common.tell(offlinePlayer.getPlayer(), Replacer.replaceVariables(Locale.getString(account, Translation.MONEY_RECEIVED.getKey()),
+				Common.tell(offlinePlayer.getPlayer(), TranslationManager.string(Translations.MONEY_RECEIVED,
 						"amount", amount,
 						"currency_auto_format", amount > 1.0 ? currency.getPluralFormat() : currency.getSingularFormat(),
 						"payer_name", sender.getName()

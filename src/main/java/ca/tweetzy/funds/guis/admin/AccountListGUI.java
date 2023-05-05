@@ -1,15 +1,16 @@
 package ca.tweetzy.funds.guis.admin;
 
-import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.guis.template.ConfirmGUI;
-import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.gui.Gui;
 import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.gui.helper.InventoryBorder;
 import ca.tweetzy.flight.gui.template.PagedGUI;
+import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.template.ConfirmGUI;
+import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -28,7 +29,7 @@ public final class AccountListGUI extends PagedGUI<Account> {
 	private final Account account;
 
 	public AccountListGUI(Gui parent, @NonNull final Account account) {
-		super(parent, Translation.GUI_ACCOUNT_LIST_TITLE.getString(account), 6, Funds.getAccountManager().getAccounts());
+		super(parent, TranslationManager.string(Translations.GUI_ACCOUNT_LIST_TITLE), 6, Funds.getAccountManager().getAccounts());
 		this.account = account;
 		draw();
 	}
@@ -37,8 +38,8 @@ public final class AccountListGUI extends PagedGUI<Account> {
 	protected ItemStack makeDisplayItem(Account account) {
 		final OfflinePlayer player = Bukkit.getOfflinePlayer(account.getOwner());
 		return QuickItem.of(player)
-				.name(Translation.GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_NAME.getString(this.account, "account_name", player.getName()))
-				.lore(Translation.GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_LORE.getList(this.account))
+				.name(TranslationManager.string(Translations.GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_NAME, "account_name", player.getName()))
+				.lore(TranslationManager.list(Translations.GUI_ACCOUNT_LIST_ITEMS_ACCOUNT_LORE))
 				.make();
 	}
 
@@ -46,8 +47,8 @@ public final class AccountListGUI extends PagedGUI<Account> {
 	protected void drawAdditional() {
 		// wipe account currencies
 		setButton(5, 7, QuickItem.of(CompMaterial.LAVA_BUCKET)
-				.name(Translation.GUI_ACCOUNT_LIST_ITEMS_RESET_NAME.getString(this.account))
-				.lore(Translation.GUI_ACCOUNT_LIST_ITEMS_RESET_LORE.getList(this.account))
+				.name(TranslationManager.string(Translations.GUI_ACCOUNT_LIST_ITEMS_RESET_NAME))
+				.lore(TranslationManager.list(Translations.GUI_ACCOUNT_LIST_ITEMS_RESET_LORE))
 				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null, this.account, confirmed -> {
 
 			if (confirmed) {

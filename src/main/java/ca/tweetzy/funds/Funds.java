@@ -1,7 +1,13 @@
 package ca.tweetzy.funds;
 
 import ca.tweetzy.flight.FlightPlugin;
+import ca.tweetzy.flight.command.CommandManager;
 import ca.tweetzy.flight.config.tweetzy.TweetzyYamlConfig;
+import ca.tweetzy.flight.database.DataMigrationManager;
+import ca.tweetzy.flight.database.DatabaseConnector;
+import ca.tweetzy.flight.database.SQLiteConnector;
+import ca.tweetzy.flight.gui.GuiManager;
+import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.funds.commands.*;
 import ca.tweetzy.funds.database.DataManager;
 import ca.tweetzy.funds.database.migrations._1_CurrencyTableMigration;
@@ -14,15 +20,8 @@ import ca.tweetzy.funds.listeners.FundsListeners;
 import ca.tweetzy.funds.listeners.HookListeners;
 import ca.tweetzy.funds.model.AccountManager;
 import ca.tweetzy.funds.model.CurrencyManager;
-import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Settings;
-import ca.tweetzy.flight.command.CommandManager;
-import ca.tweetzy.flight.comp.enums.CompMaterial;
-import ca.tweetzy.flight.database.DataMigrationManager;
-import ca.tweetzy.flight.database.DatabaseConnector;
-import ca.tweetzy.flight.database.SQLiteConnector;
-import ca.tweetzy.flight.gui.GuiManager;
-import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.funds.settings.Translations;
 import lombok.SneakyThrows;
 
 /**
@@ -66,7 +65,7 @@ public final class Funds extends FlightPlugin {
 		// settings & locale setup
 		Settings.setup();
 
-		Locale.setup();
+		Translations.init();
 
 		Common.setPrefix(Settings.METRICS.getBoolean() ? Settings.PREFIX.getString() : "&8[&eFunds&8]");
 
@@ -81,7 +80,7 @@ public final class Funds extends FlightPlugin {
 
 		// register main command
 		this.commandManager.registerCommandDynamically("funds").addCommand(new FundsCommand()).addSubCommands(
-				new SupportCommand(), new LanguageCommand(), new BalanceCommand(), new PayCommand()
+				new SupportCommand(), new BalanceCommand(), new PayCommand(), new AddCommand()
 		);
 
 		this.commandManager.registerCommandDynamically("balance").addCommand(new BalanceCommand());
@@ -109,10 +108,6 @@ public final class Funds extends FlightPlugin {
 	// instance
 	public static Funds getInstance() {
 		return (Funds) FlightPlugin.getInstance();
-	}
-
-	public TweetzyYamlConfig getCoreConfig() {
-		return getInstance().coreConfig;
 	}
 
 	// gui manager

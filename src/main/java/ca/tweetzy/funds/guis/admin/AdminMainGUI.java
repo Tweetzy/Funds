@@ -1,19 +1,18 @@
 package ca.tweetzy.funds.guis.admin;
 
+import ca.tweetzy.flight.comp.NBTEditor;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.gui.template.BaseGUI;
+import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.ChatUtil;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.guis.template.PluginListGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
-import ca.tweetzy.funds.settings.Locale;
-import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.flight.comp.NBTEditor;
-import ca.tweetzy.flight.comp.enums.CompMaterial;
-import ca.tweetzy.flight.gui.template.BaseGUI;
-import ca.tweetzy.flight.utils.ChatUtil;
-import ca.tweetzy.flight.utils.Common;
-import ca.tweetzy.flight.utils.QuickItem;
-import ca.tweetzy.flight.utils.Replacer;
-import ca.tweetzy.flight.utils.input.TitleInput;
+import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -29,7 +28,7 @@ public final class AdminMainGUI extends BaseGUI {
 	private final Account account;
 
 	public AdminMainGUI(@NonNull final Account account) {
-		super(Translation.GUI_MAIN_TITLE.getString(account, "plugin_version", Funds.getInstance().getVersion()));
+		super(TranslationManager.string(Translations.GUI_MAIN_TITLE, "plugin_version", Funds.getInstance().getVersion()));
 		this.account = account;
 		draw();
 	}
@@ -40,14 +39,14 @@ public final class AdminMainGUI extends BaseGUI {
 
 		// Currencies Button
 		setButton(1, 2, QuickItem.of(CompMaterial.GOLD_INGOT)
-				.name(Translation.GUI_MAIN_ITEMS_CURRENCY_NAME.getString(this.account))
+				.name(TranslationManager.string(Translations.GUI_MAIN_ITEMS_CURRENCY_NAME))
 				.lore(Funds.getCurrencyManager().getCurrencies().isEmpty() ?
-						Translation.GUI_MAIN_ITEMS_CURRENCY_LORE_CREATE.getList(this.account) :
-						Translation.GUI_MAIN_ITEMS_CURRENCY_LORE_VIEW.getList(this.account, "total_currencies", Funds.getCurrencyManager().getCurrencies().size())
+						TranslationManager.list(Translations.GUI_MAIN_ITEMS_CURRENCY_LORE_CREATE) :
+						TranslationManager.list(Translations.GUI_MAIN_ITEMS_CURRENCY_LORE_VIEW, "total_currencies", Funds.getCurrencyManager().getCurrencies().size())
 				).make(), click -> {
 
 			if (Funds.getCurrencyManager().getCurrencies().isEmpty()) {
-				new TitleInput(Funds.getInstance(),click.player, Common.colorize(Translation.CURRENCY_CREATE_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_CREATE_SUBTITLE.getString(this.account))) {
+				new TitleInput(Funds.getInstance(), click.player, Common.colorize(TranslationManager.string(Translations.CURRENCY_CREATE_TITLE)), Common.colorize(TranslationManager.string(Translations.CURRENCY_CREATE_SUBTITLE))) {
 
 					@Override
 					public void onExit(Player player) {
@@ -63,12 +62,12 @@ public final class AdminMainGUI extends BaseGUI {
 
 						Funds.getCurrencyManager().createCurrency(new FundCurrency(string), (success, created) -> {
 							if (!success) {
-								Locale.tell(click.player, Translation.CURRENCY_CREATION_FAIL.getKey());
+								Common.tell(click.player, TranslationManager.string(Translations.CURRENCY_CREATION_FAIL));
 								return;
 							}
 
 							click.manager.showGUI(click.player, new CurrencyListGUI(new AdminMainGUI(account), account));
-							Common.tell(click.player, Replacer.replaceVariables(Locale.getString(account, Translation.CURRENCY_CREATED.getKey()), "currency_name", created.getId()));
+							Common.tell(click.player, TranslationManager.string(Translations.CURRENCY_CREATED, "currency_name", created.getId()));
 						});
 
 						return true;
@@ -81,10 +80,10 @@ public final class AdminMainGUI extends BaseGUI {
 		});
 
 		setButton(1, 6, QuickItem.of(NBTEditor.getHead("http://textures.minecraft.net/texture/15dfc521807dce2485c4032b1350303540325715eb309dd2bcbba4e27df83fe1"))
-				.name(Translation.GUI_MAIN_ITEMS_ACCOUNTS_NAME.getString(this.account))
+				.name(TranslationManager.string(Translations.GUI_MAIN_ITEMS_ACCOUNTS_NAME))
 				.lore(Funds.getAccountManager().getAccounts().isEmpty() ?
-						Translation.GUI_MAIN_ITEMS_ACCOUNTS_LORE_CREATE.getList(this.account) :
-						Translation.GUI_MAIN_ITEMS_ACCOUNTS_LORE_VIEW.getList(this.account, "total_accounts", Funds.getAccountManager().getAccounts().size())
+						TranslationManager.list(Translations.GUI_MAIN_ITEMS_ACCOUNTS_LORE_CREATE) :
+						TranslationManager.list(Translations.GUI_MAIN_ITEMS_ACCOUNTS_LORE_VIEW, "total_accounts", Funds.getAccountManager().getAccounts().size())
 				)
 				.make(), click -> click.manager.showGUI(click.player, new AccountListGUI(this, this.account)));
 

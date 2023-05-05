@@ -1,12 +1,13 @@
 package ca.tweetzy.funds.guis.player;
 
-import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.gui.helper.InventoryBorder;
 import ca.tweetzy.flight.gui.template.PagedGUI;
+import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -28,7 +29,7 @@ public final class AccountPickerGUI extends PagedGUI<Account> {
 	private final BiConsumer<GuiClickEvent, Account> selected;
 
 	public AccountPickerGUI(@NonNull final Account player, @NonNull final BiConsumer<GuiClickEvent, Account> selected) {
-		super(null, Translation.GUI_ACCOUNT_PICKER_TITLE.getString(player), 6, Funds.getAccountManager().getAccounts().stream().filter(acc -> !acc.getOwner().equals(player.getOwner())).collect(Collectors.toList()));
+		super(null, TranslationManager.string(Translations.GUI_ACCOUNT_PICKER_TITLE), 6, Funds.getAccountManager().getAccounts().stream().filter(acc -> !acc.getOwner().equals(player.getOwner())).collect(Collectors.toList()));
 		this.player = player;
 		this.selected = selected;
 		draw();
@@ -38,8 +39,8 @@ public final class AccountPickerGUI extends PagedGUI<Account> {
 	protected ItemStack makeDisplayItem(Account account) {
 		final OfflinePlayer accountOwner = Bukkit.getOfflinePlayer(account.getOwner());
 		return QuickItem.of(accountOwner)
-				.name(Translation.GUI_ACCOUNT_PICKER_ITEMS_ACCOUNT_NAME.getString(this.player, "account_name", accountOwner.getName()))
-				.lore(Translation.GUI_ACCOUNT_PICKER_ITEMS_ACCOUNT_LORE.getList(this.player))
+				.name(TranslationManager.string(Translations.GUI_ACCOUNT_PICKER_ITEMS_ACCOUNT_NAME, "account_name", accountOwner.getName()))
+				.lore(TranslationManager.list(Translations.GUI_ACCOUNT_PICKER_ITEMS_ACCOUNT_LORE))
 				.make();
 	}
 

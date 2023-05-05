@@ -1,16 +1,16 @@
 package ca.tweetzy.funds.database;
 
-import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.funds.impl.FundAccount;
-import ca.tweetzy.funds.impl.FundCurrency;
-import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.database.Callback;
 import ca.tweetzy.flight.database.DataManagerAbstract;
 import ca.tweetzy.flight.database.DatabaseConnector;
 import ca.tweetzy.flight.database.UpdateCallback;
 import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.impl.FundAccount;
+import ca.tweetzy.funds.impl.FundCurrency;
+import ca.tweetzy.funds.impl.FundLanguage;
 import lombok.NonNull;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -280,7 +280,7 @@ public final class DataManager extends DataManagerAbstract {
 				resultSet.getString("name"),
 				FundAccount.getCurrencyMapFromJson(resultSet.getString("currencies")),
 				resultSet.getBoolean("bal_top_blocked"),
-				Locale.getLanague(resultSet.getString("preferred_language")),
+				new FundLanguage(resultSet.getString("preferred_language"), resultSet.getString("preferred_language"), null),
 				resultSet.getLong("created_at")
 
 		);

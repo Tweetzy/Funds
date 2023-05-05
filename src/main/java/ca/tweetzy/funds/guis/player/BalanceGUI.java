@@ -1,19 +1,18 @@
 package ca.tweetzy.funds.guis.player;
 
-import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.events.CurrencyWithdrawEvent;
-import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.funds.settings.Locale;
-import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.flight.gui.Gui;
 import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.gui.helper.InventoryBorder;
 import ca.tweetzy.flight.gui.template.PagedGUI;
+import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.QuickItem;
-import ca.tweetzy.flight.utils.Replacer;
 import ca.tweetzy.flight.utils.input.TitleInput;
+import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.events.CurrencyWithdrawEvent;
+import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.event.inventory.ClickType;
@@ -33,7 +32,7 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 	private final Account account;
 
 	public BalanceGUI(Gui parent, @NonNull final Account account) {
-		super(parent, Translation.GUI_BALANCES_TITLE.getString(account), 6, new ArrayList<>(account.getCurrencies().keySet()));
+		super(parent, TranslationManager.string(Translations.GUI_BALANCES_TITLE), 6, new ArrayList<>(account.getCurrencies().keySet()));
 		this.account = account;
 		draw();
 	}
@@ -41,8 +40,8 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 	@Override
 	protected ItemStack makeDisplayItem(Currency currency) {
 		return QuickItem.of(currency.getIcon())
-				.name(Translation.GUI_BALANCES_ITEMS_CURRENCY_NAME.getString(this.account, "currency_name", currency.getName()))
-				.lore(Translation.GUI_BALANCES_ITEMS_CURRENCY_LORE.getList(this.account, "currency_balance", this.account.getCurrencies().get(currency)))
+				.name(TranslationManager.string(Translations.GUI_BALANCES_ITEMS_CURRENCY_NAME, "currency_name", currency.getName()))
+				.lore(TranslationManager.list(Translations.GUI_BALANCES_ITEMS_CURRENCY_LORE, "currency_balance", this.account.getCurrencies().get(currency)))
 				.make();
 	}
 
@@ -51,7 +50,7 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 		final double currencyTotal = this.account.getCurrencies().get(currency);
 
 		if (currencyTotal <= 0D) {
-			Common.tell(clickEvent.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+			Common.tell(clickEvent.player, TranslationManager.string(Translations.NOT_ENOUGH_MONEY, "currency_plural_format", currency.getPluralFormat()));
 			return;
 		}
 
@@ -60,7 +59,7 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 
 		if (currency.isWithdrawAllowed() && clickEvent.clickType == ClickType.RIGHT) {
 
-			new TitleInput(Funds.getInstance(),clickEvent.player, Common.colorize("&eWithdrawing Currency"), Common.colorize("&fEnter amount to withdraw"), Common.colorize(
+			new TitleInput(Funds.getInstance(), clickEvent.player, Common.colorize("&eWithdrawing Currency"), Common.colorize("&fEnter amount to withdraw"), Common.colorize(
 					String.format("&e%s %s", String.format("%,.2f", currencyTotal), currencyTotal > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat())
 			)) {
 
@@ -68,7 +67,7 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 				public boolean onResult(String string) {
 					if (!NumberUtils.isNumber(string)) {
 						// tell them to learn what a number is
-						Common.tell(clickEvent.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
+						Common.tell(clickEvent.player, TranslationManager.string(Translations.NOT_A_NUMBER, "value", string));
 						return false;
 					}
 
@@ -76,7 +75,7 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 
 					// does the player even have enough money
 					if (account.getCurrencies().get(currency) < withdrawAmount) {
-						Common.tell(clickEvent.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+						Common.tell(clickEvent.player, TranslationManager.string(Translations.NOT_ENOUGH_MONEY, "currency_plural_format", currency.getPluralFormat()));
 						return false;
 					}
 
@@ -87,7 +86,7 @@ public final class BalanceGUI extends PagedGUI<Currency> {
 					BalanceGUI.this.account.withdrawCurrency(currency, withdrawAmount);
 					BalanceGUI.this.account.sync(true);
 
-					Common.tell(clickEvent.player, Translation.WITHDRAW.getString(account, "amount", withdrawAmount, "currency_auto_format", withdrawAmount > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat()));
+					Common.tell(clickEvent.player, TranslationManager.string(Translations.WITHDRAW, "amount", withdrawAmount, "currency_auto_format", withdrawAmount > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat()));
 					clickEvent.player.getInventory().addItem(currency.buildPhysicalItem(withdrawAmount));
 					return true;
 				}

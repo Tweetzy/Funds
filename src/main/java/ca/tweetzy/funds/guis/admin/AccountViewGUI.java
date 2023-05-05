@@ -1,20 +1,19 @@
 package ca.tweetzy.funds.guis.admin;
 
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.gui.events.GuiClickEvent;
+import ca.tweetzy.flight.gui.helper.InventoryBorder;
+import ca.tweetzy.flight.gui.template.PagedGUI;
+import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.guis.template.ConfirmGUI;
 import ca.tweetzy.funds.guis.template.CurrencyPicker;
-import ca.tweetzy.funds.settings.Locale;
-import ca.tweetzy.funds.settings.Translation;
-import ca.tweetzy.flight.comp.enums.CompMaterial;
-import ca.tweetzy.flight.gui.events.GuiClickEvent;
-import ca.tweetzy.flight.gui.helper.InventoryBorder;
-import ca.tweetzy.flight.gui.template.PagedGUI;
-import ca.tweetzy.flight.utils.Common;
-import ca.tweetzy.flight.utils.QuickItem;
-import ca.tweetzy.flight.utils.Replacer;
-import ca.tweetzy.flight.utils.input.TitleInput;
+import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
@@ -36,7 +35,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	private final Account account;
 
 	public AccountViewGUI(@NonNull final Account account) {
-		super(new AccountListGUI(new AdminMainGUI(account), account), Translation.GUI_ACCOUNT_VIEW_TITLE.getString(account, "account_name", account.getName()), 6, new ArrayList<>(account.getCurrencies().keySet()));
+		super(new AccountListGUI(new AdminMainGUI(account), account), TranslationManager.string(Translations.GUI_ACCOUNT_VIEW_TITLE, "account_name", account.getName()), 6, new ArrayList<>(account.getCurrencies().keySet()));
 		this.account = account;
 		draw();
 	}
@@ -44,8 +43,8 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	@Override
 	protected ItemStack makeDisplayItem(Currency currency) {
 		return QuickItem.of(currency.getIcon())
-				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_NAME.getString(this.account, "currency_name", currency.getName()))
-				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_LORE.getList(this.account,
+				.name(TranslationManager.string(Translations.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_NAME, "currency_name", currency.getName()))
+				.lore(TranslationManager.list(Translations.GUI_ACCOUNT_VIEW_ITEMS_CURRENCY_LORE,
 						"currency_balance", this.account.getCurrencies().get(currency),
 						"currency_description", currency.getDescription(),
 						"currency_starting_balance", currency.getStartingBalance(),
@@ -59,9 +58,9 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 
 		// blacklist balance top
 		setButton(5, 8, QuickItem.of(account.isBalTopBlocked() ? CompMaterial.RED_DYE : CompMaterial.LIME_DYE)
-				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_NAME.getString(this.account))
-				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_LORE.getList(this.account,
-						"is_true", account.isBalTopBlocked() ? Translation.MISC_IS_TRUE.getString(this.account) : Translation.MISC_IS_FALSE.getString(this.account)
+				.name(TranslationManager.string(Translations.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_NAME))
+				.lore(TranslationManager.list(Translations.GUI_ACCOUNT_VIEW_ITEMS_BALTOP_BLACKLIST_LORE,
+						"is_true", account.isBalTopBlocked() ? TranslationManager.string(Translations.TRUE) : TranslationManager.string(Translations.FALSE)
 				))
 				.make(), click -> {
 
@@ -73,11 +72,11 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 		// add currency player doesn't have
 		if (this.account.getCurrencies().size() != Funds.getCurrencyManager().getCurrencies().size())
 			setButton(5, 4, QuickItem.of(CompMaterial.SLIME_BALL)
-					.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_NAME.getString(this.account))
-					.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_LORE.getList(this.account))
+					.name(TranslationManager.string(Translations.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_NAME))
+					.lore(TranslationManager.list(Translations.GUI_ACCOUNT_VIEW_ITEMS_DEPOSIT_LORE))
 					.make(), click -> click.manager.showGUI(click.player, new CurrencyPicker(this.account, null, false, (e, selected) -> {
 
-				new TitleInput(Funds.getInstance(),e.player, Common.colorize(Translation.CURRENCY_DEPOSIT_TITLE.getString(this.account)), Common.colorize(Translation.CURRENCY_DEPOSIT_SUBTITLE.getString(this.account))) {
+				new TitleInput(Funds.getInstance(), e.player, Common.colorize(TranslationManager.string(Translations.CURRENCY_DEPOSIT_TITLE)), Common.colorize(TranslationManager.string(Translations.CURRENCY_DEPOSIT_SUBTITLE))) {
 
 					@Override
 					public void onExit(Player player) {
@@ -87,7 +86,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 					@Override
 					public boolean onResult(String string) {
 						if (!NumberUtils.isNumber(string)) {
-							Common.tell(click.player, Replacer.replaceVariables(Locale.getString(account, Translation.NOT_A_NUMBER.getKey()), "value", string));
+							Common.tell(click.player, TranslationManager.string(Translations.NOT_A_NUMBER, "value", string));
 							return false;
 						}
 
@@ -104,8 +103,8 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 
 		// reset all balances
 		setButton(5, 7, QuickItem.of(CompMaterial.LAVA_BUCKET)
-				.name(Translation.GUI_ACCOUNT_VIEW_ITEMS_RESET_NAME.getString(this.account))
-				.lore(Translation.GUI_ACCOUNT_VIEW_ITEMS_RESET_LORE.getList(this.account))
+				.name(TranslationManager.string(Translations.GUI_ACCOUNT_VIEW_ITEMS_RESET_NAME))
+				.lore(TranslationManager.list(Translations.GUI_ACCOUNT_VIEW_ITEMS_RESET_LORE))
 				.make(), click -> click.manager.showGUI(click.player, new ConfirmGUI(null, this.account, confirmed -> {
 
 			if (confirmed) {
@@ -119,7 +118,11 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 	@Override
 	protected void onClick(Currency currency, GuiClickEvent event) {
 		if (event.clickType == ClickType.LEFT || event.clickType == ClickType.RIGHT) {
-			new TitleInput(Funds.getInstance(),event.player, Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_TITLE.getString(this.account) : Translation.CURRENCY_ADD_BAL_TITLE.getString(this.account)), Common.colorize(event.clickType == ClickType.LEFT ? Translation.CURRENCY_SET_BAL_SUBTITLE.getString(this.account) : Translation.CURRENCY_ADD_BAL_SUBTITLE.getString(this.account))) {
+			new TitleInput(
+					Funds.getInstance(),
+					event.player,
+					Common.colorize(event.clickType == ClickType.LEFT ? TranslationManager.string(Translations.CURRENCY_SET_BAL_TITLE) : TranslationManager.string(Translations.CURRENCY_ADD_BAL_TITLE)),
+					Common.colorize(event.clickType == ClickType.LEFT ? TranslationManager.string(Translations.CURRENCY_SET_BAL_SUBTITLE) : TranslationManager.string(Translations.CURRENCY_ADD_BAL_SUBTITLE))) {
 
 				@Override
 				public void onExit(Player player) {
@@ -129,7 +132,7 @@ public final class AccountViewGUI extends PagedGUI<Currency> {
 				@Override
 				public boolean onResult(String string) {
 					if (!NumberUtils.isNumber(string)) {
-						Common.tell(event.player, Replacer.replaceVariables(Locale.getString(account, Translation.NOT_A_NUMBER.getKey()), "value", string));
+						Common.tell(event.player, TranslationManager.string(Translations.NOT_A_NUMBER, "value", string));
 						return false;
 					}
 

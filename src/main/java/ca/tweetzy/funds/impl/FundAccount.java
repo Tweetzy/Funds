@@ -1,7 +1,7 @@
 package ca.tweetzy.funds.impl;
 
+import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.Common;
-import ca.tweetzy.flight.utils.Replacer;
 import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.events.CurrencyTransferEvent;
@@ -10,9 +10,8 @@ import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.api.interfaces.Language;
 import ca.tweetzy.funds.guis.player.AccountPickerGUI;
 import ca.tweetzy.funds.guis.template.CurrencyPicker;
-import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Settings;
-import ca.tweetzy.funds.settings.Translation;
+import ca.tweetzy.funds.settings.Translations;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -45,11 +44,11 @@ public final class FundAccount implements Account {
 	private final long createdAt;
 
 	public FundAccount(@NonNull final OfflinePlayer owner) {
-		this(owner.getUniqueId(), owner.getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, Locale.getLanague(Settings.LANGUAGE.getString()), System.currentTimeMillis());
+		this(owner.getUniqueId(), owner.getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, new FundLanguage(Settings.LANGUAGE.getString(), Settings.LANGUAGE.getString(), null), System.currentTimeMillis());
 	}
 
 	public FundAccount(@NonNull final UUID owner) {
-		this(owner, Bukkit.getOfflinePlayer(owner).getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, Locale.getLanague(Settings.LANGUAGE.getString()), System.currentTimeMillis());
+		this(owner, Bukkit.getOfflinePlayer(owner).getName(), Funds.getCurrencyManager().getDefaultValueMap(), false, new FundLanguage(Settings.LANGUAGE.getString(), Settings.LANGUAGE.getString(), null), System.currentTimeMillis());
 	}
 
 	@Override
@@ -178,7 +177,7 @@ public final class FundAccount implements Account {
 			click.manager.showGUI(click.player, new CurrencyPicker(this, null, true, (event, currency) -> {
 				double currencyTotal = this.getCurrencies().get(currency);
 				if (currencyTotal <= 0D) {
-					Common.tell(click.player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+					Common.tell(click.player, TranslationManager.string(Translations.NOT_ENOUGH_MONEY, "currency_plural_format", currency.getPluralFormat()));
 					return;
 				}
 
@@ -188,7 +187,7 @@ public final class FundAccount implements Account {
 	}
 
 	private void requestTransferAmount(Player player, Account selectedAccount, Currency currency, double currencyTotal) {
-		new TitleInput(Funds.getInstance(), player, Common.colorize(Translation.SEND_CURRENCY_AMT_TITLE.getString(this)), Common.colorize(Translation.SEND_CURRENCY_AMT_SUBTITLE.getString(this)), Common.colorize(
+		new TitleInput(Funds.getInstance(), player, TranslationManager.string(Translations.SEND_CURRENCY_AMT_TITLE), Common.colorize(TranslationManager.string(Translations.SEND_CURRENCY_AMT_SUBTITLE)), Common.colorize(
 				String.format("&e%s %s", String.format("%,.2f", currencyTotal), currencyTotal > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat())
 		)) {
 
@@ -196,7 +195,7 @@ public final class FundAccount implements Account {
 			public boolean onResult(String string) {
 				if (!NumberUtils.isNumber(string)) {
 					// tell them to learn what a number is
-					Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.NOT_A_NUMBER.getKey()), "value", string));
+					Common.tell(player, TranslationManager.string(Translations.NOT_A_NUMBER, "value", string));
 					return false;
 				}
 
@@ -205,7 +204,7 @@ public final class FundAccount implements Account {
 				// does the player even have enough money
 				// todo add method to interface
 				if (getCurrencies().get(currency) < transferAmount) {
-					Common.tell(player, Replacer.replaceVariables(Locale.getString(Translation.NOT_ENOUGH_MONEY.getKey()), "currency_plural_format", currency.getPluralFormat()));
+					Common.tell(player, TranslationManager.string(Translations.NOT_ENOUGH_MONEY, "currency_plural_format", currency.getPluralFormat()));
 					return false;
 				}
 

@@ -1,11 +1,11 @@
 package ca.tweetzy.funds.commands;
 
-import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.guis.admin.AdminMainGUI;
 import ca.tweetzy.flight.command.AllowedExecutor;
 import ca.tweetzy.flight.command.Command;
 import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.admin.AdminMainGUI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

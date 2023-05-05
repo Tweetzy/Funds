@@ -1,15 +1,11 @@
 package ca.tweetzy.funds.commands;
 
-import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.guis.player.BalanceGUI;
-import ca.tweetzy.funds.guis.player.BalanceTopGUI;
-import ca.tweetzy.funds.settings.Locale;
-import ca.tweetzy.funds.settings.Settings;
-import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.flight.command.AllowedExecutor;
 import ca.tweetzy.flight.command.Command;
 import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.player.BalanceTopGUI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

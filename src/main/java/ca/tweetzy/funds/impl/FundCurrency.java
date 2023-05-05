@@ -1,11 +1,12 @@
 package ca.tweetzy.funds.impl;
 
-import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.Inflector;
 import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.settings.Translations;
 import lombok.AllArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -143,8 +144,8 @@ public final class FundCurrency implements Currency {
 	@Override
 	public ItemStack buildPhysicalItem(double amount) {
 		return QuickItem.of(this.icon)
-				.name(Translation.PHYSICAL_CURRENCY_NAME.getString("total", amount, "currency_auto_format", amount > 1.0 ? getPluralFormat() : getSingularFormat()))
-				.lore(Translation.PHYSICAL_CURRENCY_LORE.getList())
+				.name(TranslationManager.string(Translations.PHYSICAL_CURRENCY_NAME, "total", amount, "currency_auto_format", amount > 1.0 ? getPluralFormat() : getSingularFormat()))
+				.lore(TranslationManager.list(Translations.PHYSICAL_CURRENCY_LORE))
 				.tag("Funds:CurrencyID", getId())
 				.tag("Funds:CurrencyAmount", String.valueOf(amount))
 				.make();

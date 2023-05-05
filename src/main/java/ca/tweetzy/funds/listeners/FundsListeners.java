@@ -1,18 +1,18 @@
 package ca.tweetzy.funds.listeners;
 
+import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.events.CurrencyDepositEvent;
 import ca.tweetzy.funds.api.events.CurrencyTransferEvent;
 import ca.tweetzy.funds.api.events.CurrencyWithdrawEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
-import ca.tweetzy.funds.settings.Locale;
 import ca.tweetzy.funds.settings.Settings;
-import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.flight.comp.NBTEditor;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.Replacer;
+import ca.tweetzy.funds.settings.Translations;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -42,7 +42,7 @@ public final class FundsListeners implements Listener {
 
 		if (payerUser.isOnline()) {
 			assert payerUser.getPlayer() != null;
-			Common.tell(payerUser.getPlayer(), Replacer.replaceVariables(Locale.getString(payer, Translation.MONEY_PAID.getKey()),
+			Common.tell(payerUser.getPlayer(), TranslationManager.string(Translations.MONEY_PAID,
 					"amount", event.getAmount(),
 					"currency_auto_format", event.getAmount() > 1.0 ? event.getCurrency().getPluralFormat() : event.getCurrency().getSingularFormat(),
 					"payee_name", payee.getName()
@@ -51,7 +51,7 @@ public final class FundsListeners implements Listener {
 
 		if (payeeUser.isOnline()) {
 			assert payeeUser.getPlayer() != null;
-			Common.tell(payeeUser.getPlayer(), Replacer.replaceVariables(Locale.getString(payee, Translation.MONEY_RECEIVED.getKey()),
+			Common.tell(payeeUser.getPlayer(), TranslationManager.string(Translations.MONEY_RECEIVED,
 					"amount", event.getAmount(),
 					"currency_auto_format", event.getAmount() > 1.0 ? event.getCurrency().getPluralFormat() : event.getCurrency().getSingularFormat(),
 					"payer_name", payer.getName()
@@ -102,7 +102,7 @@ public final class FundsListeners implements Listener {
 		}
 
 		player.updateInventory();
-		Common.tell(player, Translation.DEPOSIT.getString(account, "amount", currencyAmount, "currency_auto_format", currencyAmount > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat()));
+		Common.tell(player, TranslationManager.string(Translations.DEPOSIT, "amount", currencyAmount, "currency_auto_format", currencyAmount > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat()));
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -132,7 +132,7 @@ public final class FundsListeners implements Listener {
 		account.depositCurrency(currency, currencyAmount);
 		account.sync(true);
 
-		Common.tell(player, Translation.DEPOSIT.getString(account, "amount", currencyAmount, "currency_auto_format", currencyAmount > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat()));
+		Common.tell(player, TranslationManager.string(Translations.DEPOSIT, "amount", currencyAmount, "currency_auto_format", currencyAmount > 1.0D ? currency.getPluralFormat() : currency.getSingularFormat()));
 
 	}
 }

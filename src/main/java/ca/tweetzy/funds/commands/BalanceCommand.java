@@ -1,14 +1,14 @@
 package ca.tweetzy.funds.commands;
 
-import ca.tweetzy.funds.Funds;
-import ca.tweetzy.funds.api.interfaces.Account;
-import ca.tweetzy.funds.guis.player.BalanceGUI;
-import ca.tweetzy.funds.settings.Locale;
-import ca.tweetzy.funds.settings.Settings;
-import ca.tweetzy.funds.settings.Translation;
 import ca.tweetzy.flight.command.AllowedExecutor;
 import ca.tweetzy.flight.command.Command;
 import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.funds.Funds;
+import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.player.BalanceGUI;
+import ca.tweetzy.funds.settings.Settings;
+import ca.tweetzy.funds.settings.Translations;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -36,14 +36,15 @@ public final class BalanceCommand extends Command {
 
 		if (Settings.USE_CHAT_BALANCE.getBoolean()) {
 
-			Locale.tell(player, Translation.CURRENCY_BALANCE_CHAT_HEADER.getKey());
+			tell(player, TranslationManager.string(Translations.CURRENCY_BALANCE_CHAT_HEADER));
 
-			account.getCurrencies().keySet().forEach(currency -> Translation.CURRENCY_BALANCE_CHAT_CURRENCY.getList(account,
+			account.getCurrencies().keySet().forEach(currency -> TranslationManager.list(Translations.CURRENCY_BALANCE_CHAT_CURRENCY,
 					"currency_name", currency.getName(),
 					"currency_balance", String.format("%,.2f", account.getCurrencies().getOrDefault(currency, 0D))
 			).forEach(player::sendMessage));
 
-			Locale.tell(player, Translation.CURRENCY_BALANCE_CHAT_FOOTER.getKey());
+			tell(player, TranslationManager.string(Translations.CURRENCY_BALANCE_CHAT_FOOTER));
+
 			return ReturnType.SUCCESS;
 		}
 
