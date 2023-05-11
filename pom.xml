@@ -28,6 +28,10 @@
             <url>https://repo.repsy.io/mvn/kiran/tweetzy</url>
         </repository>
         <repository>
+            <id>nms-repo</id>
+            <url>https://repo.codemc.io/repository/nms/</url>
+        </repository>
+        <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
