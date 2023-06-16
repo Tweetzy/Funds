@@ -1,6 +1,9 @@
 package ca.tweetzy.funds.listeners;
 
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.nbtapi.NBT;
 import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.events.CurrencyDepositEvent;
 import ca.tweetzy.funds.api.events.CurrencyTransferEvent;
@@ -8,10 +11,6 @@ import ca.tweetzy.funds.api.events.CurrencyWithdrawEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
 import ca.tweetzy.funds.settings.Settings;
-import ca.tweetzy.flight.comp.NBTEditor;
-import ca.tweetzy.flight.comp.enums.CompMaterial;
-import ca.tweetzy.flight.utils.Common;
-import ca.tweetzy.flight.utils.Replacer;
 import ca.tweetzy.funds.settings.Translations;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -75,18 +74,18 @@ public final class FundsListeners implements Listener {
 		if (event.getHand() != EquipmentSlot.HAND) return;
 
 		final ItemStack item = event.getItem();
-		if (!NBTEditor.contains(item, "Funds:CurrencyID")) return;
+		if (!NBT.get(item, nbt -> nbt.hasTag("Funds:CurrencyID"))) return;
 
 		final Player player = event.getPlayer();
 		final Account account = Funds.getAccountManager().getAccount(player);
 
 		if (account == null) return;
 
-		final String currencyId = NBTEditor.getString(item, "Funds:CurrencyID");
+		final String currencyId = NBT.get(item, nbt -> nbt.getString("Funds:CurrencyID"));
 		final Currency currency = Funds.getCurrencyManager().getCurrency(currencyId);
 
 		if (currency == null) return;
-		final double currencyAmount = Double.parseDouble(NBTEditor.getString(item, "Funds:CurrencyAmount"));
+		final double currencyAmount = NBT.get(item, nbt -> nbt.getDouble("Funds:CurrencyAmount"));
 
 		final CurrencyDepositEvent currencyDepositEvent = new CurrencyDepositEvent(false, account, currency, currencyAmount);
 		Funds.getInstance().getServer().getPluginManager().callEvent(currencyDepositEvent);
@@ -111,16 +110,16 @@ public final class FundsListeners implements Listener {
 		if (!(event.getEntity() instanceof final Player player)) return;
 
 		final ItemStack itemStack = event.getItem().getItemStack();
-		if (!NBTEditor.contains(itemStack, "Funds:CurrencyID")) return;
+		if (!NBT.get(itemStack, nbt -> nbt.hasTag("Funds:CurrencyID"))) return;
 
 		final Account account = Funds.getAccountManager().getAccount(player);
 		if (account == null) return;
 
-		final String currencyId = NBTEditor.getString(itemStack, "Funds:CurrencyID");
+		final String currencyId = NBT.get(itemStack, nbt -> nbt.getString("Funds:CurrencyID"));
 		final Currency currency = Funds.getCurrencyManager().getCurrency(currencyId);
 
 		if (currency == null) return;
-		final double currencyAmount = Double.parseDouble(NBTEditor.getString(itemStack, "Funds:CurrencyAmount"));
+		final double currencyAmount = NBT.get(itemStack, nbt -> nbt.getDouble("Funds:CurrencyAmount"));
 
 		final CurrencyDepositEvent currencyDepositEvent = new CurrencyDepositEvent(false, account, currency, currencyAmount);
 		Funds.getInstance().getServer().getPluginManager().callEvent(currencyDepositEvent);
