@@ -74,18 +74,18 @@ public final class FundsListeners implements Listener {
 		if (event.getHand() != EquipmentSlot.HAND) return;
 
 		final ItemStack item = event.getItem();
-		if (!NBT.get(item, nbt -> nbt.hasTag("Funds:CurrencyID"))) return;
+		if (!NBT.get(item, nbt -> (boolean) nbt.hasTag("Funds:CurrencyID"))) return;
 
 		final Player player = event.getPlayer();
 		final Account account = Funds.getAccountManager().getAccount(player);
 
 		if (account == null) return;
 
-		final String currencyId = NBT.get(item, nbt -> nbt.getString("Funds:CurrencyID"));
+		final String currencyId = NBT.get(item, nbt -> (String) nbt.getString("Funds:CurrencyID"));
 		final Currency currency = Funds.getCurrencyManager().getCurrency(currencyId);
 
 		if (currency == null) return;
-		final double currencyAmount = NBT.get(item, nbt -> nbt.getDouble("Funds:CurrencyAmount"));
+		final double currencyAmount = NBT.get(item, nbt -> (double) nbt.getDouble("Funds:CurrencyAmount"));
 
 		final CurrencyDepositEvent currencyDepositEvent = new CurrencyDepositEvent(false, account, currency, currencyAmount);
 		Funds.getInstance().getServer().getPluginManager().callEvent(currencyDepositEvent);
@@ -110,16 +110,16 @@ public final class FundsListeners implements Listener {
 		if (!(event.getEntity() instanceof final Player player)) return;
 
 		final ItemStack itemStack = event.getItem().getItemStack();
-		if (!NBT.get(itemStack, nbt -> nbt.hasTag("Funds:CurrencyID"))) return;
+		if (!NBT.get(itemStack, nbt -> (boolean) nbt.hasTag("Funds:CurrencyID"))) return;
 
 		final Account account = Funds.getAccountManager().getAccount(player);
 		if (account == null) return;
 
-		final String currencyId = NBT.get(itemStack, nbt -> nbt.getString("Funds:CurrencyID"));
+		final String currencyId = NBT.get(itemStack, nbt -> (String) nbt.getString("Funds:CurrencyID"));
 		final Currency currency = Funds.getCurrencyManager().getCurrency(currencyId);
 
 		if (currency == null) return;
-		final double currencyAmount = NBT.get(itemStack, nbt -> nbt.getDouble("Funds:CurrencyAmount"));
+		final double currencyAmount = NBT.get(itemStack, nbt -> (double) nbt.getDouble("Funds:CurrencyAmount"));
 
 		final CurrencyDepositEvent currencyDepositEvent = new CurrencyDepositEvent(false, account, currency, currencyAmount);
 		Funds.getInstance().getServer().getPluginManager().callEvent(currencyDepositEvent);
