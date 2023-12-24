@@ -1,6 +1,7 @@
 package ca.tweetzy.funds.guis.template;
 
 import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.FundsPagedGUI;
 import ca.tweetzy.funds.guis.admin.AdminMainGUI;
 import ca.tweetzy.funds.impl.TweetzyPlugin;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author Kiran Hart
  */
-public final class PluginListGUI extends PagedGUI<TweetzyPlugin> {
+public final class PluginListGUI extends FundsPagedGUI<TweetzyPlugin> {
 
 	private final Account account;
 

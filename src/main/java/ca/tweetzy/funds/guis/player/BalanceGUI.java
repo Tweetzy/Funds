@@ -12,6 +12,7 @@ import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.events.CurrencyWithdrawEvent;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.guis.FundsPagedGUI;
 import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
@@ -27,7 +28,7 @@ import java.util.List;
  *
  * @author Kiran Hart
  */
-public final class BalanceGUI extends PagedGUI<Currency> {
+public final class BalanceGUI extends FundsPagedGUI<Currency> {
 
 	private final Account account;
 

@@ -11,6 +11,7 @@ import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.guis.FundsPagedGUI;
 import ca.tweetzy.funds.guis.template.ConfirmGUI;
 import ca.tweetzy.funds.guis.template.CurrencyPicker;
 import ca.tweetzy.funds.settings.Translations;
@@ -30,7 +31,7 @@ import java.util.List;
  *
  * @author Kiran Hart
  */
-public final class AccountViewGUI extends PagedGUI<Currency> {
+public final class AccountViewGUI extends FundsPagedGUI<Currency> {
 
 	private final Account account;
 

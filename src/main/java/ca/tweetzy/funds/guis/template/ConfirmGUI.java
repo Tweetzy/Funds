@@ -5,6 +5,7 @@ import ca.tweetzy.flight.gui.template.BaseGUI;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.FundsBaseGUI;
 import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 
@@ -17,7 +18,7 @@ import java.util.function.Consumer;
  *
  * @author Kiran Hart
  */
-public final class ConfirmGUI extends BaseGUI {
+public final class ConfirmGUI extends FundsBaseGUI {
 
 	private final Account account;
 	private final Consumer<Boolean> confirmed;

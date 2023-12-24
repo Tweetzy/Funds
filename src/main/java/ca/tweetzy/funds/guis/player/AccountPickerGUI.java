@@ -7,6 +7,7 @@ import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.FundsPagedGUI;
 import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
  *
  * @author Kiran Hart
  */
-public final class AccountPickerGUI extends PagedGUI<Account> {
+public final class AccountPickerGUI extends FundsPagedGUI<Account> {
 
 	private final Account player;
 	private final BiConsumer<GuiClickEvent, Account> selected;

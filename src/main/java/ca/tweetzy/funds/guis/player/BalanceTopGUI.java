@@ -8,6 +8,7 @@ import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.guis.FundsPagedGUI;
 import ca.tweetzy.funds.impl.TopBalanceRecord;
 import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
@@ -17,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public final class BalanceTopGUI extends PagedGUI<TopBalanceRecord> {
+public final class BalanceTopGUI extends FundsPagedGUI<TopBalanceRecord> {
 
 	private final Account player;
 	private final Currency currency;

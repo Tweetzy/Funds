@@ -8,6 +8,7 @@ import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.gui.helper.InventoryBorder;
 import ca.tweetzy.flight.gui.template.PagedGUI;
 import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.funds.guis.FundsPagedGUI;
 import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
  * @author Kiran Hart
  * not rlly a template but eh, who cares
  */
-public final class CurrencyPicker extends PagedGUI<Currency> {
+public final class CurrencyPicker extends FundsPagedGUI<Currency> {
 
 	private final Account account;
 	private final BiConsumer<GuiClickEvent, Currency> selected;

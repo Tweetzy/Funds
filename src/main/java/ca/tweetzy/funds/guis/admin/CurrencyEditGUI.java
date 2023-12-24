@@ -11,6 +11,7 @@ import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
 import ca.tweetzy.funds.api.interfaces.Currency;
+import ca.tweetzy.funds.guis.FundsBaseGUI;
 import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
@@ -24,7 +25,7 @@ import org.bukkit.event.inventory.ClickType;
  *
  * @author Kiran Hart
  */
-public final class CurrencyEditGUI extends BaseGUI {
+public final class CurrencyEditGUI extends FundsBaseGUI {
 
 	private final Gui parent;
 	private final Currency currency;

@@ -9,6 +9,7 @@ import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.FundsBaseGUI;
 import ca.tweetzy.funds.guis.template.PluginListGUI;
 import ca.tweetzy.funds.impl.FundCurrency;
 import ca.tweetzy.funds.settings.Translations;
@@ -22,7 +23,7 @@ import org.bukkit.entity.Player;
  *
  * @author Kiran Hart
  */
-public final class AdminMainGUI extends BaseGUI {
+public final class AdminMainGUI extends FundsBaseGUI {
 
 	private final Account account;
 

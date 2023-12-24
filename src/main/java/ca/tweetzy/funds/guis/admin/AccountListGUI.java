@@ -9,6 +9,7 @@ import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.funds.Funds;
 import ca.tweetzy.funds.api.interfaces.Account;
+import ca.tweetzy.funds.guis.FundsPagedGUI;
 import ca.tweetzy.funds.guis.template.ConfirmGUI;
 import ca.tweetzy.funds.settings.Translations;
 import lombok.NonNull;
@@ -24,7 +25,7 @@ import java.util.List;
  *
  * @author Kiran Hart
  */
-public final class AccountListGUI extends PagedGUI<Account> {
+public final class AccountListGUI extends FundsPagedGUI<Account> {
 
 	private final Account account;
 
