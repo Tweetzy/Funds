@@ -42,8 +42,16 @@ public final class Funds extends FlightPlugin {
 	private DatabaseConnector databaseConnector;
 	private DataManager dataManager;
 
-	@Override
-	protected void onWake() {
+	@SneakyThrows
+	protected void onFlight() {
+
+		// settings & locale setup
+		Settings.setup();
+
+		Translations.init();
+
+		Common.setPrefix(Settings.METRICS.getBoolean() ? Settings.PREFIX.getString() : "&8[&eFunds&8]");
+
 		// Set up the database if enabled
 		this.databaseConnector = new SQLiteConnector(this);
 		this.dataManager = new DataManager(this.databaseConnector, this);
@@ -57,17 +65,6 @@ public final class Funds extends FlightPlugin {
 
 		// run migrations for tables
 		dataMigrationManager.runMigrations();
-	}
-
-	@SneakyThrows
-	protected void onFlight() {
-
-		// settings & locale setup
-		Settings.setup();
-
-		Translations.init();
-
-		Common.setPrefix(Settings.METRICS.getBoolean() ? Settings.PREFIX.getString() : "&8[&eFunds&8]");
 
 		// load currencies -> then accounts
 		this.currencyManager.loadCurrencies((loaded) -> this.accountManager.loadAccounts());

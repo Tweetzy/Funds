@@ -40,7 +40,7 @@ public final class CurrencyPicker extends FundsPagedGUI<Currency> {
 	protected ItemStack makeDisplayItem(Currency currency) {
 		return QuickItem.of(currency.getIcon())
 				.name(TranslationManager.string(Translations.GUI_SELECT_CURRENCY_ITEMS_CURRENCY_NAME, "currency_name", currency.getName()))
-				.lore(TranslationManager.string(Translations.GUI_SELECT_CURRENCY_ITEMS_CURRENCY_LORE,
+				.lore(TranslationManager.list(Translations.GUI_SELECT_CURRENCY_ITEMS_CURRENCY_LORE,
 						"currency_id", currency.getId(),
 						"currency_description", currency.getDescription()
 				))

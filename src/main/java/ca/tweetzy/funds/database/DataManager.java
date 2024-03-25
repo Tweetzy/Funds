@@ -51,7 +51,7 @@ public final class DataManager extends DataManagerAbstract {
 				fetch.setString(1, account.getOwner().toString());
 
 				preparedStatement.setString(1, account.getOwner().toString());
-				preparedStatement.setString(2, account.getName());
+				preparedStatement.setString(2, account.getName() == null ? "Unknown" : account.getName());
 				preparedStatement.setBoolean(3, account.isBalTopBlocked());
 				preparedStatement.setString(4, account.getCurrencyJson());
 				preparedStatement.setString(5, account.getPreferredLanguage().getFileName());
