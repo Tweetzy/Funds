@@ -85,7 +85,7 @@ public final class FundsListeners implements Listener {
 		final Currency currency = Funds.getCurrencyManager().getCurrency(currencyId);
 
 		if (currency == null) return;
-		final double currencyAmount = NBT.get(item, nbt -> (double) nbt.getDouble("Funds:CurrencyAmount"));
+		final double currencyAmount = Double.parseDouble(NBT.get(item, nbt -> (String) nbt.getString("Funds:CurrencyAmount")));
 
 		final CurrencyDepositEvent currencyDepositEvent = new CurrencyDepositEvent(false, account, currency, currencyAmount);
 		Funds.getInstance().getServer().getPluginManager().callEvent(currencyDepositEvent);
@@ -119,7 +119,7 @@ public final class FundsListeners implements Listener {
 		final Currency currency = Funds.getCurrencyManager().getCurrency(currencyId);
 
 		if (currency == null) return;
-		final double currencyAmount = NBT.get(itemStack, nbt -> (double) nbt.getDouble("Funds:CurrencyAmount"));
+		final double currencyAmount = Double.parseDouble(NBT.get(itemStack, nbt -> (String) nbt.getString("Funds:CurrencyAmount")));
 
 		final CurrencyDepositEvent currencyDepositEvent = new CurrencyDepositEvent(false, account, currency, currencyAmount);
 		Funds.getInstance().getServer().getPluginManager().callEvent(currencyDepositEvent);
