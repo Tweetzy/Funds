@@ -48,7 +48,7 @@ public final class CurrencyEditGUI extends FundsBaseGUI {
 				.lore(TranslationManager.list(Translations.GUI_CURRENCY_EDIT_ITEMS_ICON_LORE))
 				.make(), click -> click.manager.showGUI(click.player, new MaterialPickerGUI(this, "&eFunds &8> &7" + this.currency.getId() + " &8> &7Select Icon", null, (e, selected) -> {
 
-			this.currency.setIcon(selected);
+			this.currency.setIcon(CompMaterial.matchCompMaterial(selected));
 			this.currency.sync(false);
 			e.manager.showGUI(e.player, new CurrencyEditGUI(this.parent, this.account, this.currency));
 		})));
