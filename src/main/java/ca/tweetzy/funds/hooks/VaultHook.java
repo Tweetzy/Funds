@@ -148,15 +148,15 @@ public final class VaultHook implements Economy {
 		if (account == null || currency == null)
 			return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Funds vault currency not set or user account not found!");
 
-		if (account.getCurrencies().get(currency) < amount) {
-			return new EconomyResponse(0D, account.getCurrencies().get(currency), EconomyResponse.ResponseType.FAILURE, null);
+		final double currentBalance = account.getCurrencies().getOrDefault(currency, 0D);
+		if (currentBalance < amount) {
+			return new EconomyResponse(0D, currentBalance, EconomyResponse.ResponseType.FAILURE, null);
 		}
 
-		final double currentBalance = account.getCurrencies().get(currency);
 		account.getCurrencies().put(currency, currentBalance - amount);
 		account.sync(true);
 
-		return new EconomyResponse(amount, account.getCurrencies().get(currency), EconomyResponse.ResponseType.SUCCESS, null);
+		return new EconomyResponse(amount, currentBalance, EconomyResponse.ResponseType.SUCCESS, null);
 	}
 
 	@Override
@@ -172,15 +172,15 @@ public final class VaultHook implements Economy {
 		if (account == null || currency == null)
 			return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Funds vault currency not set or user account not found!");
 
-		if (account.getCurrencies().get(currency) < amount) {
-			return new EconomyResponse(0D, account.getCurrencies().get(currency), EconomyResponse.ResponseType.FAILURE, null);
+		final double currentBalance = account.getCurrencies().getOrDefault(currency, 0D);
+		if (currentBalance < amount) {
+			return new EconomyResponse(0D, currentBalance, EconomyResponse.ResponseType.FAILURE, null);
 		}
 
-		final double currentBalance = account.getCurrencies().get(currency);
 		account.getCurrencies().put(currency, currentBalance - amount);
 		account.sync(true);
 
-		return new EconomyResponse(amount, account.getCurrencies().get(currency), EconomyResponse.ResponseType.SUCCESS, null);
+		return new EconomyResponse(amount, currentBalance, EconomyResponse.ResponseType.SUCCESS, null);
 	}
 
 	@Override
@@ -198,11 +198,11 @@ public final class VaultHook implements Economy {
 			return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Funds vault currency not set or user account not found!");
 
 
-		final double currentBalance = account.getCurrencies().get(currency);
+		final double currentBalance = account.getCurrencies().getOrDefault(currency, 0D);
 		account.getCurrencies().put(currency, currentBalance + amount);
 		account.sync(true);
 
-		return new EconomyResponse(amount, account.getCurrencies().get(currency), EconomyResponse.ResponseType.SUCCESS, null);
+		return new EconomyResponse(amount, currentBalance, EconomyResponse.ResponseType.SUCCESS, null);
 	}
 
 	@Override
@@ -219,11 +219,11 @@ public final class VaultHook implements Economy {
 			return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Funds vault currency not set or user account not found!");
 
 
-		final double currentBalance = account.getCurrencies().get(currency);
+		final double currentBalance = account.getCurrencies().getOrDefault(currency, 0D);
 		account.getCurrencies().put(currency, currentBalance + amount);
 		account.sync(true);
 
-		return new EconomyResponse(amount, account.getCurrencies().get(currency), EconomyResponse.ResponseType.SUCCESS, null);
+		return new EconomyResponse(amount, currentBalance, EconomyResponse.ResponseType.SUCCESS, null);
 	}
 
 	@Override
